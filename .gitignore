@@ -1,0 +1,8 @@
+.misc/
+
+# Intellij
+.idea/$CACHE_FILE$
+
+# Gradle
+.gradle
+build/
