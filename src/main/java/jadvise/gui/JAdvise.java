@@ -1,6 +1,7 @@
 package jadvise.gui;
 
 import jadvise.guitools.ErrorMessagePane;
+import jadvise.objects.MySQLAccount;
 import jadvise.objects.StudentDatabase;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -55,10 +56,10 @@ public class JAdvise extends JFrame {
 	protected static Container jAdvise;
 
 	public static void main(String[] args) {
-		jAdvise = new JAdvise();
+		jAdvise = new JAdvise(new MySQLAccount("root", "usbw"));
 	}
 
-	public JAdvise() {
+	public JAdvise(MySQLAccount account) {
 		jAdvise = getRootPane();
 		setTitle(TITLE);
 		setSize(800, 600);
@@ -197,16 +198,14 @@ public class JAdvise extends JFrame {
 		setJMenuBar(menuBar);
 
 		// Load Data
-		sd = new StudentDatabase();
+		sd = new StudentDatabase(account);
 		try {
 			sd.loadData();
 		} catch (com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ce) {
 			ErrorMessagePane.showErrorMessage(jAdvise, "Can't connect to database.");
-			System.exit(1);
 		} catch (SQLException ex) {
 			ErrorMessagePane.showErrorMessage(jAdvise, "SQL Error: " + ex.getMessage());
 			ex.printStackTrace();
-			System.exit(1);
 		} catch (ClassNotFoundException ex) {
 			ErrorMessagePane.showErrorMessage(jAdvise,
 					"Something went wrong that you probably won't understand (ClassNotFoundException).");

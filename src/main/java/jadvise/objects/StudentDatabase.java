@@ -20,9 +20,11 @@ public class StudentDatabase {
 	private ArrayList<Student> searchBackup;
 	private int searchPreviousLength = 0;
 	private JTable table;
+	private final MySQLAccount account;
 
-	public StudentDatabase() {
+	public StudentDatabase(MySQLAccount account) {
 		this.students = new ArrayList<>();
+		this.account = account;
 	}
 
 	public void setTable(JTable table) {
@@ -253,6 +255,10 @@ public class StudentDatabase {
 		Class.forName("com.mysql.jdbc.Driver");
 
 		// Connect to the database
-		return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/jadvise", "root", "usbw");
+		return DriverManager.getConnection(
+				account.getMySQLLink(),
+				account.getUsername(),
+				account.getPassword()
+		);
 	}
 }

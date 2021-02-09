@@ -1,6 +1,8 @@
 package jadvise;
 
 import jadvise.gui.JAdvise;
+import jadvise.objects.MySQLAccount;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -24,6 +26,6 @@ public class Demo {
 		} catch (UnsupportedLookAndFeelException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException e) {
 		}
-		new JAdvise();
+		new JAdvise(new MySQLAccount("root", "usbw"));
 	}
 }
