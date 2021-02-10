@@ -32,15 +32,19 @@ public class Login extends JFrame {
 
 		JLabel userLabel = new JLabel("Username:  ");
 		JTextField userField = new JTextField(20);
+		userField.setMinimumSize(userField.getPreferredSize());
 
 		JLabel passLabel = new JLabel("Password:  ");
 		JPasswordField passField = new JPasswordField(20);
+		passField.setMinimumSize(passField.getPreferredSize());
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
+		ipDomainField.setMinimumSize(ipDomainField.getPreferredSize());
 
 		JLabel portLabel = new JLabel("Port:  ");
 		JTextField portField = new JFormattedTextField(new PortFormat());
+		portField.setMinimumSize(portField.getPreferredSize());
 		portField.addPropertyChangeListener("value", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -54,6 +58,7 @@ public class Login extends JFrame {
 
 		JLabel tableLabel = new JLabel("Table:  ");
 		JTextField tableField = new JTextField("jadvise", 20);
+		tableField.setMinimumSize(tableField.getPreferredSize());
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(e -> {
