@@ -34,22 +34,22 @@ public class Login extends JFrame {
 		JPasswordField passField = new JPasswordField(20);
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
-		JTextField ipDomainTextField = new JTextField("127.0.0.1", 20);
+		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
 
 		JLabel portLabel = new JLabel("Port:  ");
-		JTextField portTextField = new JTextField("3307", 20);
+		JTextField portField = new JTextField("3307", 20);
 
 		JLabel tableLabel = new JLabel("Table:  ");
-		JTextField tableTextField = new JTextField("jadvise", 20);
+		JTextField tableField = new JTextField("jadvise", 20);
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(e -> {
 			new JAdvise(new MySQLAccount(
 					userField.getText(),
 					new String(passField.getPassword()),
-					ipDomainTextField.getText(),
-					Integer.parseUnsignedInt(portTextField.getText()),
-					tableTextField.getText()
+					ipDomainField.getText(),
+					Integer.parseUnsignedInt(portField.getText()),
+					tableField.getText()
 			));
 			dispose();
 		});
@@ -79,7 +79,7 @@ public class Login extends JFrame {
 		add(ipDomainLabel, cs);
 		cs.gridx = 1;
 		cs.gridwidth = 2;
-		add(ipDomainTextField, cs);
+		add(ipDomainField, cs);
 
 		cs.gridx = 0;
 		cs.gridy++;
@@ -87,7 +87,7 @@ public class Login extends JFrame {
 		add(portLabel, cs);
 		cs.gridx = 1;
 		cs.gridwidth = 2;
-		add(portTextField, cs);
+		add(portField, cs);
 
 		cs.gridx = 0;
 		cs.gridy++;
@@ -95,7 +95,7 @@ public class Login extends JFrame {
 		add(tableLabel, cs);
 		cs.gridx = 1;
 		cs.gridwidth = 2;
-		add(tableTextField, cs);
+		add(tableField, cs);
 
 		cs.gridx = 0;
 		cs.gridy++;
