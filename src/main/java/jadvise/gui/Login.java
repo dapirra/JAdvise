@@ -69,6 +69,7 @@ public class Login extends JFrame {
 
 		GridBagConstraints cs = new GridBagConstraints();
 		cs.fill = GridBagConstraints.HORIZONTAL;
+		cs.weighty = 1;
 
 		cs.gridx = 0;
 		cs.gridy = 0;
