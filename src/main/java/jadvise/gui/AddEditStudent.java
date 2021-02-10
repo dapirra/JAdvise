@@ -20,6 +20,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import javax.swing.BoxLayout;
@@ -34,7 +35,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
-import javax.swing.event.MouseInputListener;
 
 /**
  * @author David Pirraglia
@@ -484,19 +484,9 @@ public class AddEditStudent extends JDialog {
 					}
 				}
 			});
-			outputPanel.addMouseListener(new MouseInputListener() {
-
-				@Override
-				public void mouseClicked(MouseEvent e) {
-				}
-
-				@Override
+			outputPanel.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent e) {
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					if (e.getClickCount() >= 2) {
+					if (e.getClickCount() == 2) {
 						if (hidePanel.isVisible()) {
 							hidePanel.setVisible(false);
 							hideButton.setText("+");
@@ -505,22 +495,6 @@ public class AddEditStudent extends JDialog {
 							hideButton.setText("-");
 						}
 					}
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-				}
-
-				@Override
-				public void mouseDragged(MouseEvent e) {
-				}
-
-				@Override
-				public void mouseMoved(MouseEvent e) {
 				}
 			});
 		}
