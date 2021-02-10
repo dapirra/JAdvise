@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.sql.SQLException;
 import javax.swing.JFrame;
@@ -250,6 +252,15 @@ public class JAdvise extends JFrame {
 		table.getColumnModel().getColumn(12).setPreferredWidth(175);
 		table.getColumnModel().getColumn(13).setPreferredWidth(175);
 		table.getColumnModel().getColumn(14).setPreferredWidth(400);
+		table.addMouseListener(new MouseAdapter() {  // Double clicking on a row will edit it
+			public void mousePressed(MouseEvent mouseEvent) {
+				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+					new AddStudent(jAdvise, sd, sd.getStudent(
+							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
+					));
+				}
+			}
+		});
 		tableScrollPane = new JScrollPane(table);
 		tableScrollPane.getHorizontalScrollBar().setUnitIncrement(15);
 		add(tableScrollPane, BorderLayout.CENTER);
