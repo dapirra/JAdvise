@@ -17,8 +17,6 @@ public class Login extends JFrame {
 
 	private final String TITLE = "JAdvise - Connect to MySQL Database";
 
-	protected static Container login;
-
 	public static void main(String[] args) {
 		new Login();
 	}
@@ -33,7 +31,6 @@ public class Login extends JFrame {
 	};
 
 	public Login() {
-		login = getRootPane();
 		setTitle(TITLE);
 		setSize(400, 200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -77,6 +74,7 @@ public class Login extends JFrame {
 		tableField.addMouseListener(rightClickPaste);
 
 		JButton loginButton = new JButton("Login");
+		rootPane.setDefaultButton(loginButton);
 		loginButton.addActionListener(e -> {
 			new JAdvise(new MySQLAccount(
 					userField.getText(),
