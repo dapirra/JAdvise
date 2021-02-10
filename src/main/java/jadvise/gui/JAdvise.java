@@ -130,7 +130,7 @@ public class JAdvise extends JFrame {
 		addStudentItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				AddStudent addStudent = new AddStudent(jAdvise, sd, null);
+				AddEditStudent addEditStudent = new AddEditStudent(jAdvise, sd, null);
 			}
 		});
 
@@ -142,7 +142,7 @@ public class JAdvise extends JFrame {
 				if (table.getSelectedRow() < 0) {
 					ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
 				} else {
-					AddStudent addStudent = new AddStudent(
+					AddEditStudent addEditStudent = new AddEditStudent(
 							jAdvise, sd, sd.getStudent((String)
 									table.getModel().getValueAt(
 											table.getSelectedRow(), 0)));
@@ -255,7 +255,7 @@ public class JAdvise extends JFrame {
 		table.addMouseListener(new MouseAdapter() {  // Double clicking on a row will edit it
 			public void mousePressed(MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-					new AddStudent(jAdvise, sd, sd.getStudent(
+					new AddEditStudent(jAdvise, sd, sd.getStudent(
 							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
 					));
 				}

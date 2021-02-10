@@ -39,7 +39,7 @@ import javax.swing.event.MouseInputListener;
 /**
  * @author David Pirraglia
  */
-public class AddStudent extends JDialog {
+public class AddEditStudent extends JDialog {
 
 //	private final String TITLE = "Add Student";
 	private final String previousID;
@@ -134,7 +134,7 @@ public class AddStudent extends JDialog {
 //	public static void main(String[] args) {
 //		new AddStudent(null, null, null);
 //	}
-	public AddStudent(Container frame, final StudentDatabase sd, final Student s) {
+	public AddEditStudent(Container frame, final StudentDatabase sd, final Student s) {
 
 		inputFrame = frame;
 //		addStudent = this;
@@ -399,31 +399,31 @@ public class AddStudent extends JDialog {
 								previousID);
 					}
 				} catch (TooManyEmptyFieldsException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"ID, Firstname, and Lastname are required.");
 					return;
 				} catch (InvalidIDException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"Invalid ID.");
 					return;
 				} catch (DuplicateIDException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"This ID already exists.");
 					return;
 				} catch (InvalidZipCodeException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"Invalid Zip Code.");
 					return;
 				} catch (InvalidPhoneNumberException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"Invalid Phone Number.");
 					return;
 				} catch (InvalidEmailException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"Invalid Email.");
 					return;
 				} catch (InvalidCourseException e) {
-					ErrorMessagePane.showErrorMessage(AddStudent.this,
+					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
 							"Invalid Course Input.");
 					return;
 				}
