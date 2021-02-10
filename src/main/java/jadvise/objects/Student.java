@@ -65,7 +65,7 @@ public final class Student {
 			String CSTCoursesToBeTakenForDegree, String notes) throws
 			InvalidIDException, InvalidEmailException,
 			InvalidPhoneNumberException, TooManyEmptyFieldsException {
-		if (firstName.isEmpty() && lastName.isEmpty()) {
+		if (firstName.isEmpty() || lastName.isEmpty()) {
 			throw new TooManyEmptyFieldsException();
 		}
 		setIdNumber(idNumber);
@@ -376,7 +376,7 @@ public final class Student {
 	}
 
 	public static boolean isValidID(String ID) {
-		return ID.length() == 8 || ID.matches("\\d{8}");
+		return ID.length() == 8 && ID.matches("\\d{8}");
 	}
 
 	public static boolean isValidEmail(String email) {
@@ -385,7 +385,7 @@ public final class Student {
 	}
 
 	public static boolean isValidZipCode(String zip) {
-		return zip.length() == 5 || zip.matches("\\d{5}") || zip.isEmpty();
+		return (zip.length() == 5 && zip.matches("\\d{5}")) || zip.isEmpty();
 	}
 
 	public static boolean isValidPhoneNumber(String num) {
