@@ -352,92 +352,89 @@ public class AddEditStudent extends JDialog {
 
 		// Done Button
 		doneButton = new JButton("Done");
-		doneButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				try {
-					if (s == null) { // Add new
-						sd.addStudent(new Student(IDField.getText(),
-								firstNameField.getText(),
-								middleInitialField.getText(),
-								lastNameField.getText(),
-								GPASpinner.getValue() + "",
-								homeCampusComboBox.getSelectedIndex() + "",
-								majorComboBox.getSelectedIndex() + "",
-								houseNumberField.getText(),
-								streetField.getText(),
-								cityField.getText(),
-								stateComboBox.getSelectedIndex() + "",
-								zipField.getText(),
-								homePhoneField.getText(),
-								cellPhoneField.getText(),
-								emailField.getText(),
-								CSTCoursesTakenForDegreeField.getText(),
-								CSTCoursesCurrentlyTakingField.getText(),
-								CSTCoursesToBeTakenForDegreeField.getText(),
-								notesArea.getText()));
-					} else { // Edit
-						sd.updateStudent(new Student(IDField.getText(),
-								firstNameField.getText(),
-								middleInitialField.getText(),
-								lastNameField.getText(),
-								GPASpinner.getValue() + "",
-								homeCampusComboBox.getSelectedIndex() + "",
-								majorComboBox.getSelectedIndex() + "",
-								houseNumberField.getText(),
-								streetField.getText(),
-								cityField.getText(),
-								stateComboBox.getSelectedIndex() + "",
-								zipField.getText(),
-								homePhoneField.getText(),
-								cellPhoneField.getText(),
-								emailField.getText(),
-								CSTCoursesTakenForDegreeField.getText(),
-								CSTCoursesCurrentlyTakingField.getText(),
-								CSTCoursesToBeTakenForDegreeField.getText(),
-								notesArea.getText()),
-								previousID);
-					}
-				} catch (TooManyEmptyFieldsException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"ID, Firstname, and Lastname are required.");
-					return;
-				} catch (InvalidIDException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"Invalid ID.");
-					return;
-				} catch (DuplicateIDException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"This ID already exists.");
-					return;
-				} catch (InvalidZipCodeException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"Invalid Zip Code.");
-					return;
-				} catch (InvalidPhoneNumberException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"Invalid Phone Number.");
-					return;
-				} catch (InvalidEmailException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"Invalid Email.");
-					return;
-				} catch (InvalidCourseException e) {
-					ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-							"Invalid Course Input.");
-					return;
+		doneButton.addActionListener(actionEvent -> {
+			try {
+				if (s == null) { // Add new
+					sd.addStudent(new Student(IDField.getText(),
+							firstNameField.getText(),
+							middleInitialField.getText(),
+							lastNameField.getText(),
+							GPASpinner.getValue() + "",
+							homeCampusComboBox.getSelectedIndex() + "",
+							majorComboBox.getSelectedIndex() + "",
+							houseNumberField.getText(),
+							streetField.getText(),
+							cityField.getText(),
+							stateComboBox.getSelectedIndex() + "",
+							zipField.getText(),
+							homePhoneField.getText(),
+							cellPhoneField.getText(),
+							emailField.getText(),
+							CSTCoursesTakenForDegreeField.getText(),
+							CSTCoursesCurrentlyTakingField.getText(),
+							CSTCoursesToBeTakenForDegreeField.getText(),
+							notesArea.getText()));
+				} else { // Edit
+					sd.updateStudent(new Student(IDField.getText(),
+							firstNameField.getText(),
+							middleInitialField.getText(),
+							lastNameField.getText(),
+							GPASpinner.getValue() + "",
+							homeCampusComboBox.getSelectedIndex() + "",
+							majorComboBox.getSelectedIndex() + "",
+							houseNumberField.getText(),
+							streetField.getText(),
+							cityField.getText(),
+							stateComboBox.getSelectedIndex() + "",
+							zipField.getText(),
+							homePhoneField.getText(),
+							cellPhoneField.getText(),
+							emailField.getText(),
+							CSTCoursesTakenForDegreeField.getText(),
+							CSTCoursesCurrentlyTakingField.getText(),
+							CSTCoursesToBeTakenForDegreeField.getText(),
+							notesArea.getText()),
+							previousID);
 				}
-				try {
-					sd.updateTable();
-					sd.saveData();
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				} catch (ClassNotFoundException ex) {
-					System.exit(1);
-				}
-				dispose();
+			} catch (TooManyEmptyFieldsException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"ID, Firstname, and Lastname are required.");
+				return;
+			} catch (InvalidIDException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"Invalid ID.");
+				return;
+			} catch (DuplicateIDException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"This ID already exists.");
+				return;
+			} catch (InvalidZipCodeException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"Invalid Zip Code.");
+				return;
+			} catch (InvalidPhoneNumberException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"Invalid Phone Number.");
+				return;
+			} catch (InvalidEmailException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"Invalid Email.");
+				return;
+			} catch (InvalidCourseException e) {
+				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+						"Invalid Course Input.");
+				return;
 			}
+			try {
+				sd.updateTable();
+				sd.saveData();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				System.exit(1);
+			} catch (ClassNotFoundException ex) {
+				System.exit(1);
+			}
+			dispose();
 		});
 
 		add(scrollPane, BorderLayout.CENTER);
