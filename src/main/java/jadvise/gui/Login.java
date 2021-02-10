@@ -1,9 +1,12 @@
 package jadvise.gui;
 
 import jadvise.objects.MySQLAccount;
+import jadvise.objects.PortFormat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * @author David Pirraglia
@@ -37,7 +40,17 @@ public class Login extends JFrame {
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
 
 		JLabel portLabel = new JLabel("Port:  ");
-		JTextField portField = new JTextField("3307", 20);
+		JTextField portField = new JFormattedTextField(new PortFormat());
+		portField.addPropertyChangeListener("value", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (portField.getText().isEmpty()) {
+					portField.setText("3306");
+				}
+			}
+		});
+		portField.setText("3306");
+		portField.setColumns(20);
 
 		JLabel tableLabel = new JLabel("Table:  ");
 		JTextField tableField = new JTextField("jadvise", 20);

@@ -14,7 +14,7 @@ public class MySQLAccount {
 		this.username = username;
 		this.password = password;
 		this.ip = "127.0.0.1";
-		this.port = 3307;
+		this.port = 3306;
 		this.table = "jadvise";
 	}
 
