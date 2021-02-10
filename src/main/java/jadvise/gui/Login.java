@@ -5,6 +5,8 @@ import jadvise.objects.PortFormat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -21,6 +23,15 @@ public class Login extends JFrame {
 		new Login();
 	}
 
+	private final MouseAdapter rightClickPaste = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON3) {
+				((JTextField) e.getSource()).paste();
+			}
+		}
+	};
+
 	public Login() {
 		login = getRootPane();
 		setTitle(TITLE);
@@ -33,18 +44,22 @@ public class Login extends JFrame {
 		JLabel userLabel = new JLabel("Username:  ");
 		JTextField userField = new JTextField(20);
 		userField.setMinimumSize(userField.getPreferredSize());
+		userField.addMouseListener(rightClickPaste);
 
 		JLabel passLabel = new JLabel("Password:  ");
 		JPasswordField passField = new JPasswordField(20);
 		passField.setMinimumSize(passField.getPreferredSize());
+		passField.addMouseListener(rightClickPaste);
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
 		ipDomainField.setMinimumSize(ipDomainField.getPreferredSize());
+		ipDomainField.addMouseListener(rightClickPaste);
 
 		JLabel portLabel = new JLabel("Port:  ");
 		JTextField portField = new JFormattedTextField(new PortFormat());
 		portField.setMinimumSize(portField.getPreferredSize());
+		portField.addMouseListener(rightClickPaste);
 		portField.addPropertyChangeListener("value", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -59,6 +74,7 @@ public class Login extends JFrame {
 		JLabel tableLabel = new JLabel("Table:  ");
 		JTextField tableField = new JTextField("jadvise", 20);
 		tableField.setMinimumSize(tableField.getPreferredSize());
+		tableField.addMouseListener(rightClickPaste);
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(e -> {
