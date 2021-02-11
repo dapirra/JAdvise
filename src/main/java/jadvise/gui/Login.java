@@ -21,7 +21,7 @@ public class Login extends JFrame {
 		new Login();
 	}
 
-	private final MouseAdapter rightClickPaste = new MouseAdapter() {
+	private static final MouseAdapter rightClickPaste = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.getButton() == MouseEvent.BUTTON3) {
