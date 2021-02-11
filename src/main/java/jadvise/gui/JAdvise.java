@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.sql.SQLException;
+import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -261,6 +263,23 @@ public class JAdvise extends JFrame {
 				}
 			}
 		});
+
+		// Pressing enter with a row selected will edit it
+		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+				"\n"
+		);
+		table.getActionMap().put("\n", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) {
+					new AddEditStudent(jAdvise, sd, sd.getStudent(
+							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
+					));
+				}
+			}
+		});
+
 		tableScrollPane = new JScrollPane(table);
 		tableScrollPane.getHorizontalScrollBar().setUnitIncrement(15);
 		add(tableScrollPane, BorderLayout.CENTER);
