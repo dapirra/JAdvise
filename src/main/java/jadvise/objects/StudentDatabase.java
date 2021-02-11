@@ -1,6 +1,8 @@
 package jadvise.objects;
 
 import jadvise.exceptions.id.DuplicateIDException;
+import jadvise.gui.JAdvise;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -131,34 +133,8 @@ public class StudentDatabase {
 
 	public void updateTable() {
 		if (table != null) {
-			String columnNames[] = {"<html><b>ID Number</b></html>",
-				"<html><b>First Name</b></html>",
-				"<html><b>MI</b></html>",
-				"<html><b>Last Name</b></html>",
-				"<html><b>GPA</b></html>",
-				"<html><b>Home Campus</b></html>",
-				"<html><b>Major</b></html>",
-				"<html><b>House Number</b></html>",
-				"<html><b>Street</b></html>",
-				"<html><b>City</b></html>",
-				"<html><b>State</b></html>",
-				"<html><b>Zip</b></html>",
-				"<html><b>Home Phone Number</b></html>",
-				"<html><b>Cell Phone Number</b></html>",
-				"<html><b>Email Address</b></html>"};
-			table.setModel(new DefaultTableModel(getTableData(), columnNames));
-			table.getColumnModel().getColumn(0).setPreferredWidth(100);
-			table.getColumnModel().getColumn(1).setPreferredWidth(100);
-			table.getColumnModel().getColumn(2).setPreferredWidth(30);
-			table.getColumnModel().getColumn(3).setPreferredWidth(200);
-			table.getColumnModel().getColumn(4).setPreferredWidth(40);
-			table.getColumnModel().getColumn(5).setPreferredWidth(125);
-			table.getColumnModel().getColumn(6).setPreferredWidth(60);
-			table.getColumnModel().getColumn(7).setPreferredWidth(120);
-			table.getColumnModel().getColumn(8).setPreferredWidth(200);
-			table.getColumnModel().getColumn(12).setPreferredWidth(175);
-			table.getColumnModel().getColumn(13).setPreferredWidth(175);
-			table.getColumnModel().getColumn(14).setPreferredWidth(400);
+			table.setModel(new DefaultTableModel(getTableData(), JAdvise.columnNames));
+			JAdvise.resetAllColumnWidths(table);
 		} else {
 			System.out.println("No table");
 		}

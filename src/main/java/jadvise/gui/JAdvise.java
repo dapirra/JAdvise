@@ -59,6 +59,30 @@ public class JAdvise extends JFrame {
 
 	protected static Container jAdvise;
 
+	public static final String[] columnNames = {
+			"<html><b>ID Number</b></html>",
+			"<html><b>First Name</b></html>",
+			"<html><b>MI</b></html>",
+			"<html><b>Last Name</b></html>",
+			"<html><b>GPA</b></html>",
+			"<html><b>Home Campus</b></html>",
+			"<html><b>Major</b></html>",
+			"<html><b>House Number</b></html>",
+			"<html><b>Street</b></html>",
+			"<html><b>City</b></html>",
+			"<html><b>State</b></html>",
+			"<html><b>Zip</b></html>",
+			"<html><b>Home Phone Number</b></html>",
+			"<html><b>Cell Phone Number</b></html>",
+			"<html><b>Email Address</b></html>"
+	};
+
+	public static final int[] columnWidths = {
+			100, 100, 30, 200, 40,
+			125, 60, 120, 200, 100,
+			40, 60, 175, 175, 400
+	};
+
 	public static void main(String[] args) {
 		jAdvise = new JAdvise(new MySQLAccount("root", "usbw"));
 	}
@@ -216,23 +240,8 @@ public class JAdvise extends JFrame {
 			System.exit(1);
 		}
 
-		//Table
-		String columnNames[] = {"<html><b>ID Number</b></html>",
-			"<html><b>First Name</b></html>",
-			"<html><b>MI</b></html>",
-			"<html><b>Last Name</b></html>",
-			"<html><b>GPA</b></html>",
-			"<html><b>Home Campus</b></html>",
-			"<html><b>Major</b></html>",
-			"<html><b>House Number</b></html>",
-			"<html><b>Street</b></html>",
-			"<html><b>City</b></html>",
-			"<html><b>State</b></html>",
-			"<html><b>Zip</b></html>",
-			"<html><b>Home Phone Number</b></html>",
-			"<html><b>Cell Phone Number</b></html>",
-			"<html><b>Email Address</b></html>"};
-		String rowData[][] = sd.getTableData();
+		// Table
+		String[][] rowData = sd.getTableData();
 		table = new JTable(rowData, columnNames) {
 			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -242,19 +251,10 @@ public class JAdvise extends JFrame {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table.getColumnModel().getColumn(2).setPreferredWidth(30);
-		table.getColumnModel().getColumn(3).setPreferredWidth(200);
-		table.getColumnModel().getColumn(4).setPreferredWidth(40);
-		table.getColumnModel().getColumn(5).setPreferredWidth(125);
-		table.getColumnModel().getColumn(6).setPreferredWidth(60);
-		table.getColumnModel().getColumn(7).setPreferredWidth(120);
-		table.getColumnModel().getColumn(8).setPreferredWidth(200);
-		table.getColumnModel().getColumn(12).setPreferredWidth(175);
-		table.getColumnModel().getColumn(13).setPreferredWidth(175);
-		table.getColumnModel().getColumn(14).setPreferredWidth(400);
-		table.addMouseListener(new MouseAdapter() {  // Double clicking on a row will edit it
+		resetAllColumnWidths(table);
+
+		// Double clicking on a row will edit it
+		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					new AddEditStudent(jAdvise, sd, sd.getStudent(
@@ -311,5 +311,11 @@ public class JAdvise extends JFrame {
 
 		// Bottom Buttons Area?
 		setVisible(true);
+	}
+
+	public static void resetAllColumnWidths(JTable table) {
+		for (int i = 0; i < columnWidths.length; i++) {
+			table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
+		}
 	}
 }
