@@ -20,6 +20,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerListModel;
 
 /**
@@ -154,6 +156,13 @@ public class AddEditStudent extends JDialog {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(inputFrame);
 		setResizable(true);
+
+		// Pressing Escape will close the window
+		rootPane.registerKeyboardAction(
+				actionEvent -> dispose(),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
 
 		// Personal Info
 		IDPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
