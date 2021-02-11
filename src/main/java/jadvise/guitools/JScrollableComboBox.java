@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
  * @author David Pirraglia
  */
 
-public class JScrollableComboBox extends JComboBox {
+public class JScrollableComboBox<E> extends JComboBox<E> {
 
 	private boolean loopable;
 
@@ -17,8 +17,8 @@ public class JScrollableComboBox extends JComboBox {
 		addListener();
 	}
 
-	public JScrollableComboBox(Object[] o) {
-		super(o);
+	public JScrollableComboBox(E[] e) {
+		super(e);
 		loopable = false;
 		addListener();
 	}
