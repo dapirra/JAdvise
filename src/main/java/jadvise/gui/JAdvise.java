@@ -7,6 +7,7 @@ import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -98,6 +99,7 @@ public class JAdvise extends JFrame {
 	private final JPanel searchPanel = new JPanel(new BorderLayout());
 	private final JTextField searchField;
 	private final JLabel searchLabel;
+	private final JButton clearSearch;
 
 	protected static Container jAdvise;
 
@@ -349,8 +351,18 @@ public class JAdvise extends JFrame {
 				sd.updateTable();
 			}
 		});
+		clearSearch = new JButton("X");
+		clearSearch.addActionListener(actionEvent -> {
+			if (!searchField.getText().isEmpty()) {
+				searchField.setText("");
+				sd.search("");
+				sd.updateTable();
+			}
+		});
+
 		searchPanel.add(searchLabel, BorderLayout.WEST);
 		searchPanel.add(searchField, BorderLayout.CENTER);
+		searchPanel.add(clearSearch, BorderLayout.EAST);
 		add(searchPanel, BorderLayout.NORTH);
 
 		setVisible(true);
