@@ -338,4 +338,28 @@ public final class Info {
 			"Wyandanch",
 			"Yaphank"
 	};
+
+	// https://www.nlc.org/resource/most-common-u-s-street-names/
+	public static final String[] STREET_NAMES = new String[]{
+			"Second",
+			"Third",
+			"First",
+			"Fourth",
+			"Park",
+			"Fifth",
+			"Main",
+			"Sixth",
+			"Oak",
+			"Seventh",
+			"Pine",
+			"Maple",
+			"Cedar",
+			"Eighth",
+			"Elm",
+			"View",
+			"Washington",
+			"Ninth",
+			"Lake",
+			"Hill"
+	};
 }

@@ -127,6 +127,8 @@ public final class Student {
 		this.gpa = GPA_VALUES[random.nextInt(GPA_VALUES.length)];
 		this.homeCampus = random.nextInt(3);
 		this.major = random.nextInt(5);
+		this.houseNumber = random.nextInt(999) + "";
+		this.street = STREET_NAMES[random.nextInt(STREET_NAMES.length)] + " Street";
 		this.city = TOWNS[random.nextInt(TOWNS.length)];
 		this.state = random.nextInt(STATES.length);
 		this.zip = String.format("%05d", random.nextInt(99999));
