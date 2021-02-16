@@ -189,6 +189,9 @@ public class JAdvise extends JFrame {
 		menuBar = new JMenuBar();
 
 		// File Menu
+		fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+
 		printItem = new JMenuItem("Print");
 		printItem.setMnemonic(KeyEvent.VK_P);
 		printItem.addActionListener(actionEvent -> {
@@ -198,6 +201,7 @@ public class JAdvise extends JFrame {
 				ErrorMessagePane.showErrorMessage(jAdvise, "Can't print table.");
 			}
 		});
+		fileMenu.add(printItem);
 
 		clearItem = new JMenuItem("Clear");
 		clearItem.setMnemonic(KeyEvent.VK_C);
@@ -219,6 +223,7 @@ public class JAdvise extends JFrame {
 				}
 			}
 		});
+		fileMenu.add(clearItem);
 
 		exportToCSVItem = new JMenuItem("Export to CSV");
 		exportToCSVItem.setMnemonic(KeyEvent.VK_E);
@@ -246,22 +251,21 @@ public class JAdvise extends JFrame {
 				sd.exportToCSV(csvFile);
 			}
 		});
+		fileMenu.add(exportToCSVItem);
 
 		exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.addActionListener(actionEvent -> System.exit(0));
-
-		fileMenu = new JMenu("File");
-		fileMenu.setMnemonic(KeyEvent.VK_F);
-		fileMenu.add(printItem);
-		fileMenu.add(clearItem);
-		fileMenu.add(exportToCSVItem);
 		fileMenu.add(exitItem);
 
 		// Edit Menu
+		editMenu = new JMenu("Edit");
+		editMenu.setMnemonic(KeyEvent.VK_E);
+
 		addStudentItem = new JMenuItem("Add Student");
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
 		addStudentItem.addActionListener(ae -> new AddEditStudent(jAdvise, sd, null));
+		editMenu.add(addStudentItem);
 
 		addRandomStudentsItem = new JMenuItem("Add Random Students");
 		addRandomStudentsItem.setMnemonic(KeyEvent.VK_N);
@@ -288,6 +292,7 @@ public class JAdvise extends JFrame {
 				}
 			}
 		});
+		editMenu.add(addRandomStudentsItem);
 
 		editStudentItem = new JMenuItem("Edit Selected Student");
 		editStudentItem.setMnemonic(KeyEvent.VK_E);
@@ -300,6 +305,7 @@ public class JAdvise extends JFrame {
 				));
 			}
 		});
+		editMenu.add(editStudentItem);
 
 		removeStudentItem = new JMenuItem("Remove Selected Student");
 		removeStudentItem.setMnemonic(KeyEvent.VK_R);
@@ -315,15 +321,12 @@ public class JAdvise extends JFrame {
 				System.exit(1);
 			}
 		});
-
-		editMenu = new JMenu("Edit");
-		editMenu.setMnemonic(KeyEvent.VK_E);
-		editMenu.add(addStudentItem);
-		editMenu.add(addRandomStudentsItem);
-		editMenu.add(editStudentItem);
 		editMenu.add(removeStudentItem);
 
 		// Help Menu
+		helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic(KeyEvent.VK_H);
+
 		aboutItem = new JMenuItem("About");
 		aboutItem.setMnemonic(KeyEvent.VK_A);
 		aboutItem.addActionListener(actionEvent -> {
@@ -334,9 +337,6 @@ public class JAdvise extends JFrame {
 					JOptionPane.INFORMATION_MESSAGE
 			);
 		});
-
-		helpMenu = new JMenu("Help");
-		helpMenu.setMnemonic(KeyEvent.VK_H);
 		helpMenu.add(aboutItem);
 
 		menuBar.add(fileMenu);
