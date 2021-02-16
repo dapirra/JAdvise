@@ -407,7 +407,7 @@ public class AddEditStudent extends JDialog {
 				return;
 			} catch (InvalidIDException e) {
 				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
-						"Invalid ID.");
+						"Invalid ID. Must be 8 digits.");
 				return;
 			} catch (DuplicateIDException e) {
 				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
