@@ -6,9 +6,12 @@ import jadvise.exceptions.InvalidPhoneNumberException;
 import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.InvalidIDException;
-import jadvise.tools.States;
 import jadvise.tools.TelephoneFormatter;
 import jadvise.tools.TitleCaseFormatter;
+
+import java.util.Random;
+
+import static jadvise.tools.Info.*;
 
 /**
  * @author David Pirraglia
@@ -47,6 +50,7 @@ public final class Student {
 	private String CSTCoursesCurrentlyTaking;
 	private String CSTCoursesToBeTakenForDegree;
 	private String notes;
+	private static final Random random = new Random();
 
 	public Student(String idNumber, String firstName, String lastName) throws InvalidIDException, TooManyEmptyFieldsException {
 		if (firstName.isEmpty() && lastName.isEmpty()) {
@@ -113,6 +117,36 @@ public final class Student {
 		setCSTCoursesCurrentlyTaking(input[16]);
 		setCSTCoursesToBeTakenForDegree(input[17]);
 		this.notes = input[18];
+	}
+
+	public Student() {
+		this.idNumber = String.format("%08d", random.nextInt(99999999));
+		this.firstName = FIRST_NAMES[random.nextInt(FIRST_NAMES.length)];
+		this.middleInitial = (char) (random.nextInt(26) + 65) + "";
+		this.lastName = LAST_NAMES[random.nextInt(LAST_NAMES.length)];
+		this.gpa = GPA_VALUES[random.nextInt(GPA_VALUES.length)];
+		this.homeCampus = random.nextInt(3);
+		this.major = random.nextInt(5);
+		this.city = TOWNS[random.nextInt(TOWNS.length)];
+		this.state = random.nextInt(STATES.length);
+		this.zip = String.format("%05d", random.nextInt(99999));
+		this.emailAddress = String.format(
+				"%s.%s@mail.sunysuffolk.edu",
+				this.firstName.toLowerCase(),
+				this.lastName.toLowerCase()
+		);
+		this.homePhone = String.format(
+				"(%03d) %03d - %04d",
+				random.nextInt(999),
+				random.nextInt(999),
+				random.nextInt(9999)
+		);
+		this.cellPhone = String.format(
+				"(%03d) %03d - %04d",
+				random.nextInt(999),
+				random.nextInt(999),
+				random.nextInt(9999)
+		);
 	}
 
 	public String getIdNumber() {
@@ -336,7 +370,7 @@ public final class Student {
 		} else {
 			outputArray[5] = getHomeCampus(homeCampus);
 			outputArray[6] = getMajor(major);
-			outputArray[10] = States.getAbbreviatedStates()[state];
+			outputArray[10] = STATES[state];
 		}
 		outputArray[7] = houseNumber;
 		outputArray[8] = street;
@@ -364,7 +398,7 @@ public final class Student {
 				|| houseNumber.toLowerCase().contains(search)
 				|| street.toLowerCase().contains(search)
 				|| city.toLowerCase().contains(search)
-				|| States.getAbbreviatedStates()[state].toLowerCase().contains(search)
+				|| STATES[state].toLowerCase().contains(search)
 				|| zip.contains(search)
 				|| homePhone.contains(search)
 				|| cellPhone.contains(search)

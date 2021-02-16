@@ -12,7 +12,8 @@ import jadvise.guitools.JScrollableComboBox;
 import jadvise.guitools.JScrollableSpinner;
 import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
-import jadvise.tools.States;
+import jadvise.tools.Info;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -192,12 +193,7 @@ public class AddEditStudent extends JDialog {
 		// College Info
 		GPAAndMajorPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		GPALabel = new JLabel("GPA: ");
-		GPASpinner = new JScrollableSpinner(new SpinnerListModel(new String[]{
-				"0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9",
-				"1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9",
-				"2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9",
-				"3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "4.0"
-		}));
+		GPASpinner = new JScrollableSpinner(new SpinnerListModel(Info.GPA_VALUES));
 		GPASpinner.setPreferredSize(new Dimension(50, 23));
 		majorLabel = new JLabel("Major: ");
 		majorComboBox = new JScrollableComboBox(new String[]{
@@ -239,7 +235,7 @@ public class AddEditStudent extends JDialog {
 
 		stateAndZipPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		stateLabel = new JLabel("State: ");
-		stateComboBox = new JScrollableComboBox(States.getAbbreviatedStates());
+		stateComboBox = new JScrollableComboBox(Info.STATES);
 		zipLabel = new JLabel("Zip: ");
 		zipField = new JTextField(7);
 		stateAndZipPanel.add(stateLabel);

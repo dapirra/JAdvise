@@ -1,7 +1,9 @@
 package jadvise.gui;
 
 import jadvise.guitools.ErrorMessagePane;
+import jadvise.guitools.JScrollableSpinner;
 import jadvise.objects.MySQLAccount;
+import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -14,6 +16,7 @@ import java.awt.print.PrinterException;
 import java.io.File;
 import java.sql.SQLException;
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -47,6 +51,7 @@ public class JAdvise extends JFrame {
 	private final JMenuItem exportToCSVItem;
 	private final JMenuItem exitItem;
 	private final JMenuItem addStudentItem;
+	private final JMenuItem addRandomStudentsItem;
 	private final JMenuItem editStudentItem;
 	private final JMenuItem removeStudentItem;
 	private final JMenuItem aboutItem;
@@ -243,6 +248,32 @@ public class JAdvise extends JFrame {
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
 		addStudentItem.addActionListener(ae -> new AddEditStudent(jAdvise, sd, null));
 
+		addRandomStudentsItem = new JMenuItem("Add Random Students");
+		addRandomStudentsItem.setMnemonic(KeyEvent.VK_N);
+		addRandomStudentsItem.addActionListener(actionEvent -> {
+			JScrollableSpinner spinner = new JScrollableSpinner(
+					new SpinnerNumberModel(1, 1, 100, 1)
+			);
+			int option = JOptionPane.showConfirmDialog(
+					jAdvise,
+					new JComponent[] {spinner},
+					"How many students?",
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE
+			);
+			if (option == JOptionPane.OK_OPTION) {
+				for (int i = 0; i < (int) spinner.getValue(); i++) {
+					sd.addStudent(new Student());
+				}
+				sd.updateTable();
+				try {
+					sd.saveData();
+				} catch (SQLException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		editStudentItem = new JMenuItem("Edit Selected Student");
 		editStudentItem.setMnemonic(KeyEvent.VK_E);
 		editStudentItem.addActionListener(actionEvent -> {
@@ -273,6 +304,7 @@ public class JAdvise extends JFrame {
 		editMenu = new JMenu("Edit");
 		editMenu.setMnemonic(KeyEvent.VK_E);
 		editMenu.add(addStudentItem);
+		editMenu.add(addRandomStudentsItem);
 		editMenu.add(editStudentItem);
 		editMenu.add(removeStudentItem);
 
