@@ -11,8 +11,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
+import java.io.File;
 import java.sql.SQLException;
 import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * @author David Pirraglia
@@ -41,17 +44,21 @@ public class JAdvise extends JFrame {
 	private final JMenu helpMenu;
 	private final JMenuItem printItem;
 	private final JMenuItem clearItem;
+	private final JMenuItem exportToCSVItem;
 	private final JMenuItem exitItem;
 	private final JMenuItem addStudentItem;
 	private final JMenuItem editStudentItem;
 	private final JMenuItem removeStudentItem;
 	private final JMenuItem aboutItem;
 
+	// File Chooser
+	private JFileChooser exportToCSV;
+
 	// Table
 	private final JTable table;
 	private final JScrollPane tableScrollPane;
 
-	public static final String[] columnNames = {
+	public static final String[] COLUMN_NAMES = {
 			"<html><b>ID Number</b></html>",
 			"<html><b>First Name</b></html>",
 			"<html><b>MI</b></html>",
@@ -114,7 +121,7 @@ public class JAdvise extends JFrame {
 
 		// Table
 		String[][] rowData = sd.getTableData();
-		table = new JTable(rowData, columnNames) {
+		table = new JTable(rowData, COLUMN_NAMES) {
 			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; // Disallow the editing of any cell
@@ -193,6 +200,33 @@ public class JAdvise extends JFrame {
 			}
 		});
 
+		exportToCSVItem = new JMenuItem("Export to CSV");
+		exportToCSVItem.setMnemonic(KeyEvent.VK_E);
+		exportToCSVItem.addActionListener(actionEvent -> {
+			exportToCSV = new JFileChooser();
+			exportToCSV.setDialogTitle(TITLE);
+			exportToCSV.setAcceptAllFileFilterUsed(false);
+			exportToCSV.setFileFilter(new FileFilter() {
+				@Override
+				public boolean accept(File f) {
+					return f.getName().endsWith(".csv") || f.isDirectory();
+				}
+
+				@Override
+				public String getDescription() {
+					return "*.csv";
+				}
+			});
+			int userSelection = exportToCSV.showSaveDialog(jAdvise);
+			if (userSelection == JFileChooser.APPROVE_OPTION) {
+				String csvFile = exportToCSV.getSelectedFile().getAbsolutePath();
+				if (!csvFile.endsWith(".csv")) {
+					csvFile += ".csv";
+				}
+				sd.exportToCSV(csvFile);
+			}
+		});
+
 		exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.addActionListener(actionEvent -> System.exit(0));
@@ -201,6 +235,7 @@ public class JAdvise extends JFrame {
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		fileMenu.add(printItem);
 		fileMenu.add(clearItem);
+		fileMenu.add(exportToCSVItem);
 		fileMenu.add(exitItem);
 
 		// Edit Menu

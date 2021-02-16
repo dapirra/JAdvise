@@ -1,8 +1,11 @@
 package jadvise.objects;
 
+import com.opencsv.CSVWriter;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.gui.JAdvise;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,8 +18,29 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author David Pirraglia
  */
-// TODO Maybe make a method to export as CSV
 public class StudentDatabase {
+
+	public static final String[] CSV_HEADERS = {
+			"ID Number",
+			"First Name",
+			"MI",
+			"Last Name",
+			"GPA",
+			"Home Campus",
+			"Major",
+			"House Number",
+			"Street",
+			"City",
+			"State",
+			"Zip",
+			"Home Phone Number",
+			"Cell Phone Number",
+			"Email Address",
+			"CST Courses Taken",
+			"CST Courses Currently Taking",
+			"CST Courses To Be Taken",
+			"Notes"
+	};
 
 	private ArrayList<Student> students;
 	private ArrayList<Student> searchBackup;
@@ -133,17 +157,25 @@ public class StudentDatabase {
 
 	public void updateTable() {
 		if (table != null) {
-			table.setModel(new DefaultTableModel(getTableData(), JAdvise.columnNames));
+			table.setModel(new DefaultTableModel(getTableData(), JAdvise.COLUMN_NAMES));
 			JAdvise.resetAllColumnWidths(table);
 		} else {
 			System.out.println("No table");
 		}
 	}
 
-//	public String exportToCSV() {
-//		String cols = "";
-//		return null;
-//	}
+	public void exportToCSV(String fileName) {
+		try {
+			CSVWriter csvWriter = new CSVWriter(new FileWriter(fileName));
+			csvWriter.writeNext(CSV_HEADERS);
+			for (Student student : students) {
+				csvWriter.writeNext(student.toArray(false));
+			}
+			csvWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void loadData() throws SQLException, ClassNotFoundException {
 
