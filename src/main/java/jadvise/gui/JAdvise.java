@@ -78,21 +78,33 @@ public class JAdvise extends JFrame {
 			"<html><b>City</b></html>",
 			"<html><b>State</b></html>",
 			"<html><b>Zip</b></html>",
-			"<html><b>Home Phone Number</b></html>",
-			"<html><b>Cell Phone Number</b></html>",
+			"<html><b>Home Phone</b></html>",
+			"<html><b>Cell Phone</b></html>",
 			"<html><b>Email Address</b></html>"
 	};
 
 	public static void resetAllColumnWidths(JTable table) {
-		for (int i = 0; i < columnWidths.length; i++) {
-			table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
+		for (int i = 0; i < COLUMN_WIDTHS.length; i++) {
+			table.getColumnModel().getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
 		}
 	}
 
-	public static final int[] columnWidths = {
-			100, 100, 30, 200, 40,
-			125, 60, 120, 200, 100,
-			40, 60, 175, 175, 400
+	public static final int[] COLUMN_WIDTHS = {
+			80, // ID Number
+			100, // First Name
+			30, // MI
+			200, // Last Name
+			40, // GPA
+			125, // Home Campus
+			60, // Major
+			120, // House Number
+			200, // Street
+			100, // City
+			40, // State
+			50, // Zip
+			125, // Home Phone Number
+			125, // Cell Phone Number
+			400 // Email Address
 	};
 
 	// Search Area
