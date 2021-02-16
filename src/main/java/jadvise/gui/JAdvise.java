@@ -49,13 +49,13 @@ public class JAdvise extends JFrame {
 	private final JMenu editMenu;
 	private final JMenu helpMenu;
 	private final JMenuItem printItem;
-	private final JMenuItem clearItem;
 	private final JMenuItem exportToCSVItem;
 	private final JMenuItem exitItem;
 	private final JMenuItem addStudentItem;
 	private final JMenuItem addRandomStudentsItem;
 	private final JMenuItem editStudentItem;
 	private final JMenuItem removeStudentItem;
+	private final JMenuItem removeAllStudentsItem;
 	private final JMenuItem aboutItem;
 
 	// File Chooser
@@ -203,28 +203,6 @@ public class JAdvise extends JFrame {
 		});
 		fileMenu.add(printItem);
 
-		clearItem = new JMenuItem("Clear");
-		clearItem.setMnemonic(KeyEvent.VK_C);
-		clearItem.addActionListener(actionEvent -> {
-			if (JOptionPane.showConfirmDialog(
-					getRootPane(),
-					"Are you sure you want to clear the table?",
-					TITLE,
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE) == JOptionPane.OK_OPTION) {
-				try {
-					sd.clearData();
-					sd.updateTable();
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				} catch (ClassNotFoundException ex) {
-					System.exit(1);
-				}
-			}
-		});
-		fileMenu.add(clearItem);
-
 		exportToCSVItem = new JMenuItem("Export to CSV");
 		exportToCSVItem.setMnemonic(KeyEvent.VK_E);
 		exportToCSVItem.addActionListener(actionEvent -> {
@@ -322,6 +300,28 @@ public class JAdvise extends JFrame {
 			}
 		});
 		editMenu.add(removeStudentItem);
+
+		removeAllStudentsItem = new JMenuItem("Remove All Students");
+		removeAllStudentsItem.addActionListener(actionEvent -> {
+			if (JOptionPane.showConfirmDialog(
+					getRootPane(),
+					"Are you sure you want to remove all students?",
+					TITLE,
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE
+			) == JOptionPane.OK_OPTION) {
+				try {
+					sd.clearData();
+					sd.updateTable();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+					System.exit(1);
+				} catch (ClassNotFoundException ex) {
+					System.exit(1);
+				}
+			}
+		});
+		editMenu.add(removeAllStudentsItem);
 
 		// Help Menu
 		helpMenu = new JMenu("Help");
