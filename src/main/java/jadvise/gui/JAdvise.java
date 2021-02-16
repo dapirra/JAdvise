@@ -5,16 +5,7 @@ import jadvise.guitools.JScrollableSpinner;
 import jadvise.objects.MySQLAccount;
 import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.print.PrinterException;
-import java.io.File;
-import java.sql.SQLException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -32,6 +23,16 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileFilter;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.io.File;
+import java.sql.SQLException;
 
 /**
  * @author David Pirraglia

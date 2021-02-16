@@ -4,6 +4,8 @@ import com.opencsv.CSVWriter;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.gui.JAdvise;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * @author David Pirraglia

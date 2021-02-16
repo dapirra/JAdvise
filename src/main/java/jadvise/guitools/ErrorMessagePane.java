@@ -1,7 +1,7 @@
 package jadvise.guitools;
 
-import java.awt.Component;
 import javax.swing.JOptionPane;
+import java.awt.Component;
 
 /**
  * @author David Pirraglia

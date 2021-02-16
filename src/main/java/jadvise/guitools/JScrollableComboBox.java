@@ -1,8 +1,8 @@
 package jadvise.guitools;
 
+import javax.swing.JComboBox;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import javax.swing.JComboBox;
 
 /**
  * @author David Pirraglia
