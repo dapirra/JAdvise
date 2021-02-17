@@ -10,17 +10,37 @@ public class JScrollableSpinner extends JSpinner {
 
 	private boolean ignoresFocus;
 
+	/**
+	 * Creates a <code>JScrollableSpinner</code> for the given model.
+	 * The spinner has a set of previous/next buttons, and an editor appropriate
+	 * for the model. Adds ability to use the mouse wheel to go to previous/next values.
+	 */
 	public JScrollableSpinner() {
 		ignoresFocus = false;
 		addListener();
 	}
 
+	/**
+	 * Creates a <code>JScrollableSpinner</code> for the given model.
+	 * The spinner has a set of previous/next buttons, and an editor appropriate
+	 * for the model. Adds ability to use the mouse wheel to go to previous/next values.
+	 *
+	 * @param model Determines spinner contents
+	 */
 	public JScrollableSpinner(SpinnerModel model) {
 		super(model);
 		ignoresFocus = false;
 		addListener();
 	}
 
+	/**
+	 * Creates a <code>JScrollableSpinner</code> for the given model.
+	 * The spinner has a set of previous/next buttons, and an editor appropriate
+	 * for the model. Adds ability to use the mouse wheel to go to previous/next values.
+	 *
+	 * @param model Determines spinner contents
+	 * @param ignoresFocus Whether or not focus is required to scroll with the mousewheel
+	 */
 	public JScrollableSpinner(SpinnerModel model, boolean ignoresFocus) {
 		super(model);
 		this.ignoresFocus = ignoresFocus;
