@@ -110,22 +110,6 @@ public class StudentDatabase {
 	}
 
 	public void search(String search) {
-		// Attempt 1
-//		if (search.isEmpty()) {
-//			students = searchBackup;
-//			searchBackupMade = false;
-//		} else {
-//			if (!searchBackupMade && search.length() >= 1) {
-//				searchBackup = (ArrayList<Student>) students.clone();
-//				searchBackupMade = true;
-//			}
-//			for (int i = 0; i < students.size(); i++) {
-//				if (!students.get(i).contains(search)) {
-//					students.remove(students.get(i));
-//				}
-//			}
-//		}
-		// Attempt 2
 		int currentLength = search.length();
 		if (searchPreviousLength == 0 && currentLength >= 1) { // Backup
 			System.out.println("Backup");
