@@ -13,31 +13,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * @author David Pirraglia
  */
 public class Login extends JFrame {
 
-	private final String TITLE = "JAdvise - Connect to MySQL Database";
-
 	public static void main(String[] args) {
 		new Login();
 	}
 
-	private static final MouseAdapter rightClickPaste = new MouseAdapter() {
-		@Override
-		public void mousePressed(MouseEvent e) {
-			if (e.getButton() == MouseEvent.BUTTON3) {
-				((JTextField) e.getSource()).paste();
-			}
-		}
-	};
-
 	public Login() {
-		setTitle(TITLE);
+		setTitle("JAdvise - Connect to a MySQL Database");
 		setSize(400, 200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
@@ -63,12 +50,9 @@ public class Login extends JFrame {
 		JTextField portField = new JFormattedTextField(new PortFormat());
 		portField.setMinimumSize(portField.getPreferredSize());
 		portField.addMouseListener(rightClickPaste);
-		portField.addPropertyChangeListener("value", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (portField.getText().isEmpty()) {
-					portField.setText("3306");
-				}
+		portField.addPropertyChangeListener("value", evt -> {
+			if (portField.getText().isEmpty()) {
+				portField.setText("3306");
 			}
 		});
 		portField.setText("3306");
@@ -81,7 +65,7 @@ public class Login extends JFrame {
 
 		JButton loginButton = new JButton("Login");
 		rootPane.setDefaultButton(loginButton);
-		loginButton.addActionListener(e -> {
+		loginButton.addActionListener(actionEvent -> {
 			new JAdvise(new MySQLAccount(
 					userField.getText(),
 					new String(passField.getPassword()),
@@ -143,4 +127,13 @@ public class Login extends JFrame {
 
 		setVisible(true);
 	}
+
+	private static final MouseAdapter rightClickPaste = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON3) {
+				((JTextField) e.getSource()).paste();
+			}
+		}
+	};
 }
