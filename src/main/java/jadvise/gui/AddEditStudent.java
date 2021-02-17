@@ -32,8 +32,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,13 +42,11 @@ import java.sql.SQLException;
  */
 public class AddEditStudent extends JDialog {
 
-//	private final String TITLE = "Add Student";
 	private final String previousID;
 
 	private final JPanel mainPanel;
 	private final JScrollPane scrollPane;
 	protected static Container inputFrame;
-//	protected static JDialog addStudent;
 
 	private final JPanel personalInfoPanel;
 
@@ -134,13 +130,9 @@ public class AddEditStudent extends JDialog {
 
 	private final JButton doneButton;
 
-//	public static void main(String[] args) {
-//		new AddStudent(null, null, null);
-//	}
 	public AddEditStudent(Container frame, final StudentDatabase sd, final Student s) {
 
 		inputFrame = frame;
-//		addStudent = this;
 		if (s == null) {
 			setTitle("Add Student");
 		} else {
@@ -188,7 +180,12 @@ public class AddEditStudent extends JDialog {
 		name2Panel.add(lastNameLabel);
 		name2Panel.add(lastNameField);
 
-		personalInfoPanel = createBox(addSeparator(), IDPanel, name1Panel, name2Panel);
+		personalInfoPanel = createBox(
+				addSeparator(),
+				IDPanel,
+				name1Panel,
+				name2Panel
+		);
 
 		// College Info
 		GPAAndMajorPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -212,7 +209,11 @@ public class AddEditStudent extends JDialog {
 		homeCampusPanel.add(homeCampusLabel);
 		homeCampusPanel.add(homeCampusComboBox);
 
-		collegeInfoPanel = createBox(addSeparator(), GPAAndMajorPanel, homeCampusPanel);
+		collegeInfoPanel = createBox(
+				addSeparator(),
+				GPAAndMajorPanel,
+				homeCampusPanel
+		);
 
 		// Home Address
 		houseNumberPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -244,7 +245,13 @@ public class AddEditStudent extends JDialog {
 		stateAndZipPanel.add(zipLabel);
 		stateAndZipPanel.add(zipField);
 
-		homeAddressPanel = createBox(addSeparator(), houseNumberPanel, streetPanel, cityPanel, stateAndZipPanel);
+		homeAddressPanel = createBox(
+				addSeparator(),
+				houseNumberPanel,
+				streetPanel,
+				cityPanel,
+				stateAndZipPanel
+		);
 
 		// Contact Info
 		homePhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -270,7 +277,12 @@ public class AddEditStudent extends JDialog {
 		emailPanel.add(emailLabel);
 		emailPanel.add(emailField);
 
-		contactInfoPanel = createBox(addSeparator(), homePhonePanel, cellPhonePanel, emailPanel);
+		contactInfoPanel = createBox(
+				addSeparator(),
+				homePhonePanel,
+				cellPhonePanel,
+				emailPanel
+		);
 
 		// Course Info
 		CSTCoursesTakenForDegreeLabel = new JLabel("<html>CST Courses<br>taken for degree: </html>");
@@ -291,10 +303,12 @@ public class AddEditStudent extends JDialog {
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeLabel);
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeField);
 
-		courseInfoPanel = createBox(addSeparator(),
+		courseInfoPanel = createBox(
+				addSeparator(),
 				CSTCoursesTakenForDegreePanel,
 				CSTCoursesCurrentlyTakingPanel,
-				CSTCoursesToBeTakenForDegreePanel);
+				CSTCoursesToBeTakenForDegreePanel
+		);
 //		courseInfoPanel = makeCSTPanel("CST courses that are taken", new String[]{"asd", "dsads", "asdsada", "asdsad", "adsadas"});
 
 		// Notes
@@ -361,7 +375,8 @@ public class AddEditStudent extends JDialog {
 		doneButton.addActionListener(actionEvent -> {
 			try {
 				if (s == null) { // Add new
-					sd.addStudent(new Student(IDField.getText(),
+					sd.addStudent(new Student(
+							IDField.getText(),
 							firstNameField.getText(),
 							middleInitialField.getText(),
 							lastNameField.getText(),
@@ -381,7 +396,8 @@ public class AddEditStudent extends JDialog {
 							CSTCoursesToBeTakenForDegreeField.getText(),
 							notesArea.getText()));
 				} else { // Edit
-					sd.updateStudent(new Student(IDField.getText(),
+					sd.updateStudent(new Student(
+							IDField.getText(),
 							firstNameField.getText(),
 							middleInitialField.getText(),
 							lastNameField.getText(),
@@ -475,16 +491,13 @@ public class AddEditStudent extends JDialog {
 		outputPanel.add(addSeparator(), BorderLayout.NORTH);
 		outputPanel.add(innerPanel, BorderLayout.CENTER);
 		if (hidePanel != null) {
-			hideButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (hidePanel.isVisible()) {
-						hidePanel.setVisible(false);
-						hideButton.setText("+");
-					} else {
-						hidePanel.setVisible(true);
-						hideButton.setText("-");
-					}
+			hideButton.addActionListener(actionEvent -> {
+				if (hidePanel.isVisible()) {
+					hidePanel.setVisible(false);
+					hideButton.setText("+");
+				} else {
+					hidePanel.setVisible(true);
+					hideButton.setText("-");
 				}
 			});
 			outputPanel.addMouseListener(new MouseAdapter() {
