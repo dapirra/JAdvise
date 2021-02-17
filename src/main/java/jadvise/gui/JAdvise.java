@@ -249,16 +249,16 @@ public class JAdvise extends JFrame {
 		addRandomStudentsItem.setMnemonic(KeyEvent.VK_N);
 		addRandomStudentsItem.addActionListener(actionEvent -> {
 			JScrollableSpinner spinner = new JScrollableSpinner(
-					new SpinnerNumberModel(1, 1, 100, 1)
+					new SpinnerNumberModel(1, 1, 100, 1),
+					true
 			);
-			int option = JOptionPane.showConfirmDialog(
+			if (JOptionPane.showConfirmDialog(
 					jAdvise,
 					new JComponent[] {spinner},
 					"How many students?",
 					JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE
-			);
-			if (option == JOptionPane.OK_OPTION) {
+			) == JOptionPane.OK_OPTION) {
 				for (int i = 0; i < (int) spinner.getValue(); i++) {
 					sd.addStudent(new Student());
 				}
