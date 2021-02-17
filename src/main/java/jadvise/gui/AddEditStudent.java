@@ -75,11 +75,11 @@ public class AddEditStudent extends JDialog {
 //	private final JTextField GPAField;
 	private final JScrollableSpinner GPASpinner;
 	private final JLabel majorLabel;
-	private final JScrollableComboBox majorComboBox;
+	private final JScrollableComboBox<String> majorComboBox;
 
 	private final JPanel homeCampusPanel;
 	private final JLabel homeCampusLabel;
-	private final JScrollableComboBox homeCampusComboBox;
+	private final JScrollableComboBox<String> homeCampusComboBox;
 
 	private final JPanel homeAddressPanel;
 
@@ -97,7 +97,7 @@ public class AddEditStudent extends JDialog {
 
 	private final JPanel stateAndZipPanel;
 	private final JLabel stateLabel;
-	private final JScrollableComboBox stateComboBox;
+	private final JScrollableComboBox<String> stateComboBox;
 	private final JLabel zipLabel;
 	private final JTextField zipField;
 
@@ -196,7 +196,7 @@ public class AddEditStudent extends JDialog {
 		GPASpinner = new JScrollableSpinner(new SpinnerListModel(Info.GPA_VALUES));
 		GPASpinner.setPreferredSize(new Dimension(50, 23));
 		majorLabel = new JLabel("Major: ");
-		majorComboBox = new JScrollableComboBox(new String[]{
+		majorComboBox = new JScrollableComboBox<>(new String[]{
 			Student.getMajor(0), Student.getMajor(1), Student.getMajor(2),
 			Student.getMajor(3), Student.getMajor(4)});
 		GPAAndMajorPanel.add(GPALabel);
@@ -206,7 +206,7 @@ public class AddEditStudent extends JDialog {
 
 		homeCampusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		homeCampusLabel = new JLabel("Home Campus: ");
-		homeCampusComboBox = new JScrollableComboBox(new String[]{
+		homeCampusComboBox = new JScrollableComboBox<>(new String[]{
 			Student.getHomeCampus(0), Student.getHomeCampus(1),
 			Student.getHomeCampus(2)});
 		homeCampusPanel.add(homeCampusLabel);
@@ -235,7 +235,7 @@ public class AddEditStudent extends JDialog {
 
 		stateAndZipPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		stateLabel = new JLabel("State: ");
-		stateComboBox = new JScrollableComboBox(Info.STATES);
+		stateComboBox = new JScrollableComboBox<>(Info.STATES);
 		zipLabel = new JLabel("Zip: ");
 		zipField = new JTextField(7);
 		stateAndZipPanel.add(stateLabel);
@@ -520,7 +520,7 @@ public class AddEditStudent extends JDialog {
 	private static JPanel makeCSTPanel(String msg, String[] data) {
 		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
 		JLabel msgLabel = new JLabel(msg);
-		JList list = new JList(data);
+		JList<String> list = new JList<>(data);
 
 		JButton addButton = new JButton("Add");//"   Add   "
 //		addButton.setBounds(addButton.getX(), addButton.getY(), 50, 100);
