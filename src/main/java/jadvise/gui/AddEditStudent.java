@@ -236,6 +236,7 @@ public class AddEditStudent extends JDialog {
 		stateAndZipPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		stateLabel = new JLabel("State: ");
 		stateComboBox = new JScrollableComboBox<>(Info.STATES);
+		stateComboBox.setSelectedIndex(31); // NY
 		zipLabel = new JLabel("Zip: ");
 		zipField = new JTextField(7);
 		stateAndZipPanel.add(stateLabel);
