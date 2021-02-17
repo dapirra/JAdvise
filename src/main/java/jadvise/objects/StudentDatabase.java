@@ -114,7 +114,7 @@ public class StudentDatabase {
 		if (searchPreviousLength == 0 && currentLength >= 1) { // Backup
 			System.out.println("Backup");
 			searchBackup = (ArrayList<Student>) students.clone();
-		} else if (searchPreviousLength >= 1 && currentLength == 0) { //Restore
+		} else if (searchPreviousLength >= 1 && currentLength == 0) { // Restore
 			System.out.println("Restore");
 			students = searchBackup;
 		}
@@ -170,7 +170,9 @@ public class StudentDatabase {
 		Statement statement = connection.createStatement();
 
 		// Execute statement to retrieve all data
-		ResultSet resultSet = statement.executeQuery("SELECT * FROM `students` WHERE 1");
+		ResultSet resultSet = statement.executeQuery(
+				"SELECT * FROM `students` WHERE 1"
+		);
 
 		// Iterate through the result and add the new student
 		String[] tempStudent = new String[19];
