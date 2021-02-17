@@ -8,17 +8,35 @@ import javax.swing.JComboBox;
 
 public class JScrollableComboBox<E> extends JComboBox<E> {
 
+	private boolean ignoresFocus;
 	private boolean loopable;
 
 	public JScrollableComboBox() {
+		ignoresFocus = false;
 		loopable = false;
 		addListener();
 	}
 
 	public JScrollableComboBox(E[] e) {
 		super(e);
+		ignoresFocus = false;
 		loopable = false;
 		addListener();
+	}
+
+	public JScrollableComboBox(E[] e, boolean ignoresFocus, boolean loopable) {
+		super(e);
+		this.loopable = loopable;
+		this.ignoresFocus = ignoresFocus;
+		addListener();
+	}
+
+	public boolean isIgnoringFocus() {
+		return ignoresFocus;
+	}
+
+	public void setIgnoresFocus(boolean ignoresFocus) {
+		this.ignoresFocus = ignoresFocus;
 	}
 
 	public boolean isLoopable() {
@@ -31,7 +49,7 @@ public class JScrollableComboBox<E> extends JComboBox<E> {
 
 	private void addListener() {
 		addMouseWheelListener(mouseWheelEvent -> {
-			if (isFocusOwner()) {
+			if (ignoresFocus || isFocusOwner()) {
 				// Scroll Down
 				if (mouseWheelEvent.getWheelRotation() > 0) {
 					if (getSelectedIndex() < getItemCount() - 1) {

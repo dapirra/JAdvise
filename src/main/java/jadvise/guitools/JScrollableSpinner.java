@@ -8,18 +8,36 @@ import javax.swing.SpinnerModel;
  */
 public class JScrollableSpinner extends JSpinner {
 
+	private boolean ignoresFocus;
+
 	public JScrollableSpinner() {
+		ignoresFocus = false;
 		addListener();
 	}
 
 	public JScrollableSpinner(SpinnerModel model) {
 		super(model);
+		ignoresFocus = false;
 		addListener();
+	}
+
+	public JScrollableSpinner(SpinnerModel model, boolean ignoresFocus) {
+		super(model);
+		this.ignoresFocus = ignoresFocus;
+		addListener();
+	}
+
+	public boolean isIgnoringFocus() {
+		return ignoresFocus;
+	}
+
+	public void setIgnoresFocus(boolean ignoresFocus) {
+		this.ignoresFocus = ignoresFocus;
 	}
 
 	private void addListener() {
 		addMouseWheelListener(mouseWheelEvent -> {
-			if (((DefaultEditor) getEditor()).getTextField().isFocusOwner()) {
+			if (ignoresFocus || ((DefaultEditor) getEditor()).getTextField().isFocusOwner()) {
 				// Scroll Down
 				if (mouseWheelEvent.getWheelRotation() > 0) {
 					if (getModel().getPreviousValue() != null) {
