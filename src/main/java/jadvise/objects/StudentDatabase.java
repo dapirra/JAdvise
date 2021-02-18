@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -200,25 +201,23 @@ public class StudentDatabase {
 		statement.executeUpdate("DELETE FROM `students` WHERE 1");
 
 		// Add all students to back to the database
-		String temp, tempArray[];
+		String[] studentData;
 		for (Student student : students) {
-			tempArray = student.toArray(true);
-			temp = "";
-			for (String s : tempArray) {
-				if (s == null) {
-					s = "";
-				}
-				temp += ",'" + s + "'";
-			}
-			System.out.println(temp.substring(1));
-			statement.executeUpdate("INSERT INTO `students`("
+			studentData = student.toArray(true);
+			PreparedStatement ps = connection.prepareStatement(
+					"INSERT INTO `students`("
 					+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
 					+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
 					+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
 					+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
 					+ "`CSTCoursesCurrentlyTaking`, "
 					+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
-					+ " VALUES (" + temp.substring(1) + ")");
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			);
+			for (int i = 0; i < studentData.length; i++) {
+				ps.setString(i + 1 , studentData[i] == null ? "" : studentData[i]);
+			}
+			ps.executeUpdate();
 		}
 		System.out.println("----------");
 
