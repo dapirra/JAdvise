@@ -180,6 +180,29 @@ public class JAdvise extends JFrame {
 			}
 		});
 
+		// Pressing delete with a row selected will delete it
+		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
+				"DELETE"
+		);
+		table.getActionMap().put("DELETE", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) {
+					sd.removeStudent(table.getSelectedRow());
+					sd.updateTable();
+					try {
+						sd.saveData();
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+						System.exit(1);
+					} catch (ClassNotFoundException ex) {
+						System.exit(1);
+					}
+				}
+			}
+		});
+
 		tableScrollPane = new JScrollPane(table);
 		tableScrollPane.getHorizontalScrollBar().setUnitIncrement(15);
 		add(tableScrollPane, BorderLayout.CENTER);
