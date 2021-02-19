@@ -263,13 +263,26 @@ public class StudentDatabase {
 					// Create a prepared INSERT statement which prevents SQL Injection
 					sql = connection.prepareStatement(
 							"INSERT INTO `students`("
-							+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
-							+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
-							+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
-							+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
+							+ "`idNumber`, "
+							+ "`firstName`, "
+							+ "`middleInitial`, "
+							+ "`lastName`, "
+							+ "`gpa`, "
+							+ "`homeCampus`, "
+							+ "`major`, "
+							+ "`houseNumber`, "
+							+ "`street`, "
+							+ "`city`, "
+							+ "`state`, "
+							+ "`zip`, "
+							+ "`homePhone`, "
+							+ "`cellPhone`, "
+							+ "`emailAddress`, "
+							+ "`CSTCoursesTakenForDegree`, "
 							+ "`CSTCoursesCurrentlyTaking`, "
-							+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
-							+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+							+ "`CSTCoursesToBeTakenForDegree`, "
+							+ "`notes`) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 					);
 				}
 
