@@ -230,6 +230,7 @@ public final class Info {
 	};
 
 	// https://geographic.org/streetview/usa/ny/suffolk/index.html
+	@SuppressWarnings("SpellCheckingInspection")
 	public static final String[] TOWNS = new String[]{
 			"Amagansett",
 			"Amityville",
