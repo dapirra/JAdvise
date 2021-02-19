@@ -380,15 +380,23 @@ public class JAdvise extends JFrame {
 			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
 			return;
 		}
-		sd.removeStudent(table.getSelectedRow());
-		sd.updateTable();
-		try {
-			sd.saveData();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			System.exit(1);
-		} catch (ClassNotFoundException ex) {
-			System.exit(1);
+		if (JOptionPane.showConfirmDialog(
+				getRootPane(),
+				"Are you sure you want to delete this student?",
+				TITLE,
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE
+		) == JOptionPane.OK_OPTION) {
+			sd.removeStudent(table.getSelectedRow());
+			sd.updateTable();
+			try {
+				sd.saveData();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				System.exit(1);
+			} catch (ClassNotFoundException ex) {
+				System.exit(1);
+			}
 		}
 	}
 
