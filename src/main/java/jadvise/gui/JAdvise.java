@@ -155,10 +155,8 @@ public class JAdvise extends JFrame {
 		// Double clicking on a row will edit it
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
-				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-					new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
-							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
-					));
+				if (mouseEvent.getClickCount() == 2) {
+					editStudentAction();
 				}
 			}
 		});
@@ -172,11 +170,7 @@ public class JAdvise extends JFrame {
 		table.getActionMap().put("\n", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
-					new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
-							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
-					));
-				}
+				editStudentAction();
 			}
 		});
 
@@ -188,18 +182,7 @@ public class JAdvise extends JFrame {
 		table.getActionMap().put("DELETE", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
-					sd.removeStudent(table.getSelectedRow());
-					sd.updateTable();
-					try {
-						sd.saveData();
-					} catch (SQLException ex) {
-						ex.printStackTrace();
-						System.exit(1);
-					} catch (ClassNotFoundException ex) {
-						System.exit(1);
-					}
-				}
+				removeStudentAction();
 			}
 		});
 
@@ -298,29 +281,14 @@ public class JAdvise extends JFrame {
 		editStudentItem = new JMenuItem("Edit Selected Student");
 		editStudentItem.setMnemonic(KeyEvent.VK_E);
 		editStudentItem.addActionListener(actionEvent -> {
-			if (table.getSelectedRow() < 0) {
-				ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
-			} else {
-				new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
-						(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
-				));
-			}
+			editStudentAction();
 		});
 		editMenu.add(editStudentItem);
 
 		removeStudentItem = new JMenuItem("Remove Selected Student");
 		removeStudentItem.setMnemonic(KeyEvent.VK_R);
 		removeStudentItem.addActionListener(actionEvent -> {
-			sd.removeStudent(table.getSelectedRow());
-			sd.updateTable();
-			try {
-				sd.saveData();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			} catch (ClassNotFoundException ex) {
-				System.exit(1);
-			}
+			removeStudentAction();
 		});
 		editMenu.add(removeStudentItem);
 
@@ -401,6 +369,33 @@ public class JAdvise extends JFrame {
 		add(searchPanel, BorderLayout.NORTH);
 
 		setVisible(true);
+	}
+
+	private void editStudentAction() {
+		if (table.getSelectedRow() < 0) {
+			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
+			return;
+		}
+		new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
+				(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
+		));
+	}
+
+	private void removeStudentAction() {
+		if (table.getSelectedRow() < 0) {
+			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
+			return;
+		}
+		sd.removeStudent(table.getSelectedRow());
+		sd.updateTable();
+		try {
+			sd.saveData();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.exit(1);
+		} catch (ClassNotFoundException ex) {
+			System.exit(1);
+		}
 	}
 
 	public static void main(String[] args) {
