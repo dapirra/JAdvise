@@ -225,8 +225,7 @@ public class StudentDatabase {
 
 				// Add all the students values to the prepared statement
 				for (int i = 0; i < studentData.length; i++) {
-					sql.setString(i + 1 ,
-							studentData[i] == null ? "" : studentData[i]);
+					sql.setString(i + 1 , studentData[i]);
 				}
 
 				// Execute the statement

@@ -37,25 +37,25 @@ public final class Student {
 
 	// Instance Variables
 	private int studentType;
-	private String idNumber;
-	private String firstName;
-	private String middleInitial;
-	private String lastName;
-	private String gpa;
+	private String idNumber = "";
+	private String firstName = "";
+	private String middleInitial = "";
+	private String lastName = "";
+	private String gpa = "";
 	private int homeCampus;
 	private int major;
-	private String houseNumber;
-	private String street;
-	private String city;
+	private String houseNumber = "";
+	private String street = "";
+	private String city = "";
 	private int state;
-	private String zip;
-	private String homePhone;
-	private String cellPhone;
-	private String emailAddress;
-	private String CSTCoursesTakenForDegree;
-	private String CSTCoursesCurrentlyTaking;
-	private String CSTCoursesToBeTakenForDegree;
-	private String notes;
+	private String zip = "";
+	private String homePhone = "";
+	private String cellPhone = "";
+	private String emailAddress = "";
+	private String CSTCoursesTakenForDegree = "";
+	private String CSTCoursesCurrentlyTaking = "";
+	private String CSTCoursesToBeTakenForDegree = "";
+	private String notes = "";
 	private static final Random random = new Random();
 
 	public Student(String idNumber, String firstName, String lastName) throws InvalidIDException, TooManyEmptyFieldsException {
