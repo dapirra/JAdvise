@@ -58,10 +58,21 @@ public final class Student {
 	private String notes = "";
 	private static final Random random = new Random();
 
+	/**
+	 * Creates a student with the minimum number of fields needed.
+	 *
+	 * @param idNumber Student's ID number
+	 * @param firstName Student's first name
+	 * @param lastName Student's last name
+	 * @throws InvalidIDException Student ID is invalid
+	 * @throws TooManyEmptyFieldsException ID, first, and last name are required
+	 */
+	@SuppressWarnings("unused")
 	public Student(String idNumber, String firstName, String lastName) throws InvalidIDException, TooManyEmptyFieldsException {
 		if (firstName.isEmpty() && lastName.isEmpty()) {
 			throw new TooManyEmptyFieldsException();
 		}
+		this.studentType = NEW_STUDENT;
 		setIdNumber(idNumber);
 		setFirstName(firstName);
 		setLastName(lastName);
