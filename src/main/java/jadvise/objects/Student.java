@@ -67,6 +67,42 @@ public final class Student {
 		setLastName(lastName);
 	}
 
+	/**
+	 * Creates a new student requiring all parameters to be passed.
+	 *
+	 * @param studentType <code>EXISTING_STUDENT</code> = 0,
+	 *                    <code>MODIFIED_STUDENT</code> = 1,
+	 *                    <code>NEW_STUDENT</code> = 2
+	 * @param idNumber Student's ID number
+	 * @param firstName Student's first name
+	 * @param middleInitial Student's middle initial
+	 * @param lastName Student's last name
+	 * @param gpa Student's GPA
+	 * @param homeCampus <code>AMMERMAN_CAMPUS</code> = 0,
+	 *                   <code>EASTERN_CAMPUS</code> = 1,
+	 *                   <code>GRANT_CAMPUS</code> = 2
+	 * @param major <code>CS_MAJOR</code> = 0,
+	 *              <code>NETWORK_MAJOR</code> = 1,
+	 *              <code>CIS_MAJOR</code> = 2,
+	 *              <code>WEB_MAJOR</code> = 3,
+	 *              <code>OTHER_MAJOR</code> = 4
+	 * @param houseNumber Student's house number
+	 * @param street Student's street address
+	 * @param city Student's city
+	 * @param state Student's state
+	 * @param zip Student's zipcode
+	 * @param homePhone Student's home phone number
+	 * @param cellPhone Student's cell phone number
+	 * @param emailAddress Student's email address
+	 * @param CSTCoursesTakenForDegree Courses already taken
+	 * @param CSTCoursesCurrentlyTaking Courses currently taking
+	 * @param CSTCoursesToBeTakenForDegree Courses needed to be taken
+	 * @param notes Notes regarding the student
+	 * @throws InvalidIDException Student ID is invalid
+	 * @throws InvalidEmailException Email is improperly formatted
+	 * @throws InvalidPhoneNumberException Phone number is improperly formatted
+	 * @throws TooManyEmptyFieldsException ID, first, and last name are required
+	 */
 	public Student(int studentType, String idNumber,
 			String firstName, String middleInitial, String lastName,
 			String gpa, String homeCampus, String major,
@@ -102,6 +138,14 @@ public final class Student {
 		this.notes = notes;
 	}
 
+	/**
+	 * Creates a new student from an array of data.
+	 *
+	 * @param input Array of length 19 that holds each of the fields
+	 * @throws InvalidIDException Student ID is invalid
+	 * @throws InvalidEmailException Email is improperly formatted
+	 * @throws InvalidPhoneNumberException Phone number is improperly formatted
+	 */
 	public Student(String[] input) throws InvalidIDException, InvalidEmailException, InvalidPhoneNumberException {
 		if (!isValidID(input[0])) {
 			throw new InvalidIDException();
@@ -128,6 +172,9 @@ public final class Student {
 		this.notes = input[18];
 	}
 
+	/**
+	 * Generates a random student.
+	 */
 	public Student() {
 		this.studentType = NEW_STUDENT;
 		this.idNumber = String.format("%08d", random.nextInt(99999999));
