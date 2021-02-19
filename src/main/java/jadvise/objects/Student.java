@@ -473,6 +473,7 @@ public final class Student {
 		return outputArray;
 	}
 
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public boolean contains(String search) {
 		search = search.toLowerCase();
 		return idNumber.contains(search)
@@ -496,6 +497,7 @@ public final class Student {
 				|| notes.toLowerCase().contains(search);
 	}
 
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean isValidID(String ID) {
 		return ID.length() == 8 && ID.matches("\\d{8}");
 	}
@@ -520,6 +522,7 @@ public final class Student {
 //		return (!num.matches("[A-z]*")) || num.isEmpty();
 	}
 
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	private static boolean isValidCourseInfo(String courses) {
 		return courses.matches("(CST\\d{3},?)*");
 	}
