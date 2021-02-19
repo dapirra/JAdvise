@@ -175,13 +175,13 @@ public class StudentDatabase {
 				"SELECT * FROM `students` WHERE 1"
 		);
 
-		// Iterate through the result and add the new student
-		String[] tempStudent = new String[19];
+		// Iterate through the result and read in each student
+		String[] currentStudent = new String[19];
 		while (resultSet.next()) {
-			for (int i = 0; i < 19; i++) {
-				tempStudent[i] = resultSet.getString(i + 1);
+			for (int i = 0; i < currentStudent.length; i++) {
+				currentStudent[i] = resultSet.getString(i + 1);
 			}
-			students.add(new Student(tempStudent));
+			students.add(new Student(currentStudent));
 		}
 
 		// Close the connection
@@ -250,7 +250,7 @@ public class StudentDatabase {
 		// Create a statement
 		Statement statement = connection.createStatement();
 
-		// Execute statement clear all data
+		// Execute statement to clear all data
 		statement.executeUpdate("DELETE FROM `students` WHERE 1");
 
 		// Close the connection
