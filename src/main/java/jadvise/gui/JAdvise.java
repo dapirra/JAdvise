@@ -280,16 +280,12 @@ public class JAdvise extends JFrame {
 
 		editStudentItem = new JMenuItem("Edit Selected Student");
 		editStudentItem.setMnemonic(KeyEvent.VK_E);
-		editStudentItem.addActionListener(actionEvent -> {
-			editStudentAction();
-		});
+		editStudentItem.addActionListener(actionEvent -> editStudentAction());
 		editMenu.add(editStudentItem);
 
 		removeStudentItem = new JMenuItem("Remove Selected Student");
 		removeStudentItem.setMnemonic(KeyEvent.VK_R);
-		removeStudentItem.addActionListener(actionEvent -> {
-			removeStudentAction();
-		});
+		removeStudentItem.addActionListener(actionEvent -> removeStudentAction());
 		editMenu.add(removeStudentItem);
 
 		removeAllStudentsItem = new JMenuItem("Remove All Students");
@@ -320,14 +316,12 @@ public class JAdvise extends JFrame {
 
 		aboutItem = new JMenuItem("About");
 		aboutItem.setMnemonic(KeyEvent.VK_A);
-		aboutItem.addActionListener(actionEvent -> {
-			JOptionPane.showMessageDialog(
-					jAdvise,
-					"Version: 1.0\nDate: 12/15/13\nCreated By David Pirraglia",
-					TITLE,
-					JOptionPane.INFORMATION_MESSAGE
-			);
-		});
+		aboutItem.addActionListener(actionEvent -> JOptionPane.showMessageDialog(
+				jAdvise,
+				"Version: 1.0\nDate: 12/15/13\nCreated By David Pirraglia",
+				TITLE,
+				JOptionPane.INFORMATION_MESSAGE
+		));
 		helpMenu.add(aboutItem);
 
 		menuBar.add(fileMenu);
