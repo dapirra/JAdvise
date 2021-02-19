@@ -44,6 +44,7 @@ public class StudentDatabase {
 	};
 
 	private ArrayList<Student> students;
+	private ArrayList<Student> deletedStudents;
 	private ArrayList<Student> searchBackup;
 	private int searchPreviousLength = 0;
 	private JTable table;
@@ -51,6 +52,7 @@ public class StudentDatabase {
 
 	public StudentDatabase(MySQLAccount account) {
 		this.students = new ArrayList<>();
+		this.deletedStudents = new ArrayList<>();
 		this.account = account;
 	}
 
@@ -66,16 +68,25 @@ public class StudentDatabase {
 		}
 	}
 
-	public void removeStudent(String ID) {
-		students.remove(findStudent(ID));
+	public void removeStudent(int studentIndex) {
+		deletedStudents.add(students.get(studentIndex));
+		students.remove(studentIndex);
 	}
 
-	public void updateStudent(Student s, String previousID) {
-//		if (findStudent(s.getIdNumber()) != -1) {
-//			throw new DuplicateIDException();
-//		} else {
-		students.set(findStudent(previousID), s);
-//		}
+	public void removeStudent(String ID) {
+		int studentIndex = findStudent(ID);
+		deletedStudents.add(students.get(studentIndex));
+		students.remove(studentIndex);
+	}
+
+	public void updateStudent(Student updatedStudent, String previousID, int index) {
+		int testIndex = findStudent(updatedStudent.getIdNumber());
+		if (testIndex != -1 && testIndex != index) {
+			throw new DuplicateIDException();
+		} else {
+			updatedStudent.setPreviousIdNumber(previousID);
+			students.set(index, updatedStudent);
+		}
 	}
 
 	public ArrayList<Student> getStudents() {
@@ -90,7 +101,6 @@ public class StudentDatabase {
 	public Student getStudent(String ID) {
 		System.out.println(ID + "\n" + students.size());
 		return students.get(findStudent(ID));
-//		return students.get(findStudent(index + ""));
 	}
 
 	public int findStudent(String ID) {
@@ -196,6 +206,16 @@ public class StudentDatabase {
 		// Create a statement
 		Statement statement = connection.createStatement();
 
+		// Delete all students marked for deletion
+		for (Student student : deletedStudents) {
+			System.out.println("Deleted Student: " + student.getIdNumber());
+			statement.executeUpdate(
+					"DELETE FROM `students` WHERE idNumber="
+						+ student.getIdNumber() + " LIMIT 1"
+			);
+		}
+		deletedStudents.clear();
+
 		// Loop over all of the students, checking for new/modified ones
 		for (Student student : students) {
 			if (student.getStudentType() != Student.EXISTING_STUDENT) {
@@ -205,31 +225,64 @@ public class StudentDatabase {
 
 				// If the student has been modified, delete and reinsert it
 				if (student.getStudentType() == Student.MODIFIED_STUDENT) {
-					statement.executeUpdate(
-							"DELETE FROM `students` WHERE idNumber="
-							+ student.getIdNumber()
+					// Create a prepared UPDATE statement which prevents SQL Injection
+					sql = connection.prepareStatement(
+							"UPDATE `students` SET "
+							+ "idNumber = ?, "
+							+ "firstName = ?, "
+							+ "middleInitial = ?, "
+							+ "lastName = ?, "
+							+ "gpa = ?, "
+							+ "homeCampus = ?, "
+							+ "major = ?, "
+							+ "houseNumber = ?, "
+							+ "street = ?, "
+							+ "city = ?, "
+							+ "state = ?, "
+							+ "zip = ?, "
+							+ "homePhone = ?, "
+							+ "cellPhone = ?, "
+							+ "emailAddress = ?, "
+							+ "CSTCoursesTakenForDegree = ?, "
+							+ "CSTCoursesCurrentlyTaking = ?, "
+							+ "CSTCoursesToBeTakenForDegree = ?, "
+							+ "notes = ? "
+							+ "WHERE idNumber = ? LIMIT 1"
+					);
+					System.out.format(
+							"Modified: %s %s %s%n",
+							student.getPreviousIdNumber(),
+							student.getIdNumber(),
+							student.getFirstName()
+					);
+					sql.setString(
+							studentData.length + 1,
+							student.getPreviousIdNumber()
+					);
+				} else { // New Student
+					// Create a prepared INSERT statement which prevents SQL Injection
+					sql = connection.prepareStatement(
+							"INSERT INTO `students`("
+							+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
+							+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
+							+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
+							+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
+							+ "`CSTCoursesCurrentlyTaking`, "
+							+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
+							+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 					);
 				}
 
-				// Create a prepared statement which can check for SQL Injection
-				sql = connection.prepareStatement(
-					"INSERT INTO `students`("
-						+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
-						+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
-						+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
-						+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
-						+ "`CSTCoursesCurrentlyTaking`, "
-						+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
-						+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-				);
-
-				// Add all the students values to the prepared statement
+				// Add all the student's values to the prepared statement
 				for (int i = 0; i < studentData.length; i++) {
 					sql.setString(i + 1 , studentData[i]);
 				}
 
 				// Execute the statement
 				sql.executeUpdate();
+
+				// Mark the student as an existing student
+				student.setStudentType(Student.EXISTING_STUDENT);
 			}
 		}
 		System.out.println("----------");

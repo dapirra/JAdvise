@@ -156,7 +156,7 @@ public class JAdvise extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-					new AddEditStudent(jAdvise, sd, sd.getStudent(
+					new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
 							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
 					));
 				}
@@ -173,7 +173,7 @@ public class JAdvise extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (table.getSelectedRow() != -1) {
-					new AddEditStudent(jAdvise, sd, sd.getStudent(
+					new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
 							(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
 					));
 				}
@@ -278,7 +278,7 @@ public class JAdvise extends JFrame {
 			if (table.getSelectedRow() < 0) {
 				ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
 			} else {
-				new AddEditStudent(jAdvise, sd, sd.getStudent(
+				new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
 						(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
 				));
 			}
@@ -288,7 +288,7 @@ public class JAdvise extends JFrame {
 		removeStudentItem = new JMenuItem("Remove Selected Student");
 		removeStudentItem.setMnemonic(KeyEvent.VK_R);
 		removeStudentItem.addActionListener(actionEvent -> {
-			sd.removeStudent(table.getModel().getValueAt(table.getSelectedRow(), 0) + "");
+			sd.removeStudent(table.getSelectedRow());
 			sd.updateTable();
 			try {
 				sd.saveData();

@@ -131,6 +131,10 @@ public class AddEditStudent extends JDialog {
 	private final JButton doneButton;
 
 	public AddEditStudent(Container frame, final StudentDatabase sd, final Student s) {
+		this(frame, -1, sd, s);
+	}
+
+	public AddEditStudent(Container frame, int index, final StudentDatabase sd, final Student s) {
 
 		inputFrame = frame;
 		if (s == null) {
@@ -319,9 +323,7 @@ public class AddEditStudent extends JDialog {
 		// Edit Mode - Set fields
 		if (s != null) {
 			System.out.println("Edit Mode");
-			s.setStudentType(Student.MODIFIED_STUDENT);
 			IDField.setText(s.getIdNumber());
-//			IDField.setEditable(false);
 			firstNameField.setText(s.getFirstName());
 			middleInitialField.setText(s.getMiddleInitial());
 			lastNameField.setText(s.getLastName());
@@ -419,7 +421,9 @@ public class AddEditStudent extends JDialog {
 							CSTCoursesCurrentlyTakingField.getText(),
 							CSTCoursesToBeTakenForDegreeField.getText(),
 							notesArea.getText()),
-							previousID);
+							previousID,
+							index
+					);
 				}
 			} catch (TooManyEmptyFieldsException e) {
 				ErrorMessagePane.showErrorMessage(AddEditStudent.this,

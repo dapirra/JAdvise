@@ -37,6 +37,7 @@ public final class Student {
 
 	// Instance Variables
 	private int studentType;
+	private String previousIdNumber = "";
 	private String idNumber = "";
 	private String firstName = "";
 	private String middleInitial = "";
@@ -225,6 +226,14 @@ public final class Student {
 
 	public void setStudentType(int studentType) {
 		this.studentType = studentType;
+	}
+
+	public String getPreviousIdNumber() {
+		return previousIdNumber;
+	}
+
+	public void setPreviousIdNumber(String previousIdNumber) {
+		this.previousIdNumber = previousIdNumber;
 	}
 
 	public String getIdNumber() {
