@@ -21,7 +21,7 @@ public class MySQLAccount {
 	public MySQLAccount(String username, String password, String ip, int port, String table) {
 		this.username = username;
 		this.password = password;
-		if (ip.endsWith("/")) {  // Remove ending forward slash, if included
+		if (ip.endsWith("/")) { // Remove ending forward slash, if included
 			this.ip = ip.substring(0, ip.length() - 1);
 		} else {
 			this.ip = ip;

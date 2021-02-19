@@ -18,12 +18,12 @@ import static jadvise.tools.Info.*;
  */
 public final class Student {
 
-	// Type Variables
+	// Student Type Variables
 	public static final int EXISTING_STUDENT = 0;
 	public static final int MODIFIED_STUDENT = 1;
 	public static final int NEW_STUDENT = 2;
 
-	// Campus Variales
+	// Campus Variables
 	public static final int AMMERMAN_CAMPUS = 0;
 	public static final int EASTERN_CAMPUS = 1;
 	public static final int GRANT_CAMPUS = 2;
