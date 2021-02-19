@@ -18,6 +18,11 @@ import static jadvise.tools.Info.*;
  */
 public final class Student {
 
+	// Type Variables
+	public static final int EXISTING_STUDENT = 0;
+	public static final int MODIFIED_STUDENT = 1;
+	public static final int NEW_STUDENT = 2;
+
 	// Campus Variales
 	public static final int AMMERMAN_CAMPUS = 0;
 	public static final int EASTERN_CAMPUS = 1;
@@ -31,6 +36,7 @@ public final class Student {
 	public static final int OTHER_MAJOR = 4;
 
 	// Instance Variables
+	private int studentType;
 	private String idNumber;
 	private String firstName;
 	private String middleInitial;
@@ -61,7 +67,8 @@ public final class Student {
 		setLastName(lastName);
 	}
 
-	public Student(String idNumber, String firstName, String middleInitial, String lastName,
+	public Student(int studentType, String idNumber,
+			String firstName, String middleInitial, String lastName,
 			String gpa, String homeCampus, String major,
 			String houseNumber, String street, String city, String state, String zip,
 			String homePhone, String cellPhone, String emailAddress,
@@ -72,6 +79,7 @@ public final class Student {
 		if (firstName.isEmpty() || lastName.isEmpty()) {
 			throw new TooManyEmptyFieldsException();
 		}
+		this.studentType = studentType;
 		setIdNumber(idNumber);
 		setFirstName(firstName);
 		setMiddleInitial(middleInitial);
@@ -98,6 +106,7 @@ public final class Student {
 		if (!isValidID(input[0])) {
 			throw new InvalidIDException();
 		}
+		this.studentType = EXISTING_STUDENT;
 		setIdNumber(input[0]);
 		setFirstName(input[1]);
 		setMiddleInitial(input[2]);
@@ -120,6 +129,7 @@ public final class Student {
 	}
 
 	public Student() {
+		this.studentType = NEW_STUDENT;
 		this.idNumber = String.format("%08d", random.nextInt(99999999));
 		this.firstName = FIRST_NAMES[random.nextInt(FIRST_NAMES.length)];
 		this.middleInitial = (char) (random.nextInt(26) + 65) + "";
@@ -149,6 +159,14 @@ public final class Student {
 				random.nextInt(999),
 				random.nextInt(9999)
 		);
+	}
+
+	public int getStudentType() {
+		return studentType;
+	}
+
+	public void setStudentType(int studentType) {
+		this.studentType = studentType;
 	}
 
 	public String getIdNumber() {

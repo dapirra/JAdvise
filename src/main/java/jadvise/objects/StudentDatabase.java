@@ -188,7 +188,6 @@ public class StudentDatabase {
 		connection.close();
 	}
 
-	// TODO: use sql UPDATE to save changes instead of this
 	public void saveData() throws SQLException, ClassNotFoundException {
 
 		// Connect to a database
@@ -197,27 +196,42 @@ public class StudentDatabase {
 		// Create a statement
 		Statement statement = connection.createStatement();
 
-		// Execute statement to clear all data
-		statement.executeUpdate("DELETE FROM `students` WHERE 1");
-
-		// Add all students to back to the database
-		String[] studentData;
+		// Loop over all of the students, checking for new/modified ones
 		for (Student student : students) {
-			studentData = student.toArray(true);
-			PreparedStatement ps = connection.prepareStatement(
+			if (student.getStudentType() != Student.EXISTING_STUDENT) {
+
+				String[] studentData = student.toArray(true);
+				PreparedStatement sql;
+
+				// If the student has been modified, delete and reinsert it
+				if (student.getStudentType() == Student.MODIFIED_STUDENT) {
+					statement.executeUpdate(
+							"DELETE FROM `students` WHERE idNumber="
+							+ student.getIdNumber()
+					);
+				}
+
+				// Create a prepared statement which can check for SQL Injection
+				sql = connection.prepareStatement(
 					"INSERT INTO `students`("
-					+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
-					+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
-					+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
-					+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
-					+ "`CSTCoursesCurrentlyTaking`, "
-					+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-			);
-			for (int i = 0; i < studentData.length; i++) {
-				ps.setString(i + 1 , studentData[i] == null ? "" : studentData[i]);
+						+ "`idNumber`, `firstName`, `middleInitial`, `lastName`, "
+						+ "`gpa`, `homeCampus`, `major`, `houseNumber`, `street`, "
+						+ "`city`, `state`, `zip`, `homePhone`, `cellPhone`, "
+						+ "`emailAddress`, `CSTCoursesTakenForDegree`, "
+						+ "`CSTCoursesCurrentlyTaking`, "
+						+ "`CSTCoursesToBeTakenForDegree`, `notes`)"
+						+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+				);
+
+				// Add all the students values to the prepared statement
+				for (int i = 0; i < studentData.length; i++) {
+					sql.setString(i + 1 ,
+							studentData[i] == null ? "" : studentData[i]);
+				}
+
+				// Execute the statement
+				sql.executeUpdate();
 			}
-			ps.executeUpdate();
 		}
 		System.out.println("----------");
 

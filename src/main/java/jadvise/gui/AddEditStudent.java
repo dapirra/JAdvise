@@ -319,6 +319,7 @@ public class AddEditStudent extends JDialog {
 		// Edit Mode - Set fields
 		if (s != null) {
 			System.out.println("Edit Mode");
+			s.setStudentType(Student.MODIFIED_STUDENT);
 			IDField.setText(s.getIdNumber());
 //			IDField.setEditable(false);
 			firstNameField.setText(s.getFirstName());
@@ -376,6 +377,7 @@ public class AddEditStudent extends JDialog {
 			try {
 				if (s == null) { // Add new
 					sd.addStudent(new Student(
+							Student.NEW_STUDENT,
 							IDField.getText(),
 							firstNameField.getText(),
 							middleInitialField.getText(),
@@ -397,6 +399,7 @@ public class AddEditStudent extends JDialog {
 							notesArea.getText()));
 				} else { // Edit
 					sd.updateStudent(new Student(
+							Student.MODIFIED_STUDENT,
 							IDField.getText(),
 							firstNameField.getText(),
 							middleInitialField.getText(),
