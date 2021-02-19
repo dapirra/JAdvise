@@ -260,8 +260,11 @@ public class JAdvise extends JFrame {
 			);
 			if (JOptionPane.showConfirmDialog(
 					jAdvise,
-					spinner,
-					"How many random students?",
+					new JComponent[] {
+							new JLabel("How many random students?"),
+							spinner
+					},
+					TITLE,
 					JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE
 			) == JOptionPane.OK_OPTION) {
