@@ -68,7 +68,6 @@ public class AddEditStudent extends JDialog {
 
 	private final JPanel GPAAndMajorPanel;
 	private final JLabel GPALabel;
-//	private final JTextField GPAField;
 	private final JScrollableSpinner GPASpinner;
 	private final JLabel majorLabel;
 	private final JScrollableComboBox<String> majorComboBox;
@@ -342,7 +341,6 @@ public class AddEditStudent extends JDialog {
 			middleInitialField.setText(editStudent.getMiddleInitial());
 			lastNameField.setText(editStudent.getLastName());
 
-//			GPAField.setText(s.getGpa() + "");
 			GPASpinner.setValue(editStudent.getGpa());
 			majorComboBox.setSelectedIndex(editStudent.getMajor());
 			homeCampusComboBox.setSelectedIndex(editStudent.getHomeCampus());

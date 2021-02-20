@@ -314,7 +314,7 @@ public class JAdvise extends JFrame {
 		aboutItem.setMnemonic(KeyEvent.VK_A);
 		aboutItem.addActionListener(actionEvent -> JOptionPane.showMessageDialog(
 				jAdvise,
-				"Version: 1.0\nDate: 12/15/13\nCreated By David Pirraglia",
+				"Version: 1.0\nDate: 12/15/13\nCreated by David Pirraglia",
 				TITLE,
 				JOptionPane.INFORMATION_MESSAGE
 		));

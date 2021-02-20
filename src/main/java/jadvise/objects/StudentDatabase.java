@@ -44,7 +44,7 @@ public class StudentDatabase {
 	};
 
 	private ArrayList<Student> students;
-	private ArrayList<Student> deletedStudents;
+	private final ArrayList<Student> deletedStudents;
 	private ArrayList<Student> searchBackup;
 	private int searchPreviousLength = 0;
 	private JTable table;
