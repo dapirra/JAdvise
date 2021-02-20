@@ -64,20 +64,31 @@ public class StudentDatabase {
 		s.setStudentType(Student.NEW_STUDENT);
 		if (findStudent(s.getIdNumber()) != -1) {
 			throw new DuplicateIDException();
-		} else {
-			students.add(s);
+		}
+		students.add(s);
+		if (searchBackup != null) {
+			searchBackup.add(s);
 		}
 	}
 
 	public void removeStudent(int studentIndex) {
 		deletedStudents.add(students.get(studentIndex));
 		students.remove(studentIndex);
+		if (searchBackup != null) {
+			searchBackup.remove(findStudent(
+					students.get(studentIndex).getIdNumber(),
+					searchBackup
+			));
+		}
 	}
 
 	public void removeStudent(String ID) {
 		int studentIndex = findStudent(ID);
 		deletedStudents.add(students.get(studentIndex));
 		students.remove(studentIndex);
+		if (searchBackup != null) {
+			searchBackup.remove(findStudent(ID, searchBackup));
+		}
 	}
 
 	public void updateStudent(Student updatedStudent, String previousID, int index) {
@@ -85,9 +96,18 @@ public class StudentDatabase {
 		int testIndex = findStudent(updatedStudent.getIdNumber());
 		if (testIndex != -1 && testIndex != index) {
 			throw new DuplicateIDException();
-		} else {
-			updatedStudent.setPreviousIdNumber(previousID);
-			students.set(index, updatedStudent);
+		}
+		updatedStudent.setPreviousIdNumber(previousID);
+		students.set(index, updatedStudent);
+		if (searchBackup != null) {
+			testIndex = findStudent(updatedStudent.getIdNumber(), searchBackup);
+			if (testIndex != -1 && testIndex != index) {
+				throw new DuplicateIDException();
+			}
+			searchBackup.set(
+					findStudent(previousID, searchBackup),
+					updatedStudent
+			);
 		}
 	}
 
@@ -106,6 +126,10 @@ public class StudentDatabase {
 	}
 
 	public int findStudent(String ID) {
+		return findStudent(ID, students);
+	}
+
+	public int findStudent(String ID, ArrayList<Student> students) {
 		for (int i = 0; i < students.size(); i++) {
 			if (students.get(i).getIdNumber().equals(ID)) {
 				return i;
@@ -130,6 +154,7 @@ public class StudentDatabase {
 		} else if (searchPreviousLength >= 1 && currentLength == 0) { // Restore
 			System.out.println("Restore");
 			students = searchBackup;
+			searchBackup = null;
 		}
 		if (searchPreviousLength < currentLength) { // Text Added
 			System.out.println("Text Added:\t" + search);
