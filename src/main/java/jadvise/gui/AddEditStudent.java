@@ -376,51 +376,33 @@ public class AddEditStudent extends JDialog {
 		// Done Button
 		doneButton = new JButton("Done");
 		doneButton.addActionListener(actionEvent -> {
+			Student readInStudent = new Student(
+					IDField.getText(),
+					firstNameField.getText(),
+					middleInitialField.getText(),
+					lastNameField.getText(),
+					GPASpinner.getValue() + "",
+					homeCampusComboBox.getSelectedIndex() + "",
+					majorComboBox.getSelectedIndex() + "",
+					houseNumberField.getText(),
+					streetField.getText(),
+					cityField.getText(),
+					stateComboBox.getSelectedIndex() + "",
+					zipField.getText(),
+					homePhoneField.getText(),
+					cellPhoneField.getText(),
+					emailField.getText(),
+					CSTCoursesTakenForDegreeField.getText(),
+					CSTCoursesCurrentlyTakingField.getText(),
+					CSTCoursesToBeTakenForDegreeField.getText(),
+					notesArea.getText()
+			);
 			try {
 				if (s == null) { // Add new
-					sd.addStudent(new Student(
-							Student.NEW_STUDENT,
-							IDField.getText(),
-							firstNameField.getText(),
-							middleInitialField.getText(),
-							lastNameField.getText(),
-							GPASpinner.getValue() + "",
-							homeCampusComboBox.getSelectedIndex() + "",
-							majorComboBox.getSelectedIndex() + "",
-							houseNumberField.getText(),
-							streetField.getText(),
-							cityField.getText(),
-							stateComboBox.getSelectedIndex() + "",
-							zipField.getText(),
-							homePhoneField.getText(),
-							cellPhoneField.getText(),
-							emailField.getText(),
-							CSTCoursesTakenForDegreeField.getText(),
-							CSTCoursesCurrentlyTakingField.getText(),
-							CSTCoursesToBeTakenForDegreeField.getText(),
-							notesArea.getText()));
+					sd.addStudent(readInStudent);
 				} else { // Edit
-					sd.updateStudent(new Student(
-							Student.MODIFIED_STUDENT,
-							IDField.getText(),
-							firstNameField.getText(),
-							middleInitialField.getText(),
-							lastNameField.getText(),
-							GPASpinner.getValue() + "",
-							homeCampusComboBox.getSelectedIndex() + "",
-							majorComboBox.getSelectedIndex() + "",
-							houseNumberField.getText(),
-							streetField.getText(),
-							cityField.getText(),
-							stateComboBox.getSelectedIndex() + "",
-							zipField.getText(),
-							homePhoneField.getText(),
-							cellPhoneField.getText(),
-							emailField.getText(),
-							CSTCoursesTakenForDegreeField.getText(),
-							CSTCoursesCurrentlyTakingField.getText(),
-							CSTCoursesToBeTakenForDegreeField.getText(),
-							notesArea.getText()),
+					sd.updateStudent(
+							readInStudent,
 							previousID,
 							index
 					);

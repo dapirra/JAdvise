@@ -82,9 +82,6 @@ public final class Student {
 	/**
 	 * Creates a new student requiring all parameters to be passed.
 	 *
-	 * @param studentType <code>EXISTING_STUDENT</code> = 0,
-	 *                    <code>MODIFIED_STUDENT</code> = 1,
-	 *                    <code>NEW_STUDENT</code> = 2
 	 * @param idNumber Student's ID number
 	 * @param firstName Student's first name
 	 * @param middleInitial Student's middle initial
@@ -115,7 +112,7 @@ public final class Student {
 	 * @throws InvalidPhoneNumberException Phone number is improperly formatted
 	 * @throws TooManyEmptyFieldsException ID, first, and last name are required
 	 */
-	public Student(int studentType, String idNumber,
+	public Student(String idNumber,
 			String firstName, String middleInitial, String lastName,
 			String gpa, String homeCampus, String major,
 			String houseNumber, String street, String city, String state, String zip,
@@ -127,7 +124,7 @@ public final class Student {
 		if (firstName.isEmpty() || lastName.isEmpty()) {
 			throw new TooManyEmptyFieldsException();
 		}
-		this.studentType = studentType;
+		this.studentType = EXISTING_STUDENT;
 		setIdNumber(idNumber);
 		setFirstName(firstName);
 		setMiddleInitial(middleInitial);

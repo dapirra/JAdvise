@@ -61,6 +61,7 @@ public class StudentDatabase {
 	}
 
 	public void addStudent(Student s) throws DuplicateIDException {
+		s.setStudentType(Student.NEW_STUDENT);
 		if (findStudent(s.getIdNumber()) != -1) {
 			throw new DuplicateIDException();
 		} else {
@@ -80,6 +81,7 @@ public class StudentDatabase {
 	}
 
 	public void updateStudent(Student updatedStudent, String previousID, int index) {
+		updatedStudent.setStudentType(Student.MODIFIED_STUDENT);
 		int testIndex = findStudent(updatedStudent.getIdNumber());
 		if (testIndex != -1 && testIndex != index) {
 			throw new DuplicateIDException();
