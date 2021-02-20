@@ -76,54 +76,54 @@ public class Login extends JFrame {
 			dispose();
 		});
 
-		GridBagConstraints cs = new GridBagConstraints();
-		cs.fill = GridBagConstraints.HORIZONTAL;
-		cs.weighty = 1;
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.fill = GridBagConstraints.HORIZONTAL;
+		grid.weighty = 1;
 
-		cs.gridx = 0;
-		cs.gridy = 0;
-		cs.gridwidth = 1;
-		add(userLabel, cs);
-		cs.gridx = 1;
-		cs.gridwidth = 2;
-		add(userField, cs);
+		grid.gridx = 0;
+		grid.gridy = 0;
+		grid.gridwidth = 1;
+		add(userLabel, grid);
+		grid.gridx = 1;
+		grid.gridwidth = 2;
+		add(userField, grid);
 
-		cs.gridx = 0;
-		cs.gridy++;
-		cs.gridwidth = 1;
-		add(passLabel, cs);
-		cs.gridx = 1;
-		cs.gridwidth = 2;
-		add(passField, cs);
+		grid.gridx = 0;
+		grid.gridy++;
+		grid.gridwidth = 1;
+		add(passLabel, grid);
+		grid.gridx = 1;
+		grid.gridwidth = 2;
+		add(passField, grid);
 
-		cs.gridx = 0;
-		cs.gridy++;
-		cs.gridwidth = 1;
-		add(ipDomainLabel, cs);
-		cs.gridx = 1;
-		cs.gridwidth = 2;
-		add(ipDomainField, cs);
+		grid.gridx = 0;
+		grid.gridy++;
+		grid.gridwidth = 1;
+		add(ipDomainLabel, grid);
+		grid.gridx = 1;
+		grid.gridwidth = 2;
+		add(ipDomainField, grid);
 
-		cs.gridx = 0;
-		cs.gridy++;
-		cs.gridwidth = 1;
-		add(portLabel, cs);
-		cs.gridx = 1;
-		cs.gridwidth = 2;
-		add(portField, cs);
+		grid.gridx = 0;
+		grid.gridy++;
+		grid.gridwidth = 1;
+		add(portLabel, grid);
+		grid.gridx = 1;
+		grid.gridwidth = 2;
+		add(portField, grid);
 
-		cs.gridx = 0;
-		cs.gridy++;
-		cs.gridwidth = 1;
-		add(tableLabel, cs);
-		cs.gridx = 1;
-		cs.gridwidth = 2;
-		add(tableField, cs);
+		grid.gridx = 0;
+		grid.gridy++;
+		grid.gridwidth = 1;
+		add(tableLabel, grid);
+		grid.gridx = 1;
+		grid.gridwidth = 2;
+		add(tableField, grid);
 
-		cs.gridx = 0;
-		cs.gridy++;
-		cs.gridwidth = 3;
-		add(loginButton, cs);
+		grid.gridx = 0;
+		grid.gridy++;
+		grid.gridwidth = 3;
+		add(loginButton, grid);
 
 		setVisible(true);
 	}
