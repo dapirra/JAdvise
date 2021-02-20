@@ -25,12 +25,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
@@ -328,18 +329,24 @@ public class JAdvise extends JFrame {
 		// Search Area
 		searchLabel = new JLabel(" Search:  ");
 		searchField = new JTextField();
-		searchField.addKeyListener(new KeyListener() {
-
+		searchField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
-			public void keyTyped(KeyEvent ke) {
+			public void insertUpdate(DocumentEvent e) {
+				System.out.println("insertUpdate");
+				sd.search(searchField.getText());
+				sd.updateTable();
 			}
 
 			@Override
-			public void keyPressed(KeyEvent ke) {
+			public void removeUpdate(DocumentEvent e) {
+				System.out.println("removeUpdate");
+				sd.search(searchField.getText());
+				sd.updateTable();
 			}
 
 			@Override
-			public void keyReleased(KeyEvent ke) {
+			public void changedUpdate(DocumentEvent e) {
+				System.out.println("changedUpdate");
 				sd.search(searchField.getText());
 				sd.updateTable();
 			}
