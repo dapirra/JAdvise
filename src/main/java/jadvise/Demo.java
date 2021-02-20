@@ -1,7 +1,6 @@
 package jadvise;
 
-import jadvise.gui.JAdvise;
-import jadvise.objects.MySQLAccount;
+import jadvise.gui.Login;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,13 +18,13 @@ public class Demo {
 			// Set Java L&F to GTK Theme (Only works on Linux)
 //			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 
-			// Don't remember what this was for
 //			for (UIManager.LookAndFeelInfo lf : UIManager.getInstalledLookAndFeels()) {
 //				System.out.println(lf);
 //			}
 		} catch (UnsupportedLookAndFeelException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		new JAdvise(new MySQLAccount("root", "usbw"));
+		new Login();
 	}
 }

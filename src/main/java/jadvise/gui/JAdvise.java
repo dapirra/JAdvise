@@ -115,7 +115,13 @@ public class JAdvise extends JFrame {
 
 	protected static Container jAdvise;
 
-	public JAdvise(MySQLAccount account) {
+	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
+
+		// Load Data
+		sd = new StudentDatabase(account);
+		sd.loadData();
+
+		// Create JAdvise GUI
 		jAdvise = getRootPane();
 		setTitle(TITLE);
 		setSize(800, 600);
@@ -123,21 +129,6 @@ public class JAdvise extends JFrame {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setResizable(true);
-
-		// Load Data
-		sd = new StudentDatabase(account);
-		try {
-			sd.loadData();
-		} catch (com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ce) {
-			ErrorMessagePane.showErrorMessage(jAdvise, "Can't connect to database.");
-		} catch (SQLException ex) {
-			ErrorMessagePane.showErrorMessage(jAdvise, "SQL Error: " + ex.getMessage());
-			ex.printStackTrace();
-		} catch (ClassNotFoundException ex) {
-			ErrorMessagePane.showErrorMessage(jAdvise,
-					"Something went wrong that you probably won't understand (ClassNotFoundException).");
-			System.exit(1);
-		}
 
 		// Table
 		String[][] rowData = sd.getTableData();
@@ -404,6 +395,10 @@ public class JAdvise extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new JAdvise(new MySQLAccount("root", "usbw"));
+		try {
+			new JAdvise(new MySQLAccount("root", "usbw"));
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package jadvise.gui;
 
+import jadvise.guitools.ErrorMessagePane;
 import jadvise.objects.MySQLAccount;
 import jadvise.objects.PortFormat;
 
@@ -13,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 /**
  * @author David Pirraglia
@@ -66,14 +68,19 @@ public class Login extends JFrame {
 		JButton loginButton = new JButton("Login");
 		rootPane.setDefaultButton(loginButton);
 		loginButton.addActionListener(actionEvent -> {
-			new JAdvise(new MySQLAccount(
-					userField.getText(),
-					new String(passField.getPassword()),
-					ipDomainField.getText(),
-					Integer.parseUnsignedInt(portField.getText()),
-					tableField.getText()
-			));
-			dispose();
+			try {
+				new JAdvise(new MySQLAccount(
+						userField.getText(),
+						new String(passField.getPassword()),
+						ipDomainField.getText(),
+						Integer.parseUnsignedInt(portField.getText()),
+						tableField.getText()
+				));
+				dispose();
+			} catch (SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+				ErrorMessagePane.showErrorMessage(this, e.getMessage());
+			}
 		});
 
 		GridBagConstraints grid = new GridBagConstraints();
