@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -394,10 +396,18 @@ public class JAdvise extends JFrame {
 		}
 	}
 
+	/**
+	 * Used for testing. Primary main method is located in {@link jadvise.Demo}
+	 */
 	public static void main(String[] args) {
 		try {
+			// Set Java L&F to Nimbus
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+
+			// Create JAdvise GUI
 			new JAdvise(new MySQLAccount("root", "usbw"));
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException | IllegalAccessException
+				| InstantiationException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 	}

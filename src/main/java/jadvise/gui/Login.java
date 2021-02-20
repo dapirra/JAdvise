@@ -21,10 +21,6 @@ import java.sql.SQLException;
  */
 public class Login extends JFrame {
 
-	public static void main(String[] args) {
-		new Login();
-	}
-
 	public Login() {
 		setTitle("JAdvise - Connect to a MySQL Database");
 		setSize(400, 200);
@@ -143,4 +139,11 @@ public class Login extends JFrame {
 			}
 		}
 	};
+
+	/**
+	 * Used for testing. Primary main method is located in {@link jadvise.Demo}
+	 */
+	public static void main(String[] args) {
+		new Login();
+	}
 }
