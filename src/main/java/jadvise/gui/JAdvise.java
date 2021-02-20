@@ -248,7 +248,7 @@ public class JAdvise extends JFrame {
 
 		addStudentItem = new JMenuItem("Add Student");
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
-		addStudentItem.addActionListener(ae -> new AddEditStudent(jAdvise, sd, null));
+		addStudentItem.addActionListener(ae -> new AddEditStudent(jAdvise, sd));
 		editMenu.add(addStudentItem);
 
 		addRandomStudentsItem = new JMenuItem("Add Random Students");
@@ -373,7 +373,7 @@ public class JAdvise extends JFrame {
 			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
 			return;
 		}
-		new AddEditStudent(jAdvise, table.getSelectedRow(), sd, sd.getStudent(
+		new AddEditStudent(jAdvise, sd, table.getSelectedRow(), sd.getStudent(
 				(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
 		));
 	}

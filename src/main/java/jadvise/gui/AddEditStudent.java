@@ -130,14 +130,28 @@ public class AddEditStudent extends JDialog {
 
 	private final JButton doneButton;
 
-	public AddEditStudent(Container frame, final StudentDatabase sd, final Student s) {
-		this(frame, -1, sd, s);
+	/**
+	 * Used for adding a new student.
+	 *
+	 * @param frame Main window
+	 * @param sd Student database
+	 */
+	public AddEditStudent(Container frame, final StudentDatabase sd) {
+		this(frame, sd, -1, null);
 	}
 
-	public AddEditStudent(Container frame, int index, final StudentDatabase sd, final Student s) {
+	/**
+	 * Used for editing a student.
+	 *
+	 * @param frame Main window
+	 * @param sd Student database
+	 * @param index Index of the student
+	 * @param editStudent Student object being edited
+	 */
+	public AddEditStudent(Container frame, final StudentDatabase sd, int index, final Student editStudent) {
 
 		inputFrame = frame;
-		if (s == null) {
+		if (editStudent == null) {
 			setTitle("Add Student");
 		} else {
 			setTitle("Edit Student");
@@ -321,35 +335,35 @@ public class AddEditStudent extends JDialog {
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
 
 		// Edit Mode - Set fields
-		if (s != null) {
+		if (editStudent != null) {
 			System.out.println("Edit Mode");
-			IDField.setText(s.getIdNumber());
-			firstNameField.setText(s.getFirstName());
-			middleInitialField.setText(s.getMiddleInitial());
-			lastNameField.setText(s.getLastName());
+			IDField.setText(editStudent.getIdNumber());
+			firstNameField.setText(editStudent.getFirstName());
+			middleInitialField.setText(editStudent.getMiddleInitial());
+			lastNameField.setText(editStudent.getLastName());
 
 //			GPAField.setText(s.getGpa() + "");
-			GPASpinner.setValue(s.getGpa());
-			majorComboBox.setSelectedIndex(s.getMajor());
-			homeCampusComboBox.setSelectedIndex(s.getHomeCampus());
+			GPASpinner.setValue(editStudent.getGpa());
+			majorComboBox.setSelectedIndex(editStudent.getMajor());
+			homeCampusComboBox.setSelectedIndex(editStudent.getHomeCampus());
 
-			houseNumberField.setText(s.getHouseNumber());
-			streetField.setText(s.getStreet());
-			cityField.setText(s.getCity());
-			stateComboBox.setSelectedIndex(s.getState());
-			zipField.setText(s.getZip());
+			houseNumberField.setText(editStudent.getHouseNumber());
+			streetField.setText(editStudent.getStreet());
+			cityField.setText(editStudent.getCity());
+			stateComboBox.setSelectedIndex(editStudent.getState());
+			zipField.setText(editStudent.getZip());
 
-			homePhoneField.setText(s.getHomePhone());
-			cellPhoneField.setText(s.getCellPhone());
-			emailField.setText(s.getEmailAddress());
+			homePhoneField.setText(editStudent.getHomePhone());
+			cellPhoneField.setText(editStudent.getCellPhone());
+			emailField.setText(editStudent.getEmailAddress());
 
-			CSTCoursesTakenForDegreeField.setText(s.getCSTCoursesTakenForDegree());
-			CSTCoursesCurrentlyTakingField.setText(s.getCSTCoursesCurrentlyTaking());
-			CSTCoursesToBeTakenForDegreeField.setText(s.getCSTCoursesToBeTakenForDegree());
+			CSTCoursesTakenForDegreeField.setText(editStudent.getCSTCoursesTakenForDegree());
+			CSTCoursesCurrentlyTakingField.setText(editStudent.getCSTCoursesCurrentlyTaking());
+			CSTCoursesToBeTakenForDegreeField.setText(editStudent.getCSTCoursesToBeTakenForDegree());
 
-			notesArea.setText(s.getNotes());
+			notesArea.setText(editStudent.getNotes());
 
-			previousID = s.getIdNumber();
+			previousID = editStudent.getIdNumber();
 		} else {
 			previousID = "";
 		}
@@ -398,7 +412,7 @@ public class AddEditStudent extends JDialog {
 					notesArea.getText()
 			);
 			try {
-				if (s == null) { // Add new
+				if (editStudent == null) { // Add new
 					sd.addStudent(readInStudent);
 				} else { // Edit
 					sd.updateStudent(
