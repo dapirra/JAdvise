@@ -230,14 +230,12 @@ public class JAdvise extends JFrame {
 					File csvFile = exportToCSVSaveDialog.getSelectedFile();
 
 					// If the file already exists, ask to overwrite it
-					if (csvFile.exists()
-							&& JOptionPane.showConfirmDialog(
-							getRootPane(),
+					if (csvFile.exists() &&
+							!PrebuiltDialogs.showYesNoDialog(
+							jAdvise,
 							"Do you want to overwrite this file?",
-							TITLE,
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.WARNING_MESSAGE
-					) == JOptionPane.NO_OPTION) {
+							TITLE
+					)) {
 						continue;
 					}
 
@@ -313,13 +311,11 @@ public class JAdvise extends JFrame {
 
 		removeAllStudentsItem = new JMenuItem("Remove All Students");
 		removeAllStudentsItem.addActionListener(actionEvent -> {
-			if (JOptionPane.showConfirmDialog(
-					getRootPane(),
+			if (PrebuiltDialogs.showConfirmDialog(
+					jAdvise,
 					"Are you sure you want to remove all students?",
-					TITLE,
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE
-			) == JOptionPane.OK_OPTION) {
+					TITLE
+			)) {
 				try {
 					sd.clearData();
 					sd.updateTable();
@@ -409,13 +405,11 @@ public class JAdvise extends JFrame {
 			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
-		if (JOptionPane.showConfirmDialog(
-				getRootPane(),
+		if (PrebuiltDialogs.showConfirmDialog(
+				jAdvise,
 				"Are you sure you want to delete this student?",
-				TITLE,
-				JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE
-		) == JOptionPane.OK_OPTION) {
+				TITLE
+		)) {
 			sd.removeStudent(table.getSelectedRow());
 			sd.updateTable();
 			try {
