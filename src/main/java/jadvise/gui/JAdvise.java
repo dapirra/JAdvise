@@ -1,6 +1,6 @@
 package jadvise.gui;
 
-import jadvise.guitools.ErrorMessagePane;
+import jadvise.guitools.PrebuiltDialogs;
 import jadvise.guitools.JScrollableSpinner;
 import jadvise.objects.MySQLAccount;
 import jadvise.objects.Student;
@@ -198,7 +198,7 @@ public class JAdvise extends JFrame {
 			try {
 				table.print();
 			} catch (PrinterException ex) {
-				ErrorMessagePane.showErrorDialog(jAdvise, "Can't print table.");
+				PrebuiltDialogs.showErrorDialog(jAdvise, "Can't print table.");
 			}
 		});
 		fileMenu.add(printItem);
@@ -396,7 +396,7 @@ public class JAdvise extends JFrame {
 
 	private void editStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			ErrorMessagePane.showErrorDialog(jAdvise, "No student is selected.");
+			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
 		new AddEditStudent(jAdvise, sd, table.getSelectedRow(), sd.getStudent(
@@ -406,7 +406,7 @@ public class JAdvise extends JFrame {
 
 	private void removeStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			ErrorMessagePane.showErrorDialog(jAdvise, "No student is selected.");
+			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
 		if (JOptionPane.showConfirmDialog(

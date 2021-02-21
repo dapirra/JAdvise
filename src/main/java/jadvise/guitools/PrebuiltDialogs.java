@@ -6,7 +6,7 @@ import java.awt.Component;
 /**
  * @author David Pirraglia
  */
-public class ErrorMessagePane {
+public class PrebuiltDialogs {
 
 	public static void showErrorDialog(Component parentComponent, String msg) {
 		JOptionPane.showMessageDialog(

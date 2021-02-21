@@ -7,7 +7,7 @@ import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.exceptions.id.InvalidIDException;
-import jadvise.guitools.ErrorMessagePane;
+import jadvise.guitools.PrebuiltDialogs;
 import jadvise.guitools.JScrollableComboBox;
 import jadvise.guitools.JScrollableSpinner;
 import jadvise.objects.Student;
@@ -420,31 +420,31 @@ public class AddEditStudent extends JDialog {
 					);
 				}
 			} catch (TooManyEmptyFieldsException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"ID, Firstname, and Lastname are required.");
 				return;
 			} catch (InvalidIDException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"Invalid ID. Must be 8 digits.");
 				return;
 			} catch (DuplicateIDException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"This ID already exists.");
 				return;
 			} catch (InvalidZipCodeException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"Invalid Zip Code.");
 				return;
 			} catch (InvalidPhoneNumberException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"Invalid Phone Number.");
 				return;
 			} catch (InvalidEmailException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"Invalid Email.");
 				return;
 			} catch (InvalidCourseException e) {
-				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
+				PrebuiltDialogs.showErrorDialog(AddEditStudent.this,
 						"Invalid Course Input.");
 				return;
 			}

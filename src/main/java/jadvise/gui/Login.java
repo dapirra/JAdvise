@@ -1,6 +1,6 @@
 package jadvise.gui;
 
-import jadvise.guitools.ErrorMessagePane;
+import jadvise.guitools.PrebuiltDialogs;
 import jadvise.objects.MySQLAccount;
 import jadvise.objects.PortFormat;
 
@@ -75,7 +75,7 @@ public class Login extends JFrame {
 				dispose();
 			} catch (SQLException | ClassNotFoundException e) {
 				e.printStackTrace();
-				ErrorMessagePane.showErrorDialog(this, e.getMessage());
+				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
 		});
 
