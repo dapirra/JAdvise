@@ -388,28 +388,28 @@ public class AddEditStudent extends JDialog {
 		// Done Button
 		doneButton = new JButton("Done");
 		doneButton.addActionListener(actionEvent -> {
-			Student readInStudent = new Student(
-					IDField.getText(),
-					firstNameField.getText(),
-					middleInitialField.getText(),
-					lastNameField.getText(),
-					GPASpinner.getValue() + "",
-					homeCampusComboBox.getSelectedIndex() + "",
-					majorComboBox.getSelectedIndex() + "",
-					houseNumberField.getText(),
-					streetField.getText(),
-					cityField.getText(),
-					stateComboBox.getSelectedIndex() + "",
-					zipField.getText(),
-					homePhoneField.getText(),
-					cellPhoneField.getText(),
-					emailField.getText(),
-					CSTCoursesTakenForDegreeField.getText(),
-					CSTCoursesCurrentlyTakingField.getText(),
-					CSTCoursesToBeTakenForDegreeField.getText(),
-					notesArea.getText()
-			);
 			try {
+				Student readInStudent = new Student(
+						IDField.getText(),
+						firstNameField.getText(),
+						middleInitialField.getText(),
+						lastNameField.getText(),
+						GPASpinner.getValue() + "",
+						homeCampusComboBox.getSelectedIndex() + "",
+						majorComboBox.getSelectedIndex() + "",
+						houseNumberField.getText(),
+						streetField.getText(),
+						cityField.getText(),
+						stateComboBox.getSelectedIndex() + "",
+						zipField.getText(),
+						homePhoneField.getText(),
+						cellPhoneField.getText(),
+						emailField.getText(),
+						CSTCoursesTakenForDegreeField.getText(),
+						CSTCoursesCurrentlyTakingField.getText(),
+						CSTCoursesToBeTakenForDegreeField.getText(),
+						notesArea.getText()
+				);
 				if (editStudent == null) { // Add new
 					sd.addStudent(readInStudent);
 				} else { // Edit
