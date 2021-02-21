@@ -420,31 +420,31 @@ public class AddEditStudent extends JDialog {
 					);
 				}
 			} catch (TooManyEmptyFieldsException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"ID, Firstname, and Lastname are required.");
 				return;
 			} catch (InvalidIDException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"Invalid ID. Must be 8 digits.");
 				return;
 			} catch (DuplicateIDException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"This ID already exists.");
 				return;
 			} catch (InvalidZipCodeException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"Invalid Zip Code.");
 				return;
 			} catch (InvalidPhoneNumberException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"Invalid Phone Number.");
 				return;
 			} catch (InvalidEmailException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"Invalid Email.");
 				return;
 			} catch (InvalidCourseException e) {
-				ErrorMessagePane.showErrorMessage(AddEditStudent.this,
+				ErrorMessagePane.showErrorDialog(AddEditStudent.this,
 						"Invalid Course Input.");
 				return;
 			}

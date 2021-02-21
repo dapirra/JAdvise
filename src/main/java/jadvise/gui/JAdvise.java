@@ -198,7 +198,7 @@ public class JAdvise extends JFrame {
 			try {
 				table.print();
 			} catch (PrinterException ex) {
-				ErrorMessagePane.showErrorMessage(jAdvise, "Can't print table.");
+				ErrorMessagePane.showErrorDialog(jAdvise, "Can't print table.");
 			}
 		});
 		fileMenu.add(printItem);
@@ -396,7 +396,7 @@ public class JAdvise extends JFrame {
 
 	private void editStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
+			ErrorMessagePane.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
 		new AddEditStudent(jAdvise, sd, table.getSelectedRow(), sd.getStudent(
@@ -406,7 +406,7 @@ public class JAdvise extends JFrame {
 
 	private void removeStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			ErrorMessagePane.showErrorMessage(jAdvise, "No student is selected.");
+			ErrorMessagePane.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
 		if (JOptionPane.showConfirmDialog(

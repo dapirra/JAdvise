@@ -75,7 +75,7 @@ public class Login extends JFrame {
 				dispose();
 			} catch (SQLException | ClassNotFoundException e) {
 				e.printStackTrace();
-				ErrorMessagePane.showErrorMessage(this, e.getMessage());
+				ErrorMessagePane.showErrorDialog(this, e.getMessage());
 			}
 		});
 
