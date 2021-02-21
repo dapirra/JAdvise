@@ -62,7 +62,7 @@ public class JAdvise extends JFrame {
 	private final JMenuItem aboutItem;
 
 	// File Chooser
-	private JFileChooser exportToCSV;
+	private JFileChooser exportToCSVSaveDialog;
 
 	// Table
 	private final JTable table;
@@ -205,29 +205,55 @@ public class JAdvise extends JFrame {
 
 		exportToCSVItem = new JMenuItem("Export to CSV");
 		exportToCSVItem.setMnemonic(KeyEvent.VK_E);
-		exportToCSVItem.addActionListener(actionEvent -> {
-			exportToCSV = new JFileChooser();
-			exportToCSV.setDialogTitle(TITLE);
-			exportToCSV.setAcceptAllFileFilterUsed(false);
-			exportToCSV.setFileFilter(new FileFilter() {
-				@Override
-				public boolean accept(File f) {
-					return f.getName().endsWith(".csv") || f.isDirectory();
-				}
 
-				@Override
-				public String getDescription() {
-					return "*.csv";
-				}
-			});
-			int userSelection = exportToCSV.showSaveDialog(jAdvise);
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				String csvFile = exportToCSV.getSelectedFile().getAbsolutePath();
-				if (!csvFile.endsWith(".csv")) {
-					csvFile += ".csv";
-				}
-				sd.exportToCSV(csvFile);
+		exportToCSVSaveDialog = new JFileChooser();
+		exportToCSVSaveDialog.setDialogTitle(TITLE);
+		exportToCSVSaveDialog.setAcceptAllFileFilterUsed(false);
+		exportToCSVSaveDialog.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File f) {
+				return f.getName().endsWith(".csv") || f.isDirectory();
 			}
+
+			@Override
+			public String getDescription() {
+				return "*.csv";
+			}
+		});
+
+		exportToCSVItem.addActionListener(actionEvent -> {
+			int userSelection;
+			do {
+				// Show the save dialog to the user and get their response
+				userSelection = exportToCSVSaveDialog.showSaveDialog(jAdvise);
+				if (userSelection == JFileChooser.APPROVE_OPTION) {
+					File csvFile = exportToCSVSaveDialog.getSelectedFile();
+
+					// If the file already exists, ask to overwrite it
+					if (csvFile.exists()
+							&& JOptionPane.showConfirmDialog(
+							getRootPane(),
+							"Do you want to overwrite this file?",
+							TITLE,
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE
+					) == JOptionPane.NO_OPTION) {
+						continue;
+					}
+
+					// Get the path of where to save the CSV file
+					String csvPath = csvFile.getAbsolutePath();
+
+					// Add the file extension ".csv" if it doesn't exist
+					if (!csvPath.endsWith(".csv")) {
+						csvPath += ".csv";
+					}
+
+					// Save the CSV file
+					sd.exportToCSV(csvPath);
+					return;
+				}
+			} while (userSelection != JFileChooser.CANCEL_OPTION);
 		});
 		fileMenu.add(exportToCSVItem);
 
