@@ -129,13 +129,13 @@ public final class Student {
 		setMiddleInitial(middleInitial);
 		setMiddleInitial(middleInitial);
 		setLastName(lastName);
-		this.gpa = gpa;
-		this.homeCampus = Integer.parseInt(homeCampus);
-		this.major = Integer.parseInt(major);
-		this.houseNumber = houseNumber;
-		this.street = street;
-		this.city = city;
-		this.state = Integer.parseInt(state);
+		setGpa(gpa);
+		setHomeCampus(Integer.parseInt(homeCampus));
+		setMajor(Integer.parseInt(major));
+		setHouseNumber(houseNumber);
+		setStreet(street);
+		setCity(city);
+		setState(Integer.parseInt(state));
 		setZip(zip);
 		setHomePhone(homePhone);
 		setCellPhone(cellPhone);
@@ -143,7 +143,7 @@ public final class Student {
 		setCSTCoursesTakenForDegree(CSTCoursesTakenForDegree);
 		setCSTCoursesCurrentlyTaking(CSTCoursesCurrentlyTaking);
 		setCSTCoursesToBeTakenForDegree(CSTCoursesToBeTakenForDegree);
-		this.notes = notes;
+		setNotes(notes);
 	}
 
 	/**
@@ -163,13 +163,13 @@ public final class Student {
 		setFirstName(input[1]);
 		setMiddleInitial(input[2]);
 		setLastName(input[3]);
-		this.gpa = input[4];
-		this.homeCampus = Integer.parseInt(input[5]);
-		this.major = Integer.parseInt(input[6]);
-		this.houseNumber = input[7];
-		this.street = input[8];
-		this.city = input[9];
-		this.state = Integer.parseInt(input[10]);
+		setGpa(input[4]);
+		setHomeCampus(Integer.parseInt(input[5]));
+		setMajor(Integer.parseInt(input[6]));
+		setHouseNumber(input[7]);
+		setStreet(input[8]);
+		setCity(input[9]);
+		setState(Integer.parseInt(input[10]));
 		setZip(input[11]);
 		setHomePhone(input[12]);
 		setCellPhone(input[13]);
@@ -177,39 +177,39 @@ public final class Student {
 		setCSTCoursesTakenForDegree(input[15]);
 		setCSTCoursesCurrentlyTaking(input[16]);
 		setCSTCoursesToBeTakenForDegree(input[17]);
-		this.notes = input[18];
+		setNotes(input[18]);
 	}
 
 	/**
-	 * Generates a random student from a seed.
+	 * Generates a random student from a given seed.
 	 */
 	public Student(long seed) {
 		final Random random = new Random();
 		random.setSeed(seed);
 		this.studentType = NEW_STUDENT;
-		this.idNumber = String.format("%08d", random.nextInt(99999999));
-		this.firstName = FIRST_NAMES[random.nextInt(FIRST_NAMES.length)];
-		this.middleInitial = (char) (random.nextInt(26) + 65) + "";
-		this.lastName = LAST_NAMES[random.nextInt(LAST_NAMES.length)];
-		this.gpa = GPA_VALUES[random.nextInt(GPA_VALUES.length)];
-		this.homeCampus = random.nextInt(3);
-		this.major = random.nextInt(5);
-		this.houseNumber = random.nextInt(999) + "";
-		this.street = STREET_NAMES[random.nextInt(STREET_NAMES.length)] + " Street";
-		this.city = TOWNS[random.nextInt(TOWNS.length)];
-		this.state = random.nextInt(STATES.length);
-		this.zip = String.format("%05d", random.nextInt(99999));
-		this.emailAddress = String.format(
+		setIdNumber(String.format("%08d", random.nextInt(99999999)));
+		setFirstName(FIRST_NAMES[random.nextInt(FIRST_NAMES.length)]);
+		setMiddleInitial((char) (random.nextInt(26) + 65) + "");
+		setLastName(LAST_NAMES[random.nextInt(LAST_NAMES.length)]);
+		setGpa(GPA_VALUES[random.nextInt(GPA_VALUES.length)]);
+		setHomeCampus(random.nextInt(3));
+		setMajor(random.nextInt(5));
+		setHouseNumber(random.nextInt(999) + "");
+		setStreet(STREET_NAMES[random.nextInt(STREET_NAMES.length)] + " Street");
+		setCity(TOWNS[random.nextInt(TOWNS.length)]);
+		setState(random.nextInt(STATES.length));
+		setZip(String.format("%05d", random.nextInt(99999)));
+		setEmailAddress(String.format(
 				"%s.%s@mail.sunysuffolk.edu",
 				this.firstName.toLowerCase(),
 				this.lastName.toLowerCase()
-		);
-		this.homePhone = generateRandomPhoneNumber(random);
-		this.cellPhone = generateRandomPhoneNumber(random);
-		this.CSTCoursesTakenForDegree = generateRandomCourseList(random);
-		this.CSTCoursesCurrentlyTaking = generateRandomCourseList(random);
-		this.CSTCoursesToBeTakenForDegree = generateRandomCourseList(random);
-		this.notes = "Seed used: " + seed;
+		));
+		setHomePhone(generateRandomPhoneNumber(random));
+		setCellPhone(generateRandomPhoneNumber(random));
+		setCSTCoursesTakenForDegree(generateRandomCourseList(random));
+		setCSTCoursesCurrentlyTaking(generateRandomCourseList(random));
+		setCSTCoursesToBeTakenForDegree(generateRandomCourseList(random));
+		setNotes("Seed used: " + seed);
 	}
 
 	/**
@@ -240,6 +240,7 @@ public final class Student {
 	}
 
 	public void setIdNumber(String idNumber) throws InvalidIDException {
+		idNumber = idNumber.trim();
 		if (!isValidID(idNumber)) {
 			throw new InvalidIDException();
 		}
@@ -251,7 +252,7 @@ public final class Student {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = toTitleCase(firstName);
+		this.firstName = toTitleCase(firstName.trim());
 	}
 
 	public String getMiddleInitial() {
@@ -271,7 +272,7 @@ public final class Student {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = toTitleCase(lastName);
+		this.lastName = toTitleCase(lastName.trim());
 	}
 
 	public String getGpa() {
@@ -333,7 +334,7 @@ public final class Student {
 	}
 
 	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+		this.houseNumber = houseNumber.trim();
 	}
 
 	public String getStreet() {
@@ -341,7 +342,7 @@ public final class Student {
 	}
 
 	public void setStreet(String street) {
-		this.street = street;
+		this.street = street.trim();
 	}
 
 	public String getCity() {
@@ -349,7 +350,7 @@ public final class Student {
 	}
 
 	public void setCity(String city) {
-		this.city = city;
+		this.city = city.trim();
 	}
 
 	public int getState() {
@@ -365,6 +366,7 @@ public final class Student {
 	}
 
 	public void setZip(String zip) throws InvalidZipCodeException {
+		zip = zip.trim();
 		if (!isValidZipCode(zip)) {
 			throw new InvalidZipCodeException();
 		}
@@ -392,6 +394,7 @@ public final class Student {
 	}
 
 	public void setEmailAddress(String emailAddress) throws InvalidEmailException {
+		emailAddress = emailAddress.trim();
 		if (!isValidEmail(emailAddress)) {
 			throw new InvalidEmailException();
 		}
@@ -403,7 +406,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesTakenForDegree(String courses) throws InvalidCourseException {
-		courses = courses.replace(" ", "").toUpperCase();
+		courses = courses.trim().replace(" ", "").toUpperCase();
 		if (!isValidCourseInfo(courses)) {
 			throw new InvalidCourseException();
 		}
@@ -415,7 +418,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesCurrentlyTaking(String courses) throws InvalidCourseException {
-		courses = courses.replace(" ", "").toUpperCase();
+		courses = courses.trim().replace(" ", "").toUpperCase();
 		if (!isValidCourseInfo(courses)) {
 			throw new InvalidCourseException();
 		}
@@ -427,7 +430,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesToBeTakenForDegree(String courses) throws InvalidCourseException {
-		courses = courses.replace(" ", "").toUpperCase();
+		courses = courses.trim().replace(" ", "").toUpperCase();
 		if (!isValidCourseInfo(courses)) {
 			throw new InvalidCourseException();
 		}
@@ -439,7 +442,7 @@ public final class Student {
 	}
 
 	public void setNotes(String notes) {
-		this.notes = notes;
+		this.notes = notes.trim();
 	}
 
 	public String[] toArray(boolean containsNumbers) {
@@ -527,6 +530,7 @@ public final class Student {
 	}
 
 	private String setPhoneNumber(String num) throws InvalidPhoneNumberException {
+		num = num.trim();
 		if (!isValidPhoneNumber(num)) {
 			throw new InvalidPhoneNumberException();
 		} else {
