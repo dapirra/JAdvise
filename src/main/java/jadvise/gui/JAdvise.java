@@ -149,7 +149,8 @@ public class JAdvise extends JFrame {
 		// Double clicking on a row will edit it
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
-				if (mouseEvent.getClickCount() == 2) {
+				if (mouseEvent.getClickCount() == 2
+						&& mouseEvent.getButton() == MouseEvent.BUTTON1) {
 					editStudentAction();
 				}
 			}
