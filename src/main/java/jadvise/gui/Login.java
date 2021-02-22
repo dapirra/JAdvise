@@ -49,7 +49,7 @@ public class Login extends JFrame {
 		portField.addMouseListener(rightClickPaste);
 		portField.setColumns(20);
 
-		JLabel tableLabel = new JLabel("Database:  ");
+		JLabel databaseLabel = new JLabel("Database:  ");
 		JTextField databaseField = new JTextField("jadvise", 20);
 		databaseField.setMinimumSize(databaseField.getPreferredSize());
 		databaseField.addMouseListener(rightClickPaste);
@@ -111,7 +111,7 @@ public class Login extends JFrame {
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 1;
-		add(tableLabel, grid);
+		add(databaseLabel, grid);
 		grid.gridx = 1;
 		grid.gridwidth = 2;
 		add(databaseField, grid);
