@@ -1,11 +1,10 @@
 package jadvise.gui;
 
+import jadvise.guitools.PortTextField;
 import jadvise.guitools.PrebuiltDialogs;
 import jadvise.objects.MySQLAccount;
-import jadvise.objects.PortFormat;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -45,15 +44,9 @@ public class Login extends JFrame {
 		ipDomainField.addMouseListener(rightClickPaste);
 
 		JLabel portLabel = new JLabel("Port:  ");
-		JTextField portField = new JFormattedTextField(new PortFormat());
+		JTextField portField = new PortTextField("3306");
 		portField.setMinimumSize(portField.getPreferredSize());
 		portField.addMouseListener(rightClickPaste);
-		portField.addPropertyChangeListener("value", evt -> {
-			if (portField.getText().isEmpty()) {
-				portField.setText("3306");
-			}
-		});
-		portField.setText("3306");
 		portField.setColumns(20);
 
 		JLabel tableLabel = new JLabel("Database:  ");
