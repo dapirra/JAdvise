@@ -57,7 +57,6 @@ public final class Student {
 	private String CSTCoursesCurrentlyTaking = "";
 	private String CSTCoursesToBeTakenForDegree = "";
 	private String notes = "";
-	private static final Random random = new Random();
 
 	/**
 	 * Creates a student with the minimum number of fields needed.
@@ -182,9 +181,11 @@ public final class Student {
 	}
 
 	/**
-	 * Generates a random student.
+	 * Generates a random student from a seed.
 	 */
-	public Student() {
+	public Student(long seed) {
+		final Random random = new Random();
+		random.setSeed(seed);
 		this.studentType = NEW_STUDENT;
 		this.idNumber = String.format("%08d", random.nextInt(99999999));
 		this.firstName = FIRST_NAMES[random.nextInt(FIRST_NAMES.length)];
@@ -203,18 +204,19 @@ public final class Student {
 				this.firstName.toLowerCase(),
 				this.lastName.toLowerCase()
 		);
-		this.homePhone = String.format(
-				"(%03d) %03d - %04d",
-				random.nextInt(999),
-				random.nextInt(999),
-				random.nextInt(9999)
-		);
-		this.cellPhone = String.format(
-				"(%03d) %03d - %04d",
-				random.nextInt(999),
-				random.nextInt(999),
-				random.nextInt(9999)
-		);
+		this.homePhone = generateRandomPhoneNumber(random);
+		this.cellPhone = generateRandomPhoneNumber(random);
+		this.CSTCoursesTakenForDegree = generateRandomCourseList(random);
+		this.CSTCoursesCurrentlyTaking = generateRandomCourseList(random);
+		this.CSTCoursesToBeTakenForDegree = generateRandomCourseList(random);
+		this.notes = "Seed used: " + seed;
+	}
+
+	/**
+	 * Generates a random student.
+	 */
+	public Student() {
+		this(new Random().nextLong());
 	}
 
 	public int getStudentType() {

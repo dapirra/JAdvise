@@ -1,5 +1,7 @@
 package jadvise.tools;
 
+import java.util.Random;
+
 /**
  * @author David Pirraglia
  */
@@ -363,4 +365,33 @@ public final class Info {
 			"Lake",
 			"Hill"
 	};
+
+	/**
+	 * Used by {@link jadvise.objects.Student} to generate a random phone number.
+	 *
+	 * @param random A {@link Random} object.
+	 * @return A randomly generated phone number.
+	 */
+	public static String generateRandomPhoneNumber(Random random) {
+		return String.format(
+				"(%03d) %03d - %04d",
+				random.nextInt(999),
+				random.nextInt(999),
+				random.nextInt(9999)
+		);
+	}
+
+	/**
+	 * Used by {@link jadvise.objects.Student} to generate a random list of courses.
+	 *
+	 * @param random A {@link Random} object.
+	 * @return A randomly generated list of courses.
+	 */
+	public static String generateRandomCourseList(Random random) {
+		return String.join(",",
+				String.format("CST%03d", random.nextInt(999)),
+				String.format("CST%03d", random.nextInt(999)),
+				String.format("CST%03d", random.nextInt(999))
+		);
+	}
 }
