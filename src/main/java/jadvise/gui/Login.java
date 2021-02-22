@@ -56,10 +56,10 @@ public class Login extends JFrame {
 		portField.setText("3306");
 		portField.setColumns(20);
 
-		JLabel tableLabel = new JLabel("Table:  ");
-		JTextField tableField = new JTextField("jadvise", 20);
-		tableField.setMinimumSize(tableField.getPreferredSize());
-		tableField.addMouseListener(rightClickPaste);
+		JLabel tableLabel = new JLabel("Database:  ");
+		JTextField databaseField = new JTextField("jadvise", 20);
+		databaseField.setMinimumSize(databaseField.getPreferredSize());
+		databaseField.addMouseListener(rightClickPaste);
 
 		JButton loginButton = new JButton("Login");
 		rootPane.setDefaultButton(loginButton);
@@ -70,7 +70,7 @@ public class Login extends JFrame {
 						new String(passField.getPassword()),
 						ipDomainField.getText(),
 						Integer.parseUnsignedInt(portField.getText()),
-						tableField.getText()
+						databaseField.getText()
 				));
 				dispose();
 			} catch (SQLException | ClassNotFoundException e) {
@@ -121,7 +121,7 @@ public class Login extends JFrame {
 		add(tableLabel, grid);
 		grid.gridx = 1;
 		grid.gridwidth = 2;
-		add(tableField, grid);
+		add(databaseField, grid);
 
 		grid.gridx = 0;
 		grid.gridy++;
