@@ -1,11 +1,12 @@
 package jadvise.guitools;
 
-import jadvise.objects.PortFormat;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 
 public class PortTextField extends JFormattedTextField {
 
@@ -49,5 +50,30 @@ public class PortTextField extends JFormattedTextField {
 			}
 		} catch (Exception ignored) {}
 		setForeground(Color.RED);
+	}
+
+	public static class PortFormat extends DecimalFormat {
+
+		public PortFormat() {
+			super("0");
+			setMaximumIntegerDigits(5);
+		}
+
+		public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
+			return super.format(number, toAppendTo, pos);
+		}
+
+		public StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition pos) {
+			return super.format(number, toAppendTo, pos);
+		}
+
+		@SuppressWarnings("UnnecessaryBoxing")
+		public Number parse(String source, ParsePosition parsePosition) {
+			Number result = super.parse(source, parsePosition);
+			if (result == null) {
+				result = new Long(3306);
+			}
+			return Math.abs(result.longValue());
+		}
 	}
 }
