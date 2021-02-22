@@ -7,11 +7,11 @@ import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.InvalidIDException;
 import jadvise.tools.TelephoneFormatter;
-import jadvise.tools.TitleCaseFormatter;
 
 import java.util.Random;
 
 import static jadvise.tools.Info.*;
+import static jadvise.tools.TitleCaseFormatter.toTitleCase;
 
 /**
  * @author David Pirraglia
@@ -251,7 +251,7 @@ public final class Student {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = TitleCaseFormatter.toTitleCase(firstName);
+		this.firstName = toTitleCase(firstName);
 	}
 
 	public String getMiddleInitial() {
@@ -271,7 +271,7 @@ public final class Student {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = TitleCaseFormatter.toTitleCase(lastName);
+		this.lastName = toTitleCase(lastName);
 	}
 
 	public String getGpa() {
