@@ -502,7 +502,7 @@ public final class Student {
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean isValidID(String ID) {
-		return ID.length() == 8 && ID.matches("\\d{8}");
+		return ID.length() == 8 && ID.matches("[0-9]{8}");
 	}
 
 	public static boolean isValidEmail(String email) {
@@ -510,7 +510,7 @@ public final class Student {
 	}
 
 	public static boolean isValidZipCode(String zip) {
-		return (zip.length() == 5 && zip.matches("\\d{5}")) || zip.isEmpty();
+		return (zip.length() == 5 && zip.matches("[0-9]{5}")) || zip.isEmpty();
 	}
 
 	public static boolean isValidPhoneNumber(String num) {
@@ -525,7 +525,7 @@ public final class Student {
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	private static boolean isValidCourseInfo(String courses) {
-		return courses.matches("(CST\\d{3},?)*");
+		return courses.matches("(CST[0-9]{3},?)*");
 	}
 
 	private String setPhoneNumber(String num) throws InvalidPhoneNumberException {
