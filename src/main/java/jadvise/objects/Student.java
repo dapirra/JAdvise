@@ -9,7 +9,6 @@ import jadvise.exceptions.id.InvalidIDException;
 import jadvise.tools.TelephoneTool;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import static jadvise.tools.Info.*;
 import static jadvise.tools.TitleCaseTool.toTitleCase;

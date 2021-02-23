@@ -1,7 +1,7 @@
 package jadvise.gui;
 
-import jadvise.guitools.PrebuiltDialogs;
 import jadvise.guitools.JScrollableSpinner;
+import jadvise.guitools.PrebuiltDialogs;
 import jadvise.objects.MySQLAccount;
 import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
