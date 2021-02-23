@@ -476,6 +476,9 @@ public class AddEditStudent extends JDialog {
 		JPanel outputPanel = new JPanel(new BorderLayout());
 		JSeparator separator = new JSeparator();
 		outputPanel.add(separator, BorderLayout.CENTER);
+		outputPanel.setMaximumSize(new Dimension(
+				outputPanel.getMaximumSize().width, 1
+		));
 		return outputPanel;
 	}
 
@@ -485,7 +488,7 @@ public class AddEditStudent extends JDialog {
 		JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 //		JPanel innerPanel = new JPanel(new BorderLayout());
 		final JButton hideButton = new JButton("-");
-		hideButton.setPreferredSize(new Dimension(45, 15));
+		hideButton.setPreferredSize(new Dimension(35, 28));
 //		hideButton.setMinimumSize(new Dimension(45, 15));
 //		hideButton.setMaximumSize(new Dimension(45, 15));
 		hideButton.setFocusable(false);
@@ -495,6 +498,10 @@ public class AddEditStudent extends JDialog {
 
 		outputPanel.add(addSeparator(), BorderLayout.NORTH);
 		outputPanel.add(innerPanel, BorderLayout.CENTER);
+		outputPanel.setMaximumSize(new Dimension(
+				outputPanel.getMaximumSize().width,
+				outputPanel.getPreferredSize().height
+		));
 		if (hidePanel != null) {
 			hideButton.addActionListener(actionEvent ->
 				togglePanelVisibility(hidePanel, hideButton)
