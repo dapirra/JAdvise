@@ -334,6 +334,7 @@ public class AddEditStudent extends JDialog {
 		notesArea = new JTextArea(10, 20);
 		// Prevents the UI from automatically scrolling down to the notesArea
 		// whenever a student contains any notes
+		// https://stackoverflow.com/questions/23365847/how-to-auto-scroll-down-jtextarea-after-append
 		((DefaultCaret) notesArea.getCaret())
 				.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
@@ -486,15 +487,12 @@ public class AddEditStudent extends JDialog {
 		JPanel outputPanel = new JPanel(new BorderLayout());
 
 		JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-//		JPanel innerPanel = new JPanel(new BorderLayout());
 		final JButton hideButton = new JButton("-");
 		hideButton.setPreferredSize(new Dimension(35, 28));
-//		hideButton.setMinimumSize(new Dimension(45, 15));
-//		hideButton.setMaximumSize(new Dimension(45, 15));
 		hideButton.setFocusable(false);
 		JLabel mainLabel = new JLabel(title);
-		innerPanel.add(hideButton);//, BorderLayout.WEST);
-		innerPanel.add(mainLabel);//, BorderLayout.CENTER);
+		innerPanel.add(hideButton);
+		innerPanel.add(mainLabel);
 
 		outputPanel.add(addSeparator(), BorderLayout.NORTH);
 		outputPanel.add(innerPanel, BorderLayout.CENTER);
