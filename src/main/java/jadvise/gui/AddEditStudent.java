@@ -27,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerListModel;
+import javax.swing.text.DefaultCaret;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -331,6 +332,10 @@ public class AddEditStudent extends JDialog {
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
 		notesArea = new JTextArea(10, 20);
+		// Prevents the UI from automatically scrolling down to the notesArea
+		// whenever a student contains any notes
+		((DefaultCaret) notesArea.getCaret())
+				.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
 
 		// Edit Mode - Set fields
@@ -383,7 +388,6 @@ public class AddEditStudent extends JDialog {
 		mainPanel.add(notesAreaPanel);
 		scrollPane = new JScrollPane(mainPanel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
-//		scrollPane.getVerticalScrollBar().setValue(0);
 
 		// Done Button
 		doneButton = new JButton("Done");
