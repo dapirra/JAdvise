@@ -343,7 +343,7 @@ public final class Student {
 	}
 
 	public void setStreet(String street) {
-		this.street = street.trim();
+		this.street = toTitleCase(street.trim());
 	}
 
 	public String getCity() {
