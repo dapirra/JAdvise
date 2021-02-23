@@ -7,6 +7,7 @@ import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.exceptions.id.InvalidIDException;
+import jadvise.guitools.PhoneTextField;
 import jadvise.guitools.PrebuiltDialogs;
 import jadvise.guitools.JScrollableComboBox;
 import jadvise.guitools.JScrollableSpinner;
@@ -274,7 +275,7 @@ public class AddEditStudent extends JDialog {
 		// Contact Info
 		homePhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		homePhoneLabel = new JLabel("Home Phone Number: ");
-		homePhoneField = new JTextField(15);
+		homePhoneField = new PhoneTextField(15);
 		homePhonePanel.add(homePhoneLabel);
 		homePhonePanel.add(homePhoneField);
 //		homePhonePanel = new JPanel(new BorderLayout());
@@ -285,7 +286,7 @@ public class AddEditStudent extends JDialog {
 
 		cellPhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		cellPhoneLabel = new JLabel("Cell Phone Number: ");
-		cellPhoneField = new JTextField(15);
+		cellPhoneField = new PhoneTextField(15);
 		cellPhonePanel.add(cellPhoneLabel);
 		cellPhonePanel.add(cellPhoneField);
 

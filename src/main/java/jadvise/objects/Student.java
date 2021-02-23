@@ -9,6 +9,7 @@ import jadvise.exceptions.id.InvalidIDException;
 import jadvise.tools.TelephoneFormatter;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import static jadvise.tools.Info.*;
 import static jadvise.tools.TitleCaseFormatter.toTitleCase;
@@ -506,7 +507,6 @@ public final class Student {
 
 	public static boolean isValidEmail(String email) {
 		return email.matches(".+@.+\\..+") || email.isEmpty();
-//		return email.contains("@") && email.contains(".") || email.isEmpty();
 	}
 
 	public static boolean isValidZipCode(String zip) {
@@ -514,14 +514,13 @@ public final class Student {
 	}
 
 	public static boolean isValidPhoneNumber(String num) {
-
 		for (char c : num.toCharArray()) {
 			if (Character.isAlphabetic(c)) {
 				return false;
 			}
 		}
-		return true;
-//		return (!num.matches("[A-z]*")) || num.isEmpty();
+		num = TelephoneFormatter.unFormat(num);
+		return num.isEmpty() || num.length() == 10;
 	}
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -530,14 +529,9 @@ public final class Student {
 	}
 
 	private String setPhoneNumber(String num) throws InvalidPhoneNumberException {
-		num = num.trim();
 		if (!isValidPhoneNumber(num)) {
 			throw new InvalidPhoneNumberException();
-		} else {
-			if (!TelephoneFormatter.isFormatted(num)) {
-				num = TelephoneFormatter.format(num);
-			}
-			return num;
 		}
+		return TelephoneFormatter.format(num);
 	}
 }

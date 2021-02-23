@@ -374,7 +374,7 @@ public final class Info {
 	 */
 	public static String generateRandomPhoneNumber(Random random) {
 		return String.format(
-				"(%03d) %03d - %04d",
+				"(%03d) %03d-%04d",
 				random.nextInt(999),
 				random.nextInt(999),
 				random.nextInt(9999)
