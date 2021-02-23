@@ -502,8 +502,8 @@ public class AddEditStudent extends JDialog {
 				}
 			});
 			outputPanel.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					if (e.getClickCount() == 2) {
+				public void mousePressed(MouseEvent mouseEvent) {
+					if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
 						if (hidePanel.isVisible()) {
 							hidePanel.setVisible(false);
 							hideButton.setText("+");
