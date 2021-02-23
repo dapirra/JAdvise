@@ -496,30 +496,28 @@ public class AddEditStudent extends JDialog {
 		outputPanel.add(addSeparator(), BorderLayout.NORTH);
 		outputPanel.add(innerPanel, BorderLayout.CENTER);
 		if (hidePanel != null) {
-			hideButton.addActionListener(actionEvent -> {
-				if (hidePanel.isVisible()) {
-					hidePanel.setVisible(false);
-					hideButton.setText("+");
-				} else {
-					hidePanel.setVisible(true);
-					hideButton.setText("-");
-				}
-			});
+			hideButton.addActionListener(actionEvent ->
+				togglePanelVisibility(hidePanel, hideButton)
+			);
 			outputPanel.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent mouseEvent) {
 					if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
-						if (hidePanel.isVisible()) {
-							hidePanel.setVisible(false);
-							hideButton.setText("+");
-						} else {
-							hidePanel.setVisible(true);
-							hideButton.setText("-");
-						}
+						togglePanelVisibility(hidePanel, hideButton);
 					}
 				}
 			});
 		}
 		return outputPanel;
+	}
+
+	private static void togglePanelVisibility(JPanel hidePanel, JButton hideButton) {
+		if (hidePanel.isVisible()) {
+			hidePanel.setVisible(false);
+			hideButton.setText("+");
+		} else {
+			hidePanel.setVisible(true);
+			hideButton.setText("-");
+		}
 	}
 
 	/**
