@@ -2,6 +2,7 @@
 
 # Intellij
 .idea/$CACHE_FILE$
+.idea/uiDesigner.xml
 
 # Gradle
 .gradle
