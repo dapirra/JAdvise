@@ -6,7 +6,7 @@ import jadvise.exceptions.InvalidPhoneNumberException;
 import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.InvalidIDException;
-import jadvise.tools.TelephoneFormatter;
+import jadvise.tools.TelephoneTool;
 
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -519,7 +519,7 @@ public final class Student {
 				return false;
 			}
 		}
-		num = TelephoneFormatter.unFormat(num);
+		num = TelephoneTool.unFormat(num);
 		return num.isEmpty() || num.length() == 10;
 	}
 
@@ -532,6 +532,6 @@ public final class Student {
 		if (!isValidPhoneNumber(num)) {
 			throw new InvalidPhoneNumberException();
 		}
-		return TelephoneFormatter.format(num);
+		return TelephoneTool.format(num);
 	}
 }
