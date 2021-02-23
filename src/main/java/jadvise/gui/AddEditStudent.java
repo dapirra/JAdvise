@@ -487,8 +487,7 @@ public class AddEditStudent extends JDialog {
 		JPanel outputPanel = new JPanel(new BorderLayout());
 
 		JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		final JButton hideButton = new JButton("-");
-		hideButton.setPreferredSize(new Dimension(35, 28));
+		final JButton hideButton = new JButton("\u2796"); // -
 		hideButton.setFocusable(false);
 		JLabel mainLabel = new JLabel(title);
 		innerPanel.add(hideButton);
@@ -518,10 +517,10 @@ public class AddEditStudent extends JDialog {
 	private static void togglePanelVisibility(JPanel hidePanel, JButton hideButton) {
 		if (hidePanel.isVisible()) {
 			hidePanel.setVisible(false);
-			hideButton.setText("+");
+			hideButton.setText("\u2795"); // +
 		} else {
 			hidePanel.setVisible(true);
-			hideButton.setText("-");
+			hideButton.setText("\u2796"); // -
 		}
 	}
 

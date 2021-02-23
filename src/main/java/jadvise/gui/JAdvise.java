@@ -374,7 +374,7 @@ public class JAdvise extends JFrame {
 				sd.updateTable();
 			}
 		});
-		clearSearch = new JButton("\u274C");
+		clearSearch = new JButton("\u274C"); // X
 		clearSearch.addActionListener(actionEvent -> {
 			if (!searchField.getText().isEmpty()) {
 				searchField.setText("");
