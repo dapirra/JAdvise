@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 /**
  * @author David Pirraglia
  */
-public class TitleCaseFormatter {
+public class TitleCaseTool {
 
 	/**
 	 * Converts a string to title case.

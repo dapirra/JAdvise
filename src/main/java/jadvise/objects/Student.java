@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import static jadvise.tools.Info.*;
-import static jadvise.tools.TitleCaseFormatter.toTitleCase;
+import static jadvise.tools.TitleCaseTool.toTitleCase;
 
 /**
  * @author David Pirraglia
