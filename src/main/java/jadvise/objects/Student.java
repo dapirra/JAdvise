@@ -512,14 +512,14 @@ public final class Student {
 		return (zip.length() == 5 && zip.matches("[0-9]{5}")) || zip.isEmpty();
 	}
 
-	public static boolean isValidPhoneNumber(String num) {
-		for (char c : num.toCharArray()) {
+	public static boolean isValidPhoneNumber(String phoneNumber) {
+		for (char c : phoneNumber.toCharArray()) {
 			if (Character.isAlphabetic(c)) {
 				return false;
 			}
 		}
-		num = TelephoneTool.unFormat(num);
-		return num.isEmpty() || num.length() == 10;
+		phoneNumber = TelephoneTool.unFormat(phoneNumber);
+		return phoneNumber.isEmpty() || phoneNumber.length() == 10;
 	}
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
