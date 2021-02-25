@@ -116,8 +116,7 @@ public class StudentDatabase {
 	}
 
 	public Student getStudent(int index) {
-		System.out.println(index + "\n" + students.size());
-		return students.get(findStudent(index + ""));
+		return students.get(index);
 	}
 
 	public Student getStudent(String ID) {
