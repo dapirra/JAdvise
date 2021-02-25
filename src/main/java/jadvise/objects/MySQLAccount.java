@@ -8,17 +8,17 @@ public class MySQLAccount {
 	private String password;
 	private String ip;
 	private int port;
-	private String table;
+	private String database;
 
 	public MySQLAccount(String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.ip = "127.0.0.1";
 		this.port = 3306;
-		this.table = "jadvise";
+		this.database = "jadvise";
 	}
 
-	public MySQLAccount(String username, String password, String ip, int port, String table) {
+	public MySQLAccount(String username, String password, String ip, int port, String database) {
 		this.username = username;
 		this.password = password;
 		if (ip.endsWith("/")) { // Remove ending forward slash, if included
@@ -27,11 +27,11 @@ public class MySQLAccount {
 			this.ip = ip;
 		}
 		this.port = Math.abs(port);
-		this.table = table;
+		this.database = database;
 	}
 
 	public String getMySQLLink() {
-		return "jdbc:mysql://" + ip + ':' + port + '/' + table;
+		return "jdbc:mysql://" + ip + ':' + port + '/' + database);
 	}
 
 	public String getUsername() {
