@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -29,7 +30,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -116,7 +116,7 @@ public class JAdvise extends JFrame {
 	private final JLabel searchLabel;
 	private final JButton clearSearch;
 
-	protected static Container jAdvise;
+	protected static JRootPane jAdvise;
 
 	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
 
@@ -132,6 +132,20 @@ public class JAdvise extends JFrame {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setResizable(true);
+
+		jAdvise.registerKeyboardAction(
+				actionEvent -> {
+					if (PrebuiltDialogs.showConfirmDialog(
+							this,
+							"Are you sure you want to quit?",
+							TITLE
+					)) {
+						System.exit(0);
+					};
+				},
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
 
 		// Table
 		String[][] rowData = sd.getTableData();
