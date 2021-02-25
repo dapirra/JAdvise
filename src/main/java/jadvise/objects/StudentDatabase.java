@@ -350,7 +350,7 @@ public class StudentDatabase {
 
 	private Connection connectToDatabase() throws SQLException, ClassNotFoundException {
 		// Load the JDBC driver
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		// Connect to the database
 		return DriverManager.getConnection(
