@@ -447,7 +447,7 @@ public class JAdvise extends JFrame {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
 			// Create JAdvise GUI
-			new JAdvise(new MySQLAccount("root", "usbw"));
+			new JAdvise(new MySQLAccount("root", ""));
 		} catch (SQLException | ClassNotFoundException | IllegalAccessException
 				| InstantiationException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
