@@ -328,15 +328,20 @@ public class AddEditStudent extends JDialog {
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
 		notesArea = new JTextArea(10, 20);
-		// Prevents the UI from automatically scrolling down to the notesArea
-		// whenever a student contains any notes
-		// https://stackoverflow.com/questions/23365847/how-to-auto-scroll-down-jtextarea-after-append
-		((DefaultCaret) notesArea.getCaret())
-				.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
 
 		// Edit Mode - Set fields
 		if (editStudent != null) {
+			DefaultCaret notesAreaCaret = (DefaultCaret) notesArea.getCaret();
+			boolean studentHasNotes = !editStudent.getNotes().isEmpty();
+
+			// Prevents the UI from automatically scrolling down to the notesArea
+			// whenever a student contains any notes written.
+			// https://stackoverflow.com/questions/23365847/how-to-auto-scroll-down-jtextarea-after-append
+			if (studentHasNotes) {
+				notesAreaCaret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+			}
+
 			System.out.println("Edit Mode");
 			IDField.setText(editStudent.getIdNumber());
 			firstNameField.setText(editStudent.getFirstName());
@@ -364,6 +369,12 @@ public class AddEditStudent extends JDialog {
 			notesArea.setText(editStudent.getNotes());
 
 			previousID = editStudent.getIdNumber();
+
+			// Fixes problem where cursor doesn't move at all caused by stopping
+			// the window from scrolling when the notes field was set.
+			if (studentHasNotes) {
+				notesAreaCaret.setUpdatePolicy(DefaultCaret.UPDATE_WHEN_ON_EDT);
+			}
 		} else {
 			previousID = "";
 		}
