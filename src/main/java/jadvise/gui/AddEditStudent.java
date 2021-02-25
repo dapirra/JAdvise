@@ -278,11 +278,6 @@ public class AddEditStudent extends JDialog {
 		homePhoneField = new PhoneTextField(15);
 		homePhonePanel.add(homePhoneLabel);
 		homePhonePanel.add(homePhoneField);
-//		homePhonePanel = new JPanel(new BorderLayout());
-//		homePhoneLabel = new JLabel("Home Phone Number: ");
-//		homePhoneField = new JTextField(15);
-//		homePhonePanel.add(homePhoneLabel, BorderLayout.WEST);
-//		homePhonePanel.add(homePhoneField, BorderLayout.CENTER);
 
 		cellPhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		cellPhoneLabel = new JLabel("Cell Phone Number: ");
@@ -539,6 +534,7 @@ public class AddEditStudent extends JDialog {
 		return outputPanel;
 	}
 
+	@SuppressWarnings("unused")
 	private static JPanel makeCSTPanel(String msg, String[] data) {
 		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
 		JLabel msgLabel = new JLabel(msg);
