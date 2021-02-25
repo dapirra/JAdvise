@@ -30,8 +30,10 @@ public class MySQLAccount {
 		this.database = database;
 	}
 
-	public String getMySQLLink() {
-		return "jdbc:mysql://" + ip + ':' + port + '/' + database);
+	public String getMySQLLink(boolean includeDatabase) {
+		return "jdbc:mysql://" + ip + ':' + port
+				+ (includeDatabase ? '/' + database : "")
+				+ "?characterEncoding=utf-8&connectionCollation=utf8mb4_unicode_520_ci";
 	}
 
 	public String getUsername() {
@@ -40,5 +42,9 @@ public class MySQLAccount {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getDatabase() {
+		return database;
 	}
 }

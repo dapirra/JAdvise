@@ -201,10 +201,44 @@ public class StudentDatabase {
 	public void loadData() throws SQLException, ClassNotFoundException {
 
 		// Connect to a database
-		Connection connection = connectToDatabase();
+		Connection connection = connectToDatabase(false);
 
 		// Create a statement
 		Statement statement = connection.createStatement();
+
+		// Create the database if it doesn't exist
+		statement.execute("CREATE DATABASE IF NOT EXISTS "
+				+ account.getDatabase()
+				+ " DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci"
+		);
+
+		// Select the newly created database
+		statement.execute("USE " + account.getDatabase());
+
+		// Create the student table if it doesn't exist
+		statement.execute(
+				"CREATE TABLE IF NOT EXISTS `students` (\n" +
+						"`idNumber` varchar(8) NOT NULL,\n" +
+						"`firstName` varchar(30) NOT NULL,\n" +
+						"`middleInitial` varchar(1) NOT NULL,\n" +
+						"`lastName` varchar(50) NOT NULL,\n" +
+						"`gpa` varchar(5) NOT NULL,\n" +
+						"`homeCampus` tinyint(4) NOT NULL,\n" +
+						"`major` tinyint(4) NOT NULL,\n" +
+						"`houseNumber` varchar(10) NOT NULL,\n" +
+						"`street` varchar(50) NOT NULL,\n" +
+						"`city` varchar(50) NOT NULL,\n" +
+						"`state` tinyint(4) NOT NULL,\n" +
+						"`zip` varchar(5) NOT NULL,\n" +
+						"`homePhone` varchar(16) NOT NULL,\n" +
+						"`cellPhone` varchar(16) NOT NULL,\n" +
+						"`emailAddress` varchar(200) NOT NULL,\n" +
+						"`CSTCoursesTakenForDegree` varchar(1000) NOT NULL,\n" +
+						"`CSTCoursesCurrentlyTaking` varchar(500) NOT NULL,\n" +
+						"`CSTCoursesToBeTakenForDegree` varchar(1000) NOT NULL,\n" +
+						"`notes` varchar(2500) NOT NULL)\n" +
+						"ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci"
+		);
 
 		// Execute statement to retrieve all data
 		ResultSet resultSet = statement.executeQuery(
@@ -227,7 +261,7 @@ public class StudentDatabase {
 	public void saveData() throws SQLException, ClassNotFoundException {
 
 		// Connect to a database
-		Connection connection = connectToDatabase();
+		Connection connection = connectToDatabase(true);
 
 		// Create a statement
 		Statement statement = connection.createStatement();
@@ -336,7 +370,7 @@ public class StudentDatabase {
 		students.clear();
 
 		// Connect to a database
-		Connection connection = connectToDatabase();
+		Connection connection = connectToDatabase(true);
 
 		// Create a statement
 		Statement statement = connection.createStatement();
@@ -348,13 +382,13 @@ public class StudentDatabase {
 		connection.close();
 	}
 
-	private Connection connectToDatabase() throws SQLException, ClassNotFoundException {
+	private Connection connectToDatabase(boolean includeDatabase) throws SQLException, ClassNotFoundException {
 		// Load the JDBC driver
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		// Connect to the database
 		return DriverManager.getConnection(
-				account.getMySQLLink(),
+				account.getMySQLLink(includeDatabase),
 				account.getUsername(),
 				account.getPassword()
 		);
