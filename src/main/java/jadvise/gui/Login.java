@@ -35,6 +35,7 @@ public class Login extends JFrame {
 
 		JLabel passLabel = new JLabel("Password:  ");
 		JPasswordField passField = new JPasswordField(20);
+		passField.setEchoChar('\u2022');
 		passField.setMinimumSize(passField.getPreferredSize());
 		passField.addMouseListener(rightClickPaste);
 
