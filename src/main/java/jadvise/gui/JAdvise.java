@@ -151,7 +151,7 @@ public class JAdvise extends JFrame {
 							TITLE
 					)) {
 						System.exit(0);
-					};
+					}
 				},
 				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
@@ -309,10 +309,11 @@ public class JAdvise extends JFrame {
 					// If the file already exists, ask to overwrite it
 					if (csvFile.exists() &&
 							!PrebuiltDialogs.showYesNoDialog(
-							jAdvise,
-							"Do you want to overwrite this file?",
-							TITLE
-					)) {
+									jAdvise,
+									"Do you want to overwrite this file?",
+									TITLE
+							)
+					) {
 						continue;
 					}
 
@@ -360,7 +361,7 @@ public class JAdvise extends JFrame {
 			);
 			if (JOptionPane.showConfirmDialog(
 					jAdvise,
-					new JComponent[] {
+					new JComponent[]{
 							new JLabel("How many random students?"),
 							spinner
 					},

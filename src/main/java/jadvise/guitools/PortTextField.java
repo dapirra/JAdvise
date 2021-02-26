@@ -48,7 +48,9 @@ public class PortTextField extends JFormattedTextField {
 				setForeground(FOREGROUND_BACKUP);
 				return;
 			}
-		} catch (Exception ignored) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		setForeground(Color.RED);
 	}
 

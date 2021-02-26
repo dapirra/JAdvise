@@ -38,7 +38,7 @@ public class JScrollableSpinner extends JSpinner {
 	 * The spinner has a set of previous/next buttons, and an editor appropriate
 	 * for the model. Adds ability to use the mouse wheel to go to previous/next values.
 	 *
-	 * @param model Determines spinner contents
+	 * @param model        Determines spinner contents
 	 * @param ignoresFocus Whether or not focus is required to scroll with the mousewheel
 	 */
 	public JScrollableSpinner(SpinnerModel model, boolean ignoresFocus) {

@@ -217,7 +217,7 @@ public class StudentDatabase {
 			System.out.println("Deleted Student: " + student.getIdNumber());
 			statement.executeUpdate(
 					"DELETE FROM `students` WHERE idNumber="
-						+ student.getIdNumber() + " LIMIT 1"
+							+ student.getIdNumber() + " LIMIT 1"
 			);
 		}
 		deletedStudents.clear();
@@ -232,8 +232,7 @@ public class StudentDatabase {
 				// If the student has been modified, delete and reinsert it
 				if (student.getStudentType() == Student.MODIFIED_STUDENT) {
 					// Create a prepared UPDATE statement which prevents SQL Injection
-					sql = connection.prepareStatement(
-							"UPDATE `students` SET "
+					sql = connection.prepareStatement("UPDATE `students` SET "
 							+ "idNumber = ?, "
 							+ "firstName = ?, "
 							+ "middleInitial = ?, "
@@ -267,8 +266,7 @@ public class StudentDatabase {
 					);
 				} else { // New Student
 					// Create a prepared INSERT statement which prevents SQL Injection
-					sql = connection.prepareStatement(
-							"INSERT INTO `students`("
+					sql = connection.prepareStatement("INSERT INTO `students` ("
 							+ "`idNumber`, "
 							+ "`firstName`, "
 							+ "`middleInitial`, "
@@ -294,7 +292,7 @@ public class StudentDatabase {
 
 				// Add all the student's values to the prepared statement
 				for (int i = 0; i < studentData.length; i++) {
-					sql.setString(i + 1 , studentData[i]);
+					sql.setString(i + 1, studentData[i]);
 				}
 
 				// Execute the statement

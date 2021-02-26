@@ -136,7 +136,7 @@ public class AddEditStudent extends JDialog {
 	 * Used for adding a new student.
 	 *
 	 * @param frame Main window
-	 * @param sd Student database
+	 * @param sd    Student database
 	 */
 	public AddEditStudent(Container frame, final StudentDatabase sd) {
 		this(frame, sd, -1, null);
@@ -145,9 +145,9 @@ public class AddEditStudent extends JDialog {
 	/**
 	 * Used for editing a student.
 	 *
-	 * @param frame Main window
-	 * @param sd Student database
-	 * @param index Index of the student
+	 * @param frame       Main window
+	 * @param sd          Student database
+	 * @param index       Index of the student
 	 * @param editStudent Student object being edited
 	 */
 	public AddEditStudent(Container frame, final StudentDatabase sd, int index, final Student editStudent) {
@@ -214,8 +214,8 @@ public class AddEditStudent extends JDialog {
 		GPASpinner.setPreferredSize(new Dimension(50, 23));
 		majorLabel = new JLabel("Major: ");
 		majorComboBox = new JScrollableComboBox<>(new String[]{
-			Student.getMajor(0), Student.getMajor(1), Student.getMajor(2),
-			Student.getMajor(3), Student.getMajor(4)});
+				Student.getMajor(0), Student.getMajor(1), Student.getMajor(2),
+				Student.getMajor(3), Student.getMajor(4)});
 		GPAAndMajorPanel.add(GPALabel);
 		GPAAndMajorPanel.add(GPASpinner);
 		GPAAndMajorPanel.add(majorLabel);
@@ -224,8 +224,8 @@ public class AddEditStudent extends JDialog {
 		homeCampusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		homeCampusLabel = new JLabel("Home Campus: ");
 		homeCampusComboBox = new JScrollableComboBox<>(new String[]{
-			Student.getHomeCampus(0), Student.getHomeCampus(1),
-			Student.getHomeCampus(2)});
+				Student.getHomeCampus(0), Student.getHomeCampus(1),
+				Student.getHomeCampus(2)});
 		homeCampusPanel.add(homeCampusLabel);
 		homeCampusPanel.add(homeCampusComboBox);
 
@@ -509,7 +509,7 @@ public class AddEditStudent extends JDialog {
 		));
 		if (hidePanel != null) {
 			hideButton.addActionListener(actionEvent ->
-				togglePanelVisibility(hidePanel, hideButton)
+					togglePanelVisibility(hidePanel, hideButton)
 			);
 			outputPanel.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent mouseEvent) {

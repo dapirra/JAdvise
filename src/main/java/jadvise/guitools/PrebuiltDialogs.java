@@ -12,7 +12,7 @@ public class PrebuiltDialogs {
 	 * Creates an Error dialog.
 	 *
 	 * @param parentComponent The parent window.
-	 * @param msg The message to display.
+	 * @param msg             The message to display.
 	 */
 	public static void showErrorDialog(Component parentComponent, Object msg) {
 		JOptionPane.showMessageDialog(
@@ -27,8 +27,8 @@ public class PrebuiltDialogs {
 	 * Creates an Ok/Cancel dialog with a warning icon.
 	 *
 	 * @param parentComponent The parent window.
-	 * @param msg The message to display.
-	 * @param title The title of the dialog.
+	 * @param msg             The message to display.
+	 * @param title           The title of the dialog.
 	 * @return True if user selects OK, false otherwise.
 	 */
 	public static boolean showConfirmDialog(Component parentComponent, Object msg, String title) {
@@ -45,8 +45,8 @@ public class PrebuiltDialogs {
 	 * Creates a Yes/No dialog with a warning icon.
 	 *
 	 * @param parentComponent The parent window.
-	 * @param msg The message to display.
-	 * @param title The title of the dialog.
+	 * @param msg             The message to display.
+	 * @param title           The title of the dialog.
 	 * @return True if user selects Yes, false otherwise.
 	 */
 	public static boolean showYesNoDialog(Component parentComponent, Object msg, String title) {

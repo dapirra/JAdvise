@@ -44,9 +44,9 @@ public class JScrollableComboBox<E> extends JComboBox<E> {
 	 * (and therefore the data model) becomes selected. Adds ability to use
 	 * the mouse wheel to go to previous/next values.
 	 *
-	 * @param e An array of objects to insert into the combo box
+	 * @param e            An array of objects to insert into the combo box
 	 * @param ignoresFocus Whether or not focus is required to scroll with the mousewheel
-	 * @param loopable Determines whether the data will cycle when the end is reached
+	 * @param loopable     Determines whether the data will cycle when the end is reached
 	 */
 	public JScrollableComboBox(E[] e, boolean ignoresFocus, boolean loopable) {
 		super(e);
