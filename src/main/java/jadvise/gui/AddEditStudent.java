@@ -7,6 +7,7 @@ import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.exceptions.id.InvalidIDException;
+import jadvise.guitools.IDTextField;
 import jadvise.guitools.JScrollableComboBox;
 import jadvise.guitools.JScrollableSpinner;
 import jadvise.guitools.PhoneTextField;
@@ -179,7 +180,7 @@ public class AddEditStudent extends JDialog {
 		// Personal Info
 		IDPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		IDLabel = new JLabel("<html><b>ID Number: </b></html>");
-		IDField = new JTextField(15);
+		IDField = new IDTextField(15);
 		IDPanel.add(IDLabel);
 		IDPanel.add(IDField);
 
