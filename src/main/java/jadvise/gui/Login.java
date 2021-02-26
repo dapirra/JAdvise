@@ -87,6 +87,7 @@ public class Login extends JFrame {
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.weighty = 1;
 
+		// Add Username Label and TextField
 		grid.gridx = 0;
 		grid.gridy = 0;
 		grid.gridwidth = 1;
@@ -95,6 +96,7 @@ public class Login extends JFrame {
 		grid.gridwidth = 2;
 		add(userField, grid);
 
+		// Add Password Label and TextField
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 1;
@@ -103,6 +105,7 @@ public class Login extends JFrame {
 		grid.gridwidth = 2;
 		add(passField, grid);
 
+		// Add IP/Domain Label and TextField
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 1;
@@ -111,6 +114,7 @@ public class Login extends JFrame {
 		grid.gridwidth = 2;
 		add(ipDomainField, grid);
 
+		// Add Port Label and TextField
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 1;
@@ -119,6 +123,7 @@ public class Login extends JFrame {
 		grid.gridwidth = 2;
 		add(portField, grid);
 
+		// Add Database Label and TextField
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 1;
@@ -127,6 +132,7 @@ public class Login extends JFrame {
 		grid.gridwidth = 2;
 		add(databaseField, grid);
 
+		// Add Login Button
 		grid.gridx = 0;
 		grid.gridy++;
 		grid.gridwidth = 3;
