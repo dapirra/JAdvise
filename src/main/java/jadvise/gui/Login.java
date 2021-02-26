@@ -5,12 +5,15 @@ import jadvise.guitools.PrebuiltDialogs;
 import jadvise.objects.MySQLAccount;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -72,6 +75,13 @@ public class Login extends JFrame {
 				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
 		});
+
+		// Pressing escape will ask if the user would like to quit
+		rootPane.registerKeyboardAction(
+				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
 
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.fill = GridBagConstraints.HORIZONTAL;

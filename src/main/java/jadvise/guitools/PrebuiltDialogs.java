@@ -1,5 +1,7 @@
 package jadvise.guitools;
 
+import jadvise.gui.JAdvise;
+
 import javax.swing.JOptionPane;
 import java.awt.Component;
 
@@ -57,5 +59,20 @@ public class PrebuiltDialogs {
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE
 		) == JOptionPane.YES_OPTION;
+	}
+
+	/**
+	 * Creates a Yes/No dialog asking if the user would like to quit.
+	 *
+	 * @param parentComponent The parent window.
+	 */
+	public static void showQuitDialog(Component parentComponent) {
+		if (showConfirmDialog(
+				parentComponent,
+				"Are you sure you want to quit?",
+				JAdvise.TITLE
+		)) {
+			System.exit(0);
+		}
 	}
 }

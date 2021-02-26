@@ -48,7 +48,7 @@ import java.util.stream.IntStream;
  */
 public class JAdvise extends JFrame {
 
-	private static final String TITLE = "JAdvise";
+	public static final String TITLE = "JAdvise";
 	private final StudentDatabase sd;
 
 	// Menu
@@ -142,17 +142,9 @@ public class JAdvise extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(true);
 
-		// Pressing escape will ask if you'd like to quit
+		// Pressing escape will ask if the user would like to quit
 		jAdvise.registerKeyboardAction(
-				actionEvent -> {
-					if (PrebuiltDialogs.showConfirmDialog(
-							this,
-							"Are you sure you want to quit?",
-							TITLE
-					)) {
-						System.exit(0);
-					}
-				},
+				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
 				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
