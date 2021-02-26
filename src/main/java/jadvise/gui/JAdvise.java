@@ -141,7 +141,7 @@ public class JAdvise extends JFrame {
 		// Pressing escape will ask if the user would like to quit
 		rootPane.registerKeyboardAction(
 				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				KeyStroke.getKeyStroke("ESCAPE"),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
 
@@ -223,7 +223,7 @@ public class JAdvise extends JFrame {
 		// Pressing enter with a row selected will edit it
 		// https://stackoverflow.com/questions/9091208/jtable-enter-key
 		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+				KeyStroke.getKeyStroke("ENTER"),
 				"\n"
 		);
 		table.getActionMap().put("\n", new AbstractAction() {
@@ -235,10 +235,10 @@ public class JAdvise extends JFrame {
 
 		// Pressing delete with a row selected will delete it
 		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
-				"DELETE"
+				KeyStroke.getKeyStroke("DELETE"),
+				"DEL"
 		);
-		table.getActionMap().put("DELETE", new AbstractAction() {
+		table.getActionMap().put("DEL", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeStudentAction();

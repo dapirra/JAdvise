@@ -79,7 +79,7 @@ public class Login extends JFrame {
 		// Pressing escape will ask if the user would like to quit
 		rootPane.registerKeyboardAction(
 				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				KeyStroke.getKeyStroke("ESCAPE"),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
 
