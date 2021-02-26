@@ -476,30 +476,6 @@ public final class Student {
 	}
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
-	public boolean contains(String search) {
-		search = search.toLowerCase();
-		return idNumber.contains(search)
-				|| firstName.toLowerCase().contains(search)
-				|| middleInitial.toLowerCase().contains(search)
-				|| lastName.toLowerCase().contains(search)
-				|| (gpa + "").contains(search)
-				|| getHomeCampus(homeCampus).toLowerCase().contains(search)
-				|| getMajor(major).toLowerCase().contains(search)
-				|| houseNumber.toLowerCase().contains(search)
-				|| street.toLowerCase().contains(search)
-				|| city.toLowerCase().contains(search)
-				|| STATES[state].toLowerCase().contains(search)
-				|| zip.contains(search)
-				|| homePhone.contains(search)
-				|| cellPhone.contains(search)
-				|| emailAddress.toLowerCase().contains(search)
-				|| CSTCoursesTakenForDegree.toLowerCase().contains(search)
-				|| CSTCoursesCurrentlyTaking.toLowerCase().contains(search)
-				|| CSTCoursesToBeTakenForDegree.toLowerCase().contains(search)
-				|| notes.toLowerCase().contains(search);
-	}
-
-	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean isValidID(String ID) {
 		return ID.length() == 8 && ID.matches("[0-9]{8}");
 	}
