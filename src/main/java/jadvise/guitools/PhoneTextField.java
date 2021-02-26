@@ -16,5 +16,6 @@ public class PhoneTextField extends JFormattedTextField {
 			e.printStackTrace();
 		}
 		setColumns(columns);
+		setText("");
 	}
 }

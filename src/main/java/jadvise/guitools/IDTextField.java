@@ -16,5 +16,6 @@ public class IDTextField extends JFormattedTextField {
 			e.printStackTrace();
 		}
 		setColumns(columns);
+		setText("");
 	}
 }
