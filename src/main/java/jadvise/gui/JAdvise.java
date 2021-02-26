@@ -17,7 +17,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -125,8 +124,6 @@ public class JAdvise extends JFrame {
 	private final JLabel searchLabel;
 	private final JButton clearSearch;
 
-	protected static JRootPane jAdvise;
-
 	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
 
 		// Load Data
@@ -134,7 +131,6 @@ public class JAdvise extends JFrame {
 		sd.loadData();
 
 		// Create JAdvise GUI
-		jAdvise = getRootPane();
 		setTitle(TITLE);
 		setSize(800, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -143,7 +139,7 @@ public class JAdvise extends JFrame {
 		setResizable(true);
 
 		// Pressing escape will ask if the user would like to quit
-		jAdvise.registerKeyboardAction(
+		rootPane.registerKeyboardAction(
 				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
 				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
@@ -267,7 +263,7 @@ public class JAdvise extends JFrame {
 			try {
 				table.print();
 			} catch (PrinterException ex) {
-				PrebuiltDialogs.showErrorDialog(jAdvise, "Can't print table.");
+				PrebuiltDialogs.showErrorDialog(this, "Can't print table.");
 			}
 		});
 		fileMenu.add(printItem);
@@ -294,14 +290,14 @@ public class JAdvise extends JFrame {
 			int userSelection;
 			do {
 				// Show the save dialog to the user and get their response
-				userSelection = exportToCSVSaveDialog.showSaveDialog(jAdvise);
+				userSelection = exportToCSVSaveDialog.showSaveDialog(this);
 				if (userSelection == JFileChooser.APPROVE_OPTION) {
 					File csvFile = exportToCSVSaveDialog.getSelectedFile();
 
 					// If the file already exists, ask to overwrite it
 					if (csvFile.exists() &&
 							!PrebuiltDialogs.showYesNoDialog(
-									jAdvise,
+									this,
 									"Do you want to overwrite this file?",
 									TITLE
 							)
@@ -337,7 +333,7 @@ public class JAdvise extends JFrame {
 		addStudentItem = new JMenuItem("Add Student");
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
 		addStudentItem.addActionListener(ae -> {
-			new AddEditStudent(jAdvise, sd);
+			new AddEditStudent(this, sd);
 			if (!searchField.getText().isEmpty()) {
 				search();
 			}
@@ -352,7 +348,7 @@ public class JAdvise extends JFrame {
 					true
 			);
 			if (JOptionPane.showConfirmDialog(
-					jAdvise,
+					this,
 					new JComponent[]{
 							new JLabel("How many random students?"),
 							spinner
@@ -390,7 +386,7 @@ public class JAdvise extends JFrame {
 		removeAllStudentsItem = new JMenuItem("Remove All Students");
 		removeAllStudentsItem.addActionListener(actionEvent -> {
 			if (PrebuiltDialogs.showConfirmDialog(
-					jAdvise,
+					this,
 					"Are you sure you want to remove all students?",
 					TITLE
 			)) {
@@ -414,7 +410,7 @@ public class JAdvise extends JFrame {
 		aboutItem = new JMenuItem("About");
 		aboutItem.setMnemonic(KeyEvent.VK_A);
 		aboutItem.addActionListener(actionEvent -> JOptionPane.showMessageDialog(
-				jAdvise,
+				this,
 				"Version: 1.0\nDate: 12/15/13\nCreated by David Pirraglia",
 				TITLE,
 				JOptionPane.INFORMATION_MESSAGE
@@ -431,10 +427,10 @@ public class JAdvise extends JFrame {
 
 	private void editStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
+			PrebuiltDialogs.showErrorDialog(this, "No student is selected.");
 			return;
 		}
-		new AddEditStudent(jAdvise, sd, getIndex(table), sd.getStudent(
+		new AddEditStudent(this, sd, getIndex(table), sd.getStudent(
 				(String) table.getModel().getValueAt(getIndex(table), 0)
 		));
 		if (!searchField.getText().isEmpty()) {
@@ -444,11 +440,11 @@ public class JAdvise extends JFrame {
 
 	private void removeStudentAction() {
 		if (table.getSelectedRow() < 0) {
-			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
+			PrebuiltDialogs.showErrorDialog(this, "No student is selected.");
 			return;
 		}
 		if (PrebuiltDialogs.showConfirmDialog(
-				jAdvise,
+				this,
 				"Are you sure you want to delete this student?",
 				TITLE
 		)) {

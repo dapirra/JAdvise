@@ -31,7 +31,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerListModel;
 import javax.swing.text.DefaultCaret;
 import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -49,7 +49,6 @@ public class AddEditStudent extends JDialog {
 
 	private final JPanel mainPanel;
 	private final JScrollPane scrollPane;
-	protected static Container inputFrame;
 
 	private final JPanel personalInfoPanel;
 
@@ -135,24 +134,23 @@ public class AddEditStudent extends JDialog {
 	/**
 	 * Used for adding a new student.
 	 *
-	 * @param frame Main window
-	 * @param sd    Student database
+	 * @param parentComponent Main window
+	 * @param sd              Student database
 	 */
-	public AddEditStudent(Container frame, final StudentDatabase sd) {
-		this(frame, sd, -1, null);
+	public AddEditStudent(Component parentComponent, final StudentDatabase sd) {
+		this(parentComponent, sd, -1, null);
 	}
 
 	/**
 	 * Used for editing a student.
 	 *
-	 * @param frame       Main window
-	 * @param sd          Student database
-	 * @param index       Index of the student
-	 * @param editStudent Student object being edited
+	 * @param parentComponent Main window
+	 * @param sd              Student database
+	 * @param index           Index of the student
+	 * @param editStudent     Student object being edited
 	 */
-	public AddEditStudent(Container frame, final StudentDatabase sd, int index, final Student editStudent) {
+	public AddEditStudent(Component parentComponent, final StudentDatabase sd, int index, final Student editStudent) {
 
-		inputFrame = frame;
 		if (editStudent == null) {
 			setTitle("Add Student");
 		} else {
@@ -162,12 +160,12 @@ public class AddEditStudent extends JDialog {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		// Makes parent not focusable
-		if (inputFrame != null) {
+		if (parentComponent != null) {
 			setModal(true);
 		}
 
 		setLayout(new BorderLayout());
-		setLocationRelativeTo(inputFrame);
+		setLocationRelativeTo(parentComponent);
 		setResizable(true);
 
 		// Pressing Escape will close the window
