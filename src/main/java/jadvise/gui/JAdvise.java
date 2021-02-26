@@ -23,13 +23,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -37,6 +41,7 @@ import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.stream.IntStream;
 
 /**
  * @author David Pirraglia
@@ -66,7 +71,9 @@ public class JAdvise extends JFrame {
 
 	// Table
 	private final JTable table;
+	public static TableRowSorter<TableModel> tableSorter;
 	private final JScrollPane tableScrollPane;
+	private int previousColumn = -1;
 
 	public static final String[] COLUMN_NAMES = {
 			"<html><b>ID Number</b></html>",
@@ -83,14 +90,12 @@ public class JAdvise extends JFrame {
 			"<html><b>Zip</b></html>",
 			"<html><b>Home Phone</b></html>",
 			"<html><b>Cell Phone</b></html>",
-			"<html><b>Email Address</b></html>"
+			"<html><b>Email Address</b></html>",
+			"<html><b>Courses Taken</b></html>",
+			"<html><b>Current Courses</b></html>",
+			"<html><b>Courses Needed</b></html>",
+			"<html><b>Notes</b></html>",
 	};
-
-	public static void resetAllColumnWidths(JTable table) {
-		for (int i = 0; i < COLUMN_WIDTHS.length; i++) {
-			table.getColumnModel().getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
-		}
-	}
 
 	public static final int[] COLUMN_WIDTHS = {
 			80, // ID Number
@@ -107,7 +112,11 @@ public class JAdvise extends JFrame {
 			50, // Zip
 			125, // Home Phone Number
 			125, // Cell Phone Number
-			400 // Email Address
+			300, // Email Address
+			200, // Courses Taken
+			200, // Current Courses
+			200, // Courses Needed
+			200 // Notes
 	};
 
 	// Search Area
@@ -133,6 +142,7 @@ public class JAdvise extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(true);
 
+		// Pressing escape will ask if you'd like to quit
 		jAdvise.registerKeyboardAction(
 				actionEvent -> {
 					if (PrebuiltDialogs.showConfirmDialog(
@@ -147,6 +157,36 @@ public class JAdvise extends JFrame {
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
 
+		// Search Area
+		searchLabel = new JLabel(" Search:  ");
+		searchField = new JTextField();
+		searchField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				search();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				search();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				search();
+			}
+		});
+		clearSearch = new JButton("\u274C"); // X
+		clearSearch.addActionListener(actionEvent -> {
+			searchField.setText("");
+			tableSorter.setSortKeys(null);
+		});
+
+		searchPanel.add(searchLabel, BorderLayout.WEST);
+		searchPanel.add(searchField, BorderLayout.CENTER);
+		searchPanel.add(clearSearch, BorderLayout.EAST);
+		add(searchPanel, BorderLayout.NORTH);
+
 		// Table
 		String[][] rowData = sd.getTableData();
 		table = new JTable(rowData, COLUMN_NAMES) {
@@ -159,6 +199,28 @@ public class JAdvise extends JFrame {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resetAllColumnWidths(table);
+
+		setUpSorter(table);
+
+		// Clicking on columns will now sort by ASCENDING, DESCENDING, and UNSORTED
+		table.getTableHeader().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				// Do nothing if not left click
+				if (event.getButton() != MouseEvent.BUTTON1) return;
+
+				Point point = event.getPoint();
+				int column = table.columnAtPoint(point);
+				if (tableSorter.getSortKeys().get(0).getSortOrder()
+						.toString().charAt(0) == 'A'
+						&& column == previousColumn) {
+					tableSorter.setSortKeys(null);
+					previousColumn = -1;
+				} else {
+					previousColumn = column;
+				}
+			}
+		});
 
 		// Double clicking on a row will edit it
 		table.addMouseListener(new MouseAdapter() {
@@ -281,7 +343,12 @@ public class JAdvise extends JFrame {
 
 		addStudentItem = new JMenuItem("Add Student");
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
-		addStudentItem.addActionListener(ae -> new AddEditStudent(jAdvise, sd));
+		addStudentItem.addActionListener(ae -> {
+			new AddEditStudent(jAdvise, sd);
+			if (!searchField.getText().isEmpty()) {
+				search();
+			}
+		});
 		editMenu.add(addStudentItem);
 
 		addRandomStudentsItem = new JMenuItem("Add Random Students");
@@ -309,6 +376,9 @@ public class JAdvise extends JFrame {
 					sd.saveData();
 				} catch (SQLException | ClassNotFoundException e) {
 					e.printStackTrace();
+				}
+				if (!searchField.getText().isEmpty()) {
+					search();
 				}
 			}
 		});
@@ -363,45 +433,6 @@ public class JAdvise extends JFrame {
 		menuBar.add(helpMenu);
 		setJMenuBar(menuBar);
 
-		// Search Area
-		searchLabel = new JLabel(" Search:  ");
-		searchField = new JTextField();
-		searchField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				System.out.println("insertUpdate");
-				sd.search(searchField.getText());
-				sd.updateTable();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				System.out.println("removeUpdate");
-				sd.search(searchField.getText());
-				sd.updateTable();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				System.out.println("changedUpdate");
-				sd.search(searchField.getText());
-				sd.updateTable();
-			}
-		});
-		clearSearch = new JButton("\u274C"); // X
-		clearSearch.addActionListener(actionEvent -> {
-			if (!searchField.getText().isEmpty()) {
-				searchField.setText("");
-				sd.search("");
-				sd.updateTable();
-			}
-		});
-
-		searchPanel.add(searchLabel, BorderLayout.WEST);
-		searchPanel.add(searchField, BorderLayout.CENTER);
-		searchPanel.add(clearSearch, BorderLayout.EAST);
-		add(searchPanel, BorderLayout.NORTH);
-
 		setVisible(true);
 	}
 
@@ -410,9 +441,12 @@ public class JAdvise extends JFrame {
 			PrebuiltDialogs.showErrorDialog(jAdvise, "No student is selected.");
 			return;
 		}
-		new AddEditStudent(jAdvise, sd, table.getSelectedRow(), sd.getStudent(
-				(String) table.getModel().getValueAt(table.getSelectedRow(), 0)
+		new AddEditStudent(jAdvise, sd, getIndex(table), sd.getStudent(
+				(String) table.getModel().getValueAt(getIndex(table), 0)
 		));
+		if (!searchField.getText().isEmpty()) {
+			search();
+		}
 	}
 
 	private void removeStudentAction() {
@@ -425,8 +459,11 @@ public class JAdvise extends JFrame {
 				"Are you sure you want to delete this student?",
 				TITLE
 		)) {
-			sd.removeStudent(table.getSelectedRow());
+			sd.removeStudent(getIndex(table));
 			sd.updateTable();
+			if (!searchField.getText().isEmpty()) {
+				search();
+			}
 			try {
 				sd.saveData();
 			} catch (SQLException ex) {
@@ -450,6 +487,34 @@ public class JAdvise extends JFrame {
 			new JAdvise(new MySQLAccount("root", ""));
 		} catch (SQLException | ClassNotFoundException | IllegalAccessException
 				| InstantiationException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void setUpSorter(JTable table) {
+		TableModel tableModel = table.getModel();
+		tableSorter = new TableRowSorter<>(tableModel);
+		table.setRowSorter(tableSorter);
+	}
+
+	public static void resetAllColumnWidths(JTable table) {
+		for (int i = 0; i < COLUMN_WIDTHS.length; i++) {
+			table.getColumnModel().getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
+		}
+	}
+
+	public static int getIndex(JTable table) {
+		return table.convertRowIndexToModel(table.getSelectedRow());
+	}
+
+	public void search() {
+		try {
+			RowFilter<TableModel, Object> rf = RowFilter.regexFilter(
+					"(?i)" + searchField.getText(),
+					IntStream.rangeClosed(0, COLUMN_NAMES.length).toArray()
+			);
+			tableSorter.setRowFilter(rf);
+		} catch (java.util.regex.PatternSyntaxException e) {
 			e.printStackTrace();
 		}
 	}

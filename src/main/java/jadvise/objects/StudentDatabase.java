@@ -45,8 +45,6 @@ public class StudentDatabase {
 
 	private ArrayList<Student> students;
 	private final ArrayList<Student> deletedStudents;
-	private ArrayList<Student> searchBackup;
-	private int searchPreviousLength = 0;
 	private JTable table;
 	private final MySQLAccount account;
 
@@ -66,29 +64,17 @@ public class StudentDatabase {
 			throw new DuplicateIDException();
 		}
 		students.add(s);
-		if (searchBackup != null) {
-			searchBackup.add(s);
-		}
 	}
 
 	public void removeStudent(int studentIndex) {
 		deletedStudents.add(students.get(studentIndex));
 		students.remove(studentIndex);
-		if (searchBackup != null) {
-			searchBackup.remove(findStudent(
-					students.get(studentIndex).getIdNumber(),
-					searchBackup
-			));
-		}
 	}
 
 	public void removeStudent(String ID) {
 		int studentIndex = findStudent(ID);
 		deletedStudents.add(students.get(studentIndex));
 		students.remove(studentIndex);
-		if (searchBackup != null) {
-			searchBackup.remove(findStudent(ID, searchBackup));
-		}
 	}
 
 	public void updateStudent(Student updatedStudent, String previousID, int index) {
@@ -99,16 +85,6 @@ public class StudentDatabase {
 		}
 		updatedStudent.setPreviousIdNumber(previousID);
 		students.set(index, updatedStudent);
-		if (searchBackup != null) {
-			testIndex = findStudent(updatedStudent.getIdNumber(), searchBackup);
-			if (testIndex != -1 && testIndex != index) {
-				throw new DuplicateIDException();
-			}
-			searchBackup.set(
-					findStudent(previousID, searchBackup),
-					updatedStudent
-			);
-		}
 	}
 
 	public ArrayList<Student> getStudents() {
@@ -145,41 +121,11 @@ public class StudentDatabase {
 		return output;
 	}
 
-	public void search(String search) {
-		int currentLength = search.length();
-		if (searchPreviousLength == 0 && currentLength >= 1) { // Backup
-			System.out.println("Backup");
-			searchBackup = (ArrayList<Student>) students.clone();
-		} else if (searchPreviousLength >= 1 && currentLength == 0) { // Restore
-			System.out.println("Restore");
-			students = searchBackup;
-			searchBackup = null;
-		}
-		if (searchPreviousLength < currentLength) { // Text Added
-			System.out.println("Text Added:\t" + search);
-			for (int i = 0; i < students.size(); i++) {
-				if (!students.get(i).contains(search)) {
-					students.remove(i);
-					i--;
-				}
-			}
-		} else if (searchPreviousLength > currentLength && currentLength != 0) { // Text Removed
-			System.out.println("Text Removed:\t" + search);
-			students = (ArrayList<Student>) searchBackup.clone();
-			for (int i = 0; i < students.size(); i++) {
-				if (!students.get(i).contains(search)) {
-					students.remove(i);
-					i--;
-				}
-			}
-		}
-		searchPreviousLength = currentLength;
-	}
-
 	public void updateTable() {
 		if (table != null) {
 			table.setModel(new DefaultTableModel(getTableData(), JAdvise.COLUMN_NAMES));
 			JAdvise.resetAllColumnWidths(table);
+			JAdvise.setUpSorter(table);
 		} else {
 			System.out.println("No table");
 		}
