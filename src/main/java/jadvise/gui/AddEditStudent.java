@@ -342,6 +342,8 @@ public class AddEditStudent extends JDialog {
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
 		notesArea = new JTextArea(10, 20);
+		notesArea.setLineWrap(true);
+		notesArea.setWrapStyleWord(true);
 		enhanceTextField(notesArea);
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
 
