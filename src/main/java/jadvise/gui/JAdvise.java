@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -242,6 +243,32 @@ public class JAdvise extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeStudentAction();
+			}
+		});
+
+		// Created a context menu for the table with Edit/Delete options
+		// https://stackoverflow.com/questions/3558293/java-swing-jtable-right-click-menu-how-do-i-get-it-to-select-aka-highlight-t
+		JPopupMenu popupmenu = new JPopupMenu();
+		JMenuItem popupEditItem = new JMenuItem("Edit");
+		JMenuItem popupDeleteItem = new JMenuItem("Delete");
+		popupEditItem.addActionListener(e -> {
+			editStudentAction();
+		});
+		popupDeleteItem.addActionListener(e -> {
+			removeStudentAction();
+		});
+		popupmenu.add(popupEditItem);
+		popupmenu.add(popupDeleteItem);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger() && e.getComponent() instanceof JTable) {
+					int row = table.rowAtPoint(e.getPoint());
+					if (row != -1) {
+						table.setRowSelectionInterval(row, row);
+						popupmenu.show(table, e.getX(), e.getY());
+					}
+				}
 			}
 		});
 
