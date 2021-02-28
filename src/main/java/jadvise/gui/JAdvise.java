@@ -211,16 +211,6 @@ public class JAdvise extends JFrame {
 			}
 		});
 
-		// Double clicking on a row will edit it
-		table.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent mouseEvent) {
-				if (mouseEvent.getClickCount() == 2
-						&& mouseEvent.getButton() == MouseEvent.BUTTON1) {
-					editStudentAction();
-				}
-			}
-		});
-
 		// Pressing enter with a row selected will edit it
 		// https://stackoverflow.com/questions/9091208/jtable-enter-key
 		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
@@ -259,7 +249,10 @@ public class JAdvise extends JFrame {
 		});
 		popupmenu.add(popupEditItem);
 		popupmenu.add(popupDeleteItem);
+
+		// Adds mouse listeners to the table
 		table.addMouseListener(new MouseAdapter() {
+			// Right clicking selects the current row and shows the popup menu
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger() && e.getComponent() instanceof JTable) {
@@ -268,6 +261,14 @@ public class JAdvise extends JFrame {
 						table.setRowSelectionInterval(row, row);
 						popupmenu.show(table, e.getX(), e.getY());
 					}
+				}
+			}
+
+			// Double clicking on a row will edit it
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+					editStudentAction();
 				}
 			}
 		});
