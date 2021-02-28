@@ -166,7 +166,16 @@ public class TextFieldEnhancer {
 			});
 		}
 
-		textComponent.setComponentPopupMenu(popupmenu);
+		// Right clicking on a textfield will focus it
+		textComponent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					textComponent.requestFocusInWindow();
+					popupmenu.show(textComponent, e.getX(), e.getY());
+				}
+			}
+		});
 	}
 
 	public static void addPasteContextMenu(JTextComponent textComponent) {
@@ -226,6 +235,15 @@ public class TextFieldEnhancer {
 			});
 		}
 
-		textComponent.setComponentPopupMenu(popupmenu);
+		// Right clicking on a textfield will focus it
+		textComponent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					textComponent.requestFocusInWindow();
+					popupmenu.show(textComponent, e.getX(), e.getY());
+				}
+			}
+		});
 	}
 }
