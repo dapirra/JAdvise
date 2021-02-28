@@ -5,8 +5,8 @@ import com.sun.javafx.PlatformUtil;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.text.JTextComponent;
 import javax.swing.undo.UndoManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -32,12 +32,12 @@ public class TextFieldEnhancer {
 	 *     <li>Middle click will paste</li>
 	 * </ul>
 	 *
-	 * @param textField The textfield to enhance
+	 * @param textComponent The textfield to enhance
 	 */
-	public static void enhanceTextField(JTextField textField) {
+	public static void enhanceTextField(JTextComponent textComponent) {
 		JPopupMenu popupmenu = new JPopupMenu();
 		UndoManager undoManager = new UndoManager();
-		textField.getDocument().addUndoableEditListener(undoManager);
+		textComponent.getDocument().addUndoableEditListener(undoManager);
 
 		JMenuItem cut = new JMenuItem("Cut");
 		JMenuItem copy = new JMenuItem("Copy");
@@ -47,8 +47,8 @@ public class TextFieldEnhancer {
 		JMenuItem redo = new JMenuItem("Redo");
 
 		// Binds CTRL+Z to undo
-		textField.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "UNDO");
-		textField.getActionMap().put("UNDO", new AbstractAction() {
+		textComponent.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "UNDO");
+		textComponent.getActionMap().put("UNDO", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (undoManager.canUndo()) {
@@ -58,8 +58,8 @@ public class TextFieldEnhancer {
 		});
 
 		// Binds CTRL+Y to redo
-		textField.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "REDO");
-		textField.getActionMap().put("REDO", new AbstractAction() {
+		textComponent.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "REDO");
+		textComponent.getActionMap().put("REDO", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (undoManager.canRedo()) {
@@ -69,8 +69,8 @@ public class TextFieldEnhancer {
 		});
 
 		undo.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
 			if (undoManager.canUndo()) {
 				undoManager.undo();
@@ -78,8 +78,8 @@ public class TextFieldEnhancer {
 		});
 
 		redo.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
 			if (undoManager.canRedo()) {
 				undoManager.redo();
@@ -87,31 +87,31 @@ public class TextFieldEnhancer {
 		});
 
 		cut.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
-			textField.cut();
+			textComponent.cut();
 		});
 
 		copy.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
-			textField.copy();
+			textComponent.copy();
 		});
 
 		paste.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
-			textField.paste();
+			textComponent.paste();
 		});
 
 		selectAll.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
-			textField.selectAll();
+			textComponent.selectAll();
 		});
 
 		popupmenu.add(cut);
@@ -136,48 +136,48 @@ public class TextFieldEnhancer {
 
 		// Pressing Escape on a textfield will deselect selected text if any text
 		// is selected and if not, it will unfocus the textfield.
-		textField.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
+		textComponent.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
 				KeyStroke.getKeyStroke("ESCAPE"),
 				"ESC"
 		);
-		textField.getActionMap().put("ESC", new AbstractAction() {
+		textComponent.getActionMap().put("ESC", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textField.getSelectedText() == null) {
-					textField.getRootPane().requestFocusInWindow();
+				if (textComponent.getSelectedText() == null) {
+					textComponent.getRootPane().requestFocusInWindow();
 				} else {
-					textField.select(0, 0);
+					textComponent.select(0, 0);
 				}
 			}
 		});
 
 		// Middle clicking on a textfield will paste
 		if (PlatformUtil.isWindows()) {
-			textField.addMouseListener(new MouseAdapter() {
+			textComponent.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON2) {
-						if (!textField.hasFocus()) {
-							textField.requestFocusInWindow();
+						if (!textComponent.hasFocus()) {
+							textComponent.requestFocusInWindow();
 						}
-						textField.paste();
+						textComponent.paste();
 					}
 				}
 			});
 		}
 
-		textField.setComponentPopupMenu(popupmenu);
+		textComponent.setComponentPopupMenu(popupmenu);
 	}
 
-	public static void addPasteContextMenu(JTextField textField) {
+	public static void addPasteContextMenu(JTextComponent textComponent) {
 		JPopupMenu popupmenu = new JPopupMenu();
 		JMenuItem paste = new JMenuItem("Paste");
 
 		paste.addActionListener(e -> {
-			if (!textField.hasFocus()) {
-				textField.requestFocusInWindow();
+			if (!textComponent.hasFocus()) {
+				textComponent.requestFocusInWindow();
 			}
-			textField.paste();
+			textComponent.paste();
 		});
 
 		popupmenu.add(paste);
@@ -196,36 +196,36 @@ public class TextFieldEnhancer {
 
 		// Pressing Escape on a textfield will deselect selected text if any text
 		// is selected and if not, it will unfocus the textfield.
-		textField.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
+		textComponent.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
 				KeyStroke.getKeyStroke("ESCAPE"),
 				"ESC"
 		);
-		textField.getActionMap().put("ESC", new AbstractAction() {
+		textComponent.getActionMap().put("ESC", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textField.getSelectedText() == null) {
-					textField.getRootPane().requestFocusInWindow();
+				if (textComponent.getSelectedText() == null) {
+					textComponent.getRootPane().requestFocusInWindow();
 				} else {
-					textField.select(0, 0);
+					textComponent.select(0, 0);
 				}
 			}
 		});
 
 		// Middle clicking on a textfield will paste
 		if (PlatformUtil.isWindows()) {
-			textField.addMouseListener(new MouseAdapter() {
+			textComponent.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON2) {
-						if (!textField.hasFocus()) {
-							textField.requestFocusInWindow();
+						if (!textComponent.hasFocus()) {
+							textComponent.requestFocusInWindow();
 						}
-						textField.paste();
+						textComponent.paste();
 					}
 				}
 			});
 		}
 
-		textField.setComponentPopupMenu(popupmenu);
+		textComponent.setComponentPopupMenu(popupmenu);
 	}
 }
