@@ -38,7 +38,7 @@ public class Login extends JFrame {
 		JPasswordField passField = new JPasswordField(20);
 		passField.setEchoChar('\u2022');
 		passField.setMinimumSize(passField.getPreferredSize());
-		TextFieldEnhancer.enhanceTextField(passField);
+		TextFieldEnhancer.addPasteContextMenu(passField);
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);

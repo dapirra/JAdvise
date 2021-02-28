@@ -168,4 +168,64 @@ public class TextFieldEnhancer {
 
 		textField.setComponentPopupMenu(popupmenu);
 	}
+
+	public static void addPasteContextMenu(JTextField textField) {
+		JPopupMenu popupmenu = new JPopupMenu();
+		JMenuItem paste = new JMenuItem("Paste");
+
+		paste.addActionListener(e -> {
+			if (!textField.hasFocus()) {
+				textField.requestFocusInWindow();
+			}
+			textField.paste();
+		});
+
+		popupmenu.add(paste);
+
+		// Hide popup menu when escape is pressed
+		popupmenu.getInputMap(JPopupMenu.WHEN_IN_FOCUSED_WINDOW).put(
+				KeyStroke.getKeyStroke("ESCAPE"),
+				"ESC"
+		);
+		popupmenu.getActionMap().put("ESC", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				popupmenu.setVisible(false);
+			}
+		});
+
+		// Pressing Escape on a textfield will deselect selected text if any text
+		// is selected and if not, it will unfocus the textfield.
+		textField.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
+				KeyStroke.getKeyStroke("ESCAPE"),
+				"ESC"
+		);
+		textField.getActionMap().put("ESC", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getSelectedText() == null) {
+					textField.getRootPane().requestFocusInWindow();
+				} else {
+					textField.select(0, 0);
+				}
+			}
+		});
+
+		// Middle clicking on a textfield will paste
+		if (PlatformUtil.isWindows()) {
+			textField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON2) {
+						if (!textField.hasFocus()) {
+							textField.requestFocusInWindow();
+						}
+						textField.paste();
+					}
+				}
+			});
+		}
+
+		textField.setComponentPopupMenu(popupmenu);
+	}
 }
