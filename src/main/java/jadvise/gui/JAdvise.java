@@ -43,6 +43,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.stream.IntStream;
 
+import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
+
 /**
  * @author David Pirraglia
  */
@@ -149,6 +151,7 @@ public class JAdvise extends JFrame {
 		// Search Area
 		searchLabel = new JLabel(" Search:  ");
 		searchField = new JTextField();
+		enhanceTextField(searchField);
 		searchField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
