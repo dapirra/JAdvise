@@ -40,6 +40,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
+import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
+
 /**
  * @author David Pirraglia
  */
@@ -179,14 +181,17 @@ public class AddEditStudent extends JDialog {
 		IDPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		IDLabel = new JLabel("<html><b>ID Number: </b></html>");
 		IDField = new IDTextField(15);
+		enhanceTextField(IDField);
 		IDPanel.add(IDLabel);
 		IDPanel.add(IDField);
 
 		name1Panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		firstNameLabel = new JLabel("<html><b>First Name: </b></html>");
 		firstNameField = new JTextField(17);
+		enhanceTextField(firstNameField);
 		middleInitialLabel = new JLabel("Middle Initial: ");
 		middleInitialField = new JTextField(3);
+		enhanceTextField(middleInitialField);
 		name1Panel.add(firstNameLabel);
 		name1Panel.add(firstNameField);
 		name1Panel.add(middleInitialLabel);
@@ -195,6 +200,7 @@ public class AddEditStudent extends JDialog {
 		name2Panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		lastNameLabel = new JLabel("<html><b>Last Name: </b></html>");
 		lastNameField = new JTextField(30);
+		enhanceTextField(lastNameField);
 		name2Panel.add(lastNameLabel);
 		name2Panel.add(lastNameField);
 
@@ -237,18 +243,21 @@ public class AddEditStudent extends JDialog {
 		houseNumberPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		houseNumberLabel = new JLabel("House Number: ");
 		houseNumberField = new JTextField(10);
+		enhanceTextField(houseNumberField);
 		houseNumberPanel.add(houseNumberLabel);
 		houseNumberPanel.add(houseNumberField);
 
 		streetPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		streetLabel = new JLabel("Street: ");
 		streetField = new JTextField(20);
+		enhanceTextField(streetField);
 		streetPanel.add(streetLabel);
 		streetPanel.add(streetField);
 
 		cityPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		cityLabel = new JLabel("City: ");
 		cityField = new JTextField(20);
+		enhanceTextField(cityField);
 		cityPanel.add(cityLabel);
 		cityPanel.add(cityField);
 
@@ -258,6 +267,7 @@ public class AddEditStudent extends JDialog {
 		stateComboBox.setSelectedIndex(31); // NY
 		zipLabel = new JLabel("Zip: ");
 		zipField = new JTextField(7);
+		enhanceTextField(zipField);
 		stateAndZipPanel.add(stateLabel);
 		stateAndZipPanel.add(stateComboBox);
 		stateAndZipPanel.add(zipLabel);
@@ -275,18 +285,21 @@ public class AddEditStudent extends JDialog {
 		homePhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		homePhoneLabel = new JLabel("Home Phone Number: ");
 		homePhoneField = new PhoneTextField(15);
+		enhanceTextField(homePhoneField);
 		homePhonePanel.add(homePhoneLabel);
 		homePhonePanel.add(homePhoneField);
 
 		cellPhonePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		cellPhoneLabel = new JLabel("Cell Phone Number: ");
 		cellPhoneField = new PhoneTextField(15);
+		enhanceTextField(cellPhoneField);
 		cellPhonePanel.add(cellPhoneLabel);
 		cellPhonePanel.add(cellPhoneField);
 
 		emailPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		emailLabel = new JLabel("Email Address: ");
 		emailField = new JTextField(30);
+		enhanceTextField(emailField);
 		emailPanel.add(emailLabel);
 		emailPanel.add(emailField);
 
@@ -300,18 +313,21 @@ public class AddEditStudent extends JDialog {
 		// Course Info
 		CSTCoursesTakenForDegreeLabel = new JLabel("<html>CST Courses<br>taken for degree: </html>");
 		CSTCoursesTakenForDegreeField = new JTextField(25);
+		enhanceTextField(CSTCoursesTakenForDegreeField);
 		CSTCoursesTakenForDegreePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		CSTCoursesTakenForDegreePanel.add(CSTCoursesTakenForDegreeLabel);
 		CSTCoursesTakenForDegreePanel.add(CSTCoursesTakenForDegreeField);
 
 		CSTCoursesCurrentlyTakingLabel = new JLabel("<html>CST Courses<br>currently taking: </html>");
 		CSTCoursesCurrentlyTakingField = new JTextField(25);
+		enhanceTextField(CSTCoursesCurrentlyTakingField);
 		CSTCoursesCurrentlyTakingPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		CSTCoursesCurrentlyTakingPanel.add(CSTCoursesCurrentlyTakingLabel);
 		CSTCoursesCurrentlyTakingPanel.add(CSTCoursesCurrentlyTakingField);
 
 		CSTCoursesToBeTakenForDegreeLabel = new JLabel("<html>CST Courses to be<br>taken for degree: </html>");
 		CSTCoursesToBeTakenForDegreeField = new JTextField(25);
+		enhanceTextField(CSTCoursesToBeTakenForDegreeField);
 		CSTCoursesToBeTakenForDegreePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeLabel);
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeField);
@@ -327,6 +343,7 @@ public class AddEditStudent extends JDialog {
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
 		notesArea = new JTextArea(10, 20);
+		enhanceTextField(notesArea);
 		notesAreaPanel.add(notesArea, BorderLayout.CENTER);
 
 		// Edit Mode - Set fields
