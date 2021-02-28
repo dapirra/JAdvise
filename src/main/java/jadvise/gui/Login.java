@@ -2,6 +2,7 @@ package jadvise.gui;
 
 import jadvise.guitools.PortTextField;
 import jadvise.guitools.PrebuiltDialogs;
+import jadvise.guitools.TextFieldEnhancer;
 import jadvise.objects.MySQLAccount;
 
 import javax.swing.JButton;
@@ -13,9 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 /**
@@ -34,29 +32,29 @@ public class Login extends JFrame {
 		JLabel userLabel = new JLabel("Username:  ");
 		JTextField userField = new JTextField(20);
 		userField.setMinimumSize(userField.getPreferredSize());
-		userField.addMouseListener(rightClickPaste);
+		TextFieldEnhancer.enhanceTextField(userField);
 
 		JLabel passLabel = new JLabel("Password:  ");
 		JPasswordField passField = new JPasswordField(20);
 		passField.setEchoChar('\u2022');
 		passField.setMinimumSize(passField.getPreferredSize());
-		passField.addMouseListener(rightClickPaste);
+		TextFieldEnhancer.enhanceTextField(passField);
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
 		ipDomainField.setMinimumSize(ipDomainField.getPreferredSize());
-		ipDomainField.addMouseListener(rightClickPaste);
+		TextFieldEnhancer.enhanceTextField(ipDomainField);
 
 		JLabel portLabel = new JLabel("Port:  ");
 		JTextField portField = new PortTextField("3306");
 		portField.setMinimumSize(portField.getPreferredSize());
-		portField.addMouseListener(rightClickPaste);
+		TextFieldEnhancer.enhanceTextField(portField);
 		portField.setColumns(20);
 
 		JLabel databaseLabel = new JLabel("Database:  ");
 		JTextField databaseField = new JTextField("jadvise", 20);
 		databaseField.setMinimumSize(databaseField.getPreferredSize());
-		databaseField.addMouseListener(rightClickPaste);
+		TextFieldEnhancer.enhanceTextField(databaseField);
 
 		JButton loginButton = new JButton("Login");
 		rootPane.setDefaultButton(loginButton);
@@ -78,7 +76,11 @@ public class Login extends JFrame {
 
 		// Pressing escape will ask if the user would like to quit
 		rootPane.registerKeyboardAction(
-				actionEvent -> PrebuiltDialogs.showQuitDialog(this),
+				actionEvent -> {
+					if (rootPane.hasFocus() || loginButton.hasFocus()) {
+						PrebuiltDialogs.showQuitDialog(this);
+					}
+				},
 				KeyStroke.getKeyStroke("ESCAPE"),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
@@ -140,15 +142,6 @@ public class Login extends JFrame {
 
 		setVisible(true);
 	}
-
-	private static final MouseAdapter rightClickPaste = new MouseAdapter() {
-		@Override
-		public void mousePressed(MouseEvent e) {
-			if (e.getButton() == MouseEvent.BUTTON3) {
-				((JTextField) e.getSource()).paste();
-			}
-		}
-	};
 
 	/**
 	 * Used for testing. Primary main method is located in {@link jadvise.Demo}
