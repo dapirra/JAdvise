@@ -37,6 +37,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
@@ -491,6 +493,17 @@ public class AddEditStudent extends JDialog {
 
 		add(scrollPane, BorderLayout.CENTER);
 		add(doneButton, BorderLayout.SOUTH);
+
+		// Sets the ID field to be the initial focused item
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				super.windowOpened(e);
+				IDField.requestFocusInWindow();
+				e.getWindow().removeWindowListener(this);
+			}
+		});
+
 		setVisible(true);
 	}
 
@@ -512,7 +525,6 @@ public class AddEditStudent extends JDialog {
 
 		JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		final JButton hideButton = new JButton("\u2796"); // -
-		hideButton.setFocusable(false);
 		JLabel mainLabel = new JLabel(title);
 		innerPanel.add(hideButton);
 		innerPanel.add(mainLabel);
