@@ -130,12 +130,12 @@ public class AddEditStudent extends JDialog {
 
 	private final JPanel courseInfoPanel;
 
-	private JList<String> coursesTaken;
-	private DefaultListModel<String> coursesTakenModel = new DefaultListModel<>();
-	private JList<String> currentCourses;
-	private DefaultListModel<String> currentCoursesModel = new DefaultListModel<>();
-	private JList<String> coursesNeeded;
-	private DefaultListModel<String> coursesNeededModel = new DefaultListModel<>();
+	private final JList<String> coursesTaken;
+	private final DefaultListModel<String> coursesTakenModel = new DefaultListModel<>();
+	private final JList<String> currentCourses;
+	private final DefaultListModel<String> currentCoursesModel = new DefaultListModel<>();
+	private final JList<String> coursesNeeded;
+	private final DefaultListModel<String> coursesNeededModel = new DefaultListModel<>();
 
 	private final JPanel notesAreaPanel;
 	private final JTextArea notesArea;
