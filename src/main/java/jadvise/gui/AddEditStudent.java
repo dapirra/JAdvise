@@ -360,11 +360,11 @@ public class AddEditStudent extends JDialog {
 		coursesTaken = new JList<>(coursesTakenModel);
 		currentCourses = new JList<>(currentCoursesModel);
 		coursesNeeded = new JList<>(coursesNeededModel);
-		courseInfoPanel = new JPanel(new BorderLayout(10, 5));
-		courseInfoPanel.add(addSeparator(), BorderLayout.NORTH);
-		courseInfoPanel.add(makeCSTPanel("Courses Taken", coursesTaken, coursesTakenModel), BorderLayout.WEST);
-		courseInfoPanel.add(makeCSTPanel("Current Courses", currentCourses, currentCoursesModel), BorderLayout.CENTER);
-		courseInfoPanel.add(makeCSTPanel("Courses Needed", coursesNeeded, coursesNeededModel), BorderLayout.EAST);
+		JPanel innerCoursePanel = new JPanel(new GridLayout(1, 3, 20, 5));
+		innerCoursePanel.add(makeCSTPanel("Courses Taken:", coursesTaken, coursesTakenModel));
+		innerCoursePanel.add(makeCSTPanel("Current Courses:", currentCourses, currentCoursesModel));
+		innerCoursePanel.add(makeCSTPanel("Courses Needed:", coursesNeeded, coursesNeededModel));
+		courseInfoPanel = createBox(addSeparator(), innerCoursePanel);
 
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
@@ -614,9 +614,9 @@ public class AddEditStudent extends JDialog {
 		return outputPanel;
 	}
 
-	private static JPanel makeCSTPanel(String msg, JList<String> list, DefaultListModel<String> model) {
+	private static JPanel makeCSTPanel(String header, JList<String> list, DefaultListModel<String> model) {
 		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
-		JLabel msgLabel = new JLabel(msg);
+		JLabel headerLabel = new JLabel(header);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setDragEnabled(true);
 		list.setDropMode(DropMode.INSERT);
@@ -630,17 +630,21 @@ public class AddEditStudent extends JDialog {
 			}
 		});
 
-		JPanel buttonPanel = new JPanel(new BorderLayout());
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		JButton addButton = new JButton("+");
 		JButton removeButton = new JButton("-");
+		addButton.setToolTipText("Add a course");
+		removeButton.setToolTipText("Remove a course");
 		addButton.addActionListener(e -> {
 			System.out.println("Add course");
 		});
 		removeButton.addActionListener(e -> {
 			System.out.println("Remove course");
 		});
+		buttonPanel.add(addButton);
+		buttonPanel.add(removeButton);
 
-		outputPanel.add(msgLabel, BorderLayout.NORTH);
+		outputPanel.add(headerLabel, BorderLayout.NORTH);
 		outputPanel.add(list, BorderLayout.CENTER);
 		outputPanel.add(buttonPanel, BorderLayout.SOUTH);
 
