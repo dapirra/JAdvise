@@ -130,18 +130,6 @@ public class AddEditStudent extends JDialog {
 
 	private final JPanel courseInfoPanel;
 
-	private final JPanel CSTCoursesTakenForDegreePanel;
-	private final JLabel CSTCoursesTakenForDegreeLabel;
-	private final JTextField CSTCoursesTakenForDegreeField;
-
-	private final JPanel CSTCoursesCurrentlyTakingPanel;
-	private final JLabel CSTCoursesCurrentlyTakingLabel;
-	private final JTextField CSTCoursesCurrentlyTakingField;
-
-	private final JPanel CSTCoursesToBeTakenForDegreePanel;
-	private final JLabel CSTCoursesToBeTakenForDegreeLabel;
-	private final JTextField CSTCoursesToBeTakenForDegreeField;
-
 	private JList<String> coursesTaken;
 	private DefaultListModel<String> coursesTakenModel = new DefaultListModel<>();
 	private JList<String> currentCourses;
@@ -332,34 +320,6 @@ public class AddEditStudent extends JDialog {
 		);
 
 		// Course Info
-		CSTCoursesTakenForDegreeLabel = new JLabel("<html>CST Courses<br>taken for degree: </html>");
-		CSTCoursesTakenForDegreeField = new JTextField(25);
-		enhanceTextField(CSTCoursesTakenForDegreeField);
-		CSTCoursesTakenForDegreePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		CSTCoursesTakenForDegreePanel.add(CSTCoursesTakenForDegreeLabel);
-		CSTCoursesTakenForDegreePanel.add(CSTCoursesTakenForDegreeField);
-
-		CSTCoursesCurrentlyTakingLabel = new JLabel("<html>CST Courses<br>currently taking: </html>");
-		CSTCoursesCurrentlyTakingField = new JTextField(25);
-		enhanceTextField(CSTCoursesCurrentlyTakingField);
-		CSTCoursesCurrentlyTakingPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		CSTCoursesCurrentlyTakingPanel.add(CSTCoursesCurrentlyTakingLabel);
-		CSTCoursesCurrentlyTakingPanel.add(CSTCoursesCurrentlyTakingField);
-
-		CSTCoursesToBeTakenForDegreeLabel = new JLabel("<html>CST Courses to be<br>taken for degree: </html>");
-		CSTCoursesToBeTakenForDegreeField = new JTextField(25);
-		enhanceTextField(CSTCoursesToBeTakenForDegreeField);
-		CSTCoursesToBeTakenForDegreePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeLabel);
-		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeField);
-
-		/*courseInfoPanel = createBox(
-				addSeparator(),
-				CSTCoursesTakenForDegreePanel,
-				CSTCoursesCurrentlyTakingPanel,
-				CSTCoursesToBeTakenForDegreePanel
-		);*/
-
 		coursesTaken = new JList<>();
 		currentCourses = new JList<>();
 		coursesNeeded = new JList<>();
@@ -408,10 +368,6 @@ public class AddEditStudent extends JDialog {
 			homePhoneField.setText(editStudent.getHomePhone());
 			cellPhoneField.setText(editStudent.getCellPhone());
 			emailField.setText(editStudent.getEmailAddress());
-
-			CSTCoursesTakenForDegreeField.setText(editStudent.getCSTCoursesTakenForDegree());
-			CSTCoursesCurrentlyTakingField.setText(editStudent.getCSTCoursesCurrentlyTaking());
-			CSTCoursesToBeTakenForDegreeField.setText(editStudent.getCSTCoursesToBeTakenForDegree());
 
 			String courses = editStudent.getCSTCoursesTakenForDegree();
 			if (!courses.isEmpty()) {
@@ -485,9 +441,6 @@ public class AddEditStudent extends JDialog {
 						homePhoneField.getText(),
 						cellPhoneField.getText(),
 						emailField.getText(),
-//						CSTCoursesTakenForDegreeField.getText(),
-//						CSTCoursesCurrentlyTakingField.getText(),
-//						CSTCoursesToBeTakenForDegreeField.getText(),
 						String.join(",", Arrays.stream(coursesTakenModel.toArray()).toArray(String[]::new)),
 						String.join(",", Arrays.stream(currentCoursesModel.toArray()).toArray(String[]::new)),
 						String.join(",", Arrays.stream(coursesNeededModel.toArray()).toArray(String[]::new)),
@@ -710,30 +663,6 @@ public class AddEditStudent extends JDialog {
 		outputPanel.add(list, BorderLayout.CENTER);
 		outputPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-		return outputPanel;
-	}
-
-	@SuppressWarnings("unused")
-	private static JPanel makeCSTPanelOld(String msg, String[] data) {
-		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
-		JLabel msgLabel = new JLabel(msg);
-		JList<String> list = new JList<>(data);
-
-		JButton addButton = new JButton("Add");//"   Add   "
-//		addButton.setBounds(addButton.getX(), addButton.getY(), 50, 100);
-//		addButton.setPreferredSize(new Dimension(50, 20));
-		JButton removeButton = new JButton("Remove");
-//		removeButton.setPreferredSize(new Dimension(100, 200));
-//		JPanel buttonPanel = new JPanel(new BorderLayout(0, 10));
-		JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 0, 20));
-		buttonPanel.add(addButton);
-		buttonPanel.add(removeButton);
-//		buttonPanel.add(addButton, BorderLayout.NORTH);
-//		buttonPanel.add(removeButton, BorderLayout.NORTH);
-
-		outputPanel.add(list, BorderLayout.WEST);
-		outputPanel.add(msgLabel, BorderLayout.NORTH);
-		outputPanel.add(buttonPanel, BorderLayout.CENTER);
 		return outputPanel;
 	}
 
