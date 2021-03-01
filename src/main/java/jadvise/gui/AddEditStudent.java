@@ -626,21 +626,29 @@ public class AddEditStudent extends JDialog {
 		removeButton.setToolTipText("Remove a course");
 		removeButton.setFocusable(false);
 		addButton.addActionListener(e -> {
-			String newCourse = JOptionPane.showInputDialog(
-					this,
-					"Add a course (e.g. CST101):",
-					header,
-					JOptionPane.PLAIN_MESSAGE
-			);
-			if (newCourse != null) {
-				newCourse = Student.cleanUpCourses(newCourse);
-				if (Student.isValidCourseInfo(newCourse)) {
-					for (String course : newCourse.split(",")) {
-						model.addElement(course);
+			String courses = "";
+			while (true) {
+				courses = (String) JOptionPane.showInputDialog(
+						this,
+						"Add a course (e.g. CST101, CST242):",
+						header,
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						null,
+						courses
+				);
+				if (courses != null) {
+					courses = Student.cleanUpCourses(courses);
+					if (Student.isValidCourseInfo(courses)) {
+						for (String course : courses.split(",")) {
+							model.addElement(course);
+						}
+					} else {
+						PrebuiltDialogs.showErrorDialog(this, "Invalid Course Input.");
+						continue;
 					}
-				} else {
-					PrebuiltDialogs.showErrorDialog(this, "Invalid Course Input.");
 				}
+				return;
 			}
 		});
 		removeButton.addActionListener(e -> {
