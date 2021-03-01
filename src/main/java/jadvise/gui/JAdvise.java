@@ -63,6 +63,7 @@ public class JAdvise extends JFrame {
 	private final JMenuItem exitItem;
 	private final JMenuItem addStudentItem;
 	private final JMenuItem addRandomStudentsItem;
+	private final JMenuItem addRandomStudentFromSeedItem;
 	private final JMenuItem editStudentItem;
 	private final JMenuItem removeStudentItem;
 	private final JMenuItem removeAllStudentsItem;
@@ -403,6 +404,38 @@ public class JAdvise extends JFrame {
 			}
 		});
 		editMenu.add(addRandomStudentsItem);
+
+		addRandomStudentFromSeedItem = new JMenuItem("Add Random Student From Seed");
+		addRandomStudentFromSeedItem.addActionListener(actionEvent -> {
+			long seed;
+			String input = "";
+			while (true) {
+				input = (String) JOptionPane.showInputDialog(
+						this,
+						"Enter seed to generate student:",
+						TITLE,
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						null,
+						input
+				);
+				if (input != null) { // Cancel wasn't pressed
+					try {
+						seed = Long.parseLong(input);
+						sd.addStudent(new Student(seed));
+						sd.updateTable();
+						sd.saveData();
+					} catch (NumberFormatException e) {
+						PrebuiltDialogs.showErrorDialog(this, "Invalid seed.");
+						continue;
+					} catch (SQLException | ClassNotFoundException e) {
+						PrebuiltDialogs.showErrorDialog(this, e.getMessage());
+					}
+				}
+				return;
+			}
+		});
+		editMenu.add(addRandomStudentFromSeedItem);
 
 		editStudentItem = new JMenuItem("Edit Selected Student");
 		editStudentItem.setMnemonic(KeyEvent.VK_E);
