@@ -406,11 +406,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesTakenForDegree(String courses) throws InvalidCourseException {
-		courses = courses.trim().replace(" ", "").toUpperCase();
-		if (!isValidCourseInfo(courses)) {
-			throw new InvalidCourseException();
-		}
-		this.CSTCoursesTakenForDegree = courses;
+		this.CSTCoursesTakenForDegree = setCourse(courses);
 	}
 
 	public String getCSTCoursesCurrentlyTaking() {
@@ -418,11 +414,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesCurrentlyTaking(String courses) throws InvalidCourseException {
-		courses = courses.trim().replace(" ", "").toUpperCase();
-		if (!isValidCourseInfo(courses)) {
-			throw new InvalidCourseException();
-		}
-		this.CSTCoursesCurrentlyTaking = courses;
+		this.CSTCoursesCurrentlyTaking = setCourse(courses);
 	}
 
 	public String getCSTCoursesToBeTakenForDegree() {
@@ -430,14 +422,7 @@ public final class Student {
 	}
 
 	public void setCSTCoursesToBeTakenForDegree(String courses) throws InvalidCourseException {
-		courses = courses.trim().replace(" ", "").toUpperCase();
-		if (courses.startsWith(",")) {
-			courses = courses.substring(1);
-		}
-		if (!isValidCourseInfo(courses)) {
-			throw new InvalidCourseException();
-		}
-		this.CSTCoursesToBeTakenForDegree = courses;
+		this.CSTCoursesToBeTakenForDegree = setCourse(courses);
 	}
 
 	public String getNotes() {
@@ -501,8 +486,7 @@ public final class Student {
 		return phoneNumber.isEmpty() || phoneNumber.length() == 10;
 	}
 
-	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
-	private static boolean isValidCourseInfo(String courses) {
+	public static boolean isValidCourseInfo(String courses) {
 		return courses.matches("(CST[0-9]{3},?)*");
 	}
 
@@ -511,5 +495,21 @@ public final class Student {
 			throw new InvalidPhoneNumberException();
 		}
 		return TelephoneTool.format(num);
+	}
+
+	private String setCourse(String courses) throws InvalidCourseException {
+		courses = cleanUpCourses(courses);
+		if (!isValidCourseInfo(courses)) {
+			throw new InvalidCourseException();
+		}
+		return courses;
+	}
+
+	public static String cleanUpCourses(String courses) {
+		courses = courses.trim().replace(" ", "").toUpperCase();
+		if (courses.startsWith(",")) {
+			courses = courses.substring(1);
+		}
+		return courses;
 	}
 }

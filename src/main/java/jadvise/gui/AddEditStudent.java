@@ -16,6 +16,7 @@ import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 import jadvise.tools.Info;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
@@ -24,6 +25,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -42,6 +44,7 @@ import java.awt.GridLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -357,9 +360,9 @@ public class AddEditStudent extends JDialog {
 				CSTCoursesToBeTakenForDegreePanel
 		);*/
 
-		coursesTaken = new JList<>(coursesTakenModel);
-		currentCourses = new JList<>(currentCoursesModel);
-		coursesNeeded = new JList<>(coursesNeededModel);
+		coursesTaken = new JList<>();
+		currentCourses = new JList<>();
+		coursesNeeded = new JList<>();
 		JPanel innerCoursePanel = new JPanel(new GridLayout(1, 3, 20, 5));
 		innerCoursePanel.add(makeCSTPanel("Courses Taken:", coursesTaken, coursesTakenModel));
 		innerCoursePanel.add(makeCSTPanel("Current Courses:", currentCourses, currentCoursesModel));
@@ -410,16 +413,25 @@ public class AddEditStudent extends JDialog {
 			CSTCoursesCurrentlyTakingField.setText(editStudent.getCSTCoursesCurrentlyTaking());
 			CSTCoursesToBeTakenForDegreeField.setText(editStudent.getCSTCoursesToBeTakenForDegree());
 
-			for (String i : editStudent.getCSTCoursesTakenForDegree().split(",")) {
-				coursesTakenModel.addElement(i);
+			String courses = editStudent.getCSTCoursesTakenForDegree();
+			if (!courses.isEmpty()) {
+				for (String course : courses.split(",")) {
+					coursesTakenModel.addElement(course);
+				}
 			}
 
-			for (String i : editStudent.getCSTCoursesCurrentlyTaking().split(",")) {
-				currentCoursesModel.addElement(i);
+			courses = editStudent.getCSTCoursesCurrentlyTaking();
+			if (!courses.isEmpty()) {
+				for (String course : courses.split(",")) {
+					currentCoursesModel.addElement(course);
+				}
 			}
 
-			for (String i : editStudent.getCSTCoursesToBeTakenForDegree().split(",")) {
-				coursesNeededModel.addElement(i);
+			courses = editStudent.getCSTCoursesToBeTakenForDegree();
+			if (!courses.isEmpty()) {
+				for (String course : courses.split(",")) {
+					coursesNeededModel.addElement(course);
+				}
 			}
 
 			notesArea.setText(editStudent.getNotes());
@@ -614,13 +626,37 @@ public class AddEditStudent extends JDialog {
 		return outputPanel;
 	}
 
-	private static JPanel makeCSTPanel(String header, JList<String> list, DefaultListModel<String> model) {
+	private JPanel makeCSTPanel(String header, JList<String> list, DefaultListModel<String> model) {
+		list.setModel(model);
 		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
 		JLabel headerLabel = new JLabel(header);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setDragEnabled(true);
 		list.setDropMode(DropMode.INSERT);
 		list.setTransferHandler(new DragNDropTransferHandler(list, model));
+
+		// Pressing Delete will remove the selected item
+		list.getInputMap(JComponent.WHEN_FOCUSED).put(
+				KeyStroke.getKeyStroke("DELETE"),
+				"DEL"
+		);
+		list.getActionMap().put("DEL", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = list.getSelectedIndex();
+				System.out.println("DEL: " + index);
+				if (index != -1) {
+					model.remove(index);
+				}
+				if (model.size() > 0) {
+					if (model.size() == index) {
+						list.setSelectedIndex(index - 1);
+					} else {
+						list.setSelectedIndex(index);
+					}
+				}
+			}
+		});
 
 		// Clear selection when focus is lost
 		list.addFocusListener(new FocusAdapter() {
@@ -635,11 +671,37 @@ public class AddEditStudent extends JDialog {
 		JButton removeButton = new JButton("-");
 		addButton.setToolTipText("Add a course");
 		removeButton.setToolTipText("Remove a course");
+		removeButton.setFocusable(false);
 		addButton.addActionListener(e -> {
-			System.out.println("Add course");
+			String newCourse = JOptionPane.showInputDialog(
+					this,
+					"Add a course (e.g. CST101):",
+					header,
+					JOptionPane.PLAIN_MESSAGE
+			);
+			if (newCourse != null) {
+				newCourse = Student.cleanUpCourses(newCourse);
+				if (Student.isValidCourseInfo(newCourse)) {
+					for (String course : newCourse.split(",")) {
+						model.addElement(course);
+					}
+				} else {
+					PrebuiltDialogs.showErrorDialog(this, "Invalid Course Input.");
+				}
+			}
 		});
 		removeButton.addActionListener(e -> {
-			System.out.println("Remove course");
+			int index = list.getSelectedIndex();
+			if (index != -1) {
+				model.remove(index);
+			}
+			if (model.size() > 0) {
+				if (model.size() == index) {
+					list.setSelectedIndex(index - 1);
+				} else {
+					list.setSelectedIndex(index);
+				}
+			}
 		});
 		buttonPanel.add(addButton);
 		buttonPanel.add(removeButton);
