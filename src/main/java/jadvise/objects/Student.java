@@ -431,6 +431,9 @@ public final class Student {
 
 	public void setCSTCoursesToBeTakenForDegree(String courses) throws InvalidCourseException {
 		courses = courses.trim().replace(" ", "").toUpperCase();
+		if (courses.startsWith(",")) {
+			courses = courses.substring(1);
+		}
 		if (!isValidCourseInfo(courses)) {
 			throw new InvalidCourseException();
 		}

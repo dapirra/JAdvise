@@ -17,6 +17,8 @@ import jadvise.objects.StudentDatabase;
 import jadvise.tools.Info;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -28,18 +30,26 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerListModel;
+import javax.swing.TransferHandler;
 import javax.swing.text.DefaultCaret;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
 
@@ -128,6 +138,13 @@ public class AddEditStudent extends JDialog {
 	private final JPanel CSTCoursesToBeTakenForDegreePanel;
 	private final JLabel CSTCoursesToBeTakenForDegreeLabel;
 	private final JTextField CSTCoursesToBeTakenForDegreeField;
+
+	private JList<String> coursesTaken;
+	private DefaultListModel<String> coursesTakenModel = new DefaultListModel<>();
+	private JList<String> currentCourses;
+	private DefaultListModel<String> currentCoursesModel = new DefaultListModel<>();
+	private JList<String> coursesNeeded;
+	private DefaultListModel<String> coursesNeededModel = new DefaultListModel<>();
 
 	private final JPanel notesAreaPanel;
 	private final JTextArea notesArea;
@@ -333,13 +350,21 @@ public class AddEditStudent extends JDialog {
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeLabel);
 		CSTCoursesToBeTakenForDegreePanel.add(CSTCoursesToBeTakenForDegreeField);
 
-		courseInfoPanel = createBox(
+		/*courseInfoPanel = createBox(
 				addSeparator(),
 				CSTCoursesTakenForDegreePanel,
 				CSTCoursesCurrentlyTakingPanel,
 				CSTCoursesToBeTakenForDegreePanel
-		);
-//		courseInfoPanel = makeCSTPanel("CST courses that are taken", new String[]{"asd", "dsads", "asdsada", "asdsad", "adsadas"});
+		);*/
+
+		coursesTaken = new JList<>(coursesTakenModel);
+		currentCourses = new JList<>(currentCoursesModel);
+		coursesNeeded = new JList<>(coursesNeededModel);
+		courseInfoPanel = new JPanel(new BorderLayout(10, 5));
+		courseInfoPanel.add(addSeparator(), BorderLayout.NORTH);
+		courseInfoPanel.add(makeCSTPanel("Courses Taken", coursesTaken, coursesTakenModel), BorderLayout.WEST);
+		courseInfoPanel.add(makeCSTPanel("Current Courses", currentCourses, currentCoursesModel), BorderLayout.CENTER);
+		courseInfoPanel.add(makeCSTPanel("Courses Needed", coursesNeeded, coursesNeededModel), BorderLayout.EAST);
 
 		// Notes
 		notesAreaPanel = new JPanel(new BorderLayout());
@@ -384,6 +409,18 @@ public class AddEditStudent extends JDialog {
 			CSTCoursesTakenForDegreeField.setText(editStudent.getCSTCoursesTakenForDegree());
 			CSTCoursesCurrentlyTakingField.setText(editStudent.getCSTCoursesCurrentlyTaking());
 			CSTCoursesToBeTakenForDegreeField.setText(editStudent.getCSTCoursesToBeTakenForDegree());
+
+			for (String i : editStudent.getCSTCoursesTakenForDegree().split(",")) {
+				coursesTakenModel.addElement(i);
+			}
+
+			for (String i : editStudent.getCSTCoursesCurrentlyTaking().split(",")) {
+				currentCoursesModel.addElement(i);
+			}
+
+			for (String i : editStudent.getCSTCoursesToBeTakenForDegree().split(",")) {
+				coursesNeededModel.addElement(i);
+			}
 
 			notesArea.setText(editStudent.getNotes());
 
@@ -436,9 +473,12 @@ public class AddEditStudent extends JDialog {
 						homePhoneField.getText(),
 						cellPhoneField.getText(),
 						emailField.getText(),
-						CSTCoursesTakenForDegreeField.getText(),
-						CSTCoursesCurrentlyTakingField.getText(),
-						CSTCoursesToBeTakenForDegreeField.getText(),
+//						CSTCoursesTakenForDegreeField.getText(),
+//						CSTCoursesCurrentlyTakingField.getText(),
+//						CSTCoursesToBeTakenForDegreeField.getText(),
+						String.join(",", Arrays.stream(coursesTakenModel.toArray()).toArray(String[]::new)),
+						String.join(",", Arrays.stream(currentCoursesModel.toArray()).toArray(String[]::new)),
+						String.join(",", Arrays.stream(coursesNeededModel.toArray()).toArray(String[]::new)),
 						notesArea.getText()
 				);
 				if (editStudent == null) { // Add new
@@ -574,8 +614,41 @@ public class AddEditStudent extends JDialog {
 		return outputPanel;
 	}
 
+	private static JPanel makeCSTPanel(String msg, JList<String> list, DefaultListModel<String> model) {
+		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
+		JLabel msgLabel = new JLabel(msg);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setDragEnabled(true);
+		list.setDropMode(DropMode.INSERT);
+		list.setTransferHandler(new DragNDropTransferHandler(list, model));
+
+		// Clear selection when focus is lost
+		list.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				list.clearSelection();
+			}
+		});
+
+		JPanel buttonPanel = new JPanel(new BorderLayout());
+		JButton addButton = new JButton("+");
+		JButton removeButton = new JButton("-");
+		addButton.addActionListener(e -> {
+			System.out.println("Add course");
+		});
+		removeButton.addActionListener(e -> {
+			System.out.println("Remove course");
+		});
+
+		outputPanel.add(msgLabel, BorderLayout.NORTH);
+		outputPanel.add(list, BorderLayout.CENTER);
+		outputPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+		return outputPanel;
+	}
+
 	@SuppressWarnings("unused")
-	private static JPanel makeCSTPanel(String msg, String[] data) {
+	private static JPanel makeCSTPanelOld(String msg, String[] data) {
 		JPanel outputPanel = new JPanel(new BorderLayout(10, 5));
 		JLabel msgLabel = new JLabel(msg);
 		JList<String> list = new JList<>(data);
@@ -596,5 +669,52 @@ public class AddEditStudent extends JDialog {
 		outputPanel.add(msgLabel, BorderLayout.NORTH);
 		outputPanel.add(buttonPanel, BorderLayout.CENTER);
 		return outputPanel;
+	}
+
+	private static class DragNDropTransferHandler extends TransferHandler {
+		private final JList<String> list;
+		private final DefaultListModel<String> model;
+
+		public DragNDropTransferHandler(JList<String> list, DefaultListModel<String> model) {
+			this.list = list;
+			this.model = model;
+		}
+
+		@Override
+		public boolean canImport(TransferHandler.TransferSupport ts) {
+			return ts.isDataFlavorSupported(DataFlavor.stringFlavor);
+		}
+
+		@Override
+		public boolean importData(TransferSupport ts) {
+			Transferable t = ts.getTransferable();
+			String data;
+
+			try {
+				data = t.getTransferData(DataFlavor.stringFlavor).toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+
+			JList.DropLocation d = list.getDropLocation();
+			model.add(d.getIndex(), data);
+			return true;
+		}
+
+		@Override
+		public int getSourceActions(JComponent c) {
+			return TransferHandler.MOVE;
+		}
+
+		@Override
+		public Transferable createTransferable(JComponent c) {
+			return new StringSelection(list.getSelectedValue());
+		}
+
+		@Override
+		public void exportDone(JComponent source, Transferable data, int action) {
+			model.remove(list.getSelectedIndex());
+		}
 	}
 }
