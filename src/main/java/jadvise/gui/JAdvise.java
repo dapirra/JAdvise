@@ -245,12 +245,8 @@ public class JAdvise extends JFrame {
 		JPopupMenu popupmenu = new JPopupMenu();
 		JMenuItem popupEditItem = new JMenuItem("Edit");
 		JMenuItem popupDeleteItem = new JMenuItem("Delete");
-		popupEditItem.addActionListener(e -> {
-			editStudentAction();
-		});
-		popupDeleteItem.addActionListener(e -> {
-			removeStudentAction();
-		});
+		popupEditItem.addActionListener(e -> editStudentAction());
+		popupDeleteItem.addActionListener(e -> removeStudentAction());
 		popupmenu.add(popupEditItem);
 		popupmenu.add(popupDeleteItem);
 
