@@ -41,6 +41,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -498,6 +499,19 @@ public class AddEditStudent extends JDialog {
 
 		add(scrollPane, BorderLayout.CENTER);
 		add(doneButton, BorderLayout.SOUTH);
+
+		// Scrolls to focused item when tab key is used
+		// https://stackoverflow.com/questions/8245328/how-do-i-make-jscrollpane-scroll-to-follow-input-focus
+		KeyboardFocusManager.getCurrentKeyboardFocusManager()
+				.addPropertyChangeListener("focusOwner", evt -> {
+					if (evt.getNewValue() instanceof JComponent) {
+						JComponent focused = (JComponent) evt.getNewValue();
+						if (focused.getParent() instanceof JComponent) {
+							JComponent parent = (JComponent) focused.getParent();
+							parent.scrollRectToVisible(focused.getBounds());
+						}
+					}
+				});
 
 		// Sets the ID field to be the initial focused item
 		addWindowListener(new WindowAdapter() {
