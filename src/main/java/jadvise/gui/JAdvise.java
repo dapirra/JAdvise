@@ -402,6 +402,7 @@ public class JAdvise extends JFrame {
 		editMenu.add(addRandomStudentsItem);
 
 		addRandomStudentFromSeedItem = new JMenuItem("Add Random Student From Seed");
+		addRandomStudentFromSeedItem.setMnemonic(KeyEvent.VK_S);
 		addRandomStudentFromSeedItem.addActionListener(actionEvent -> {
 			long seed;
 			String input = "";
