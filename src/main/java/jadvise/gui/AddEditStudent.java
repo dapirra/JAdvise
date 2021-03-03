@@ -23,6 +23,7 @@ import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -37,7 +38,6 @@ import javax.swing.SpinnerListModel;
 import javax.swing.TransferHandler;
 import javax.swing.text.DefaultCaret;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -146,22 +146,23 @@ public class AddEditStudent extends JDialog {
 	/**
 	 * Used for adding a new student.
 	 *
-	 * @param parentComponent Main window
-	 * @param sd              Student database
+	 * @param mainWindow Main window
+	 * @param sd         Student database
 	 */
-	public AddEditStudent(Component parentComponent, final StudentDatabase sd) {
-		this(parentComponent, sd, -1, null);
+	public AddEditStudent(JFrame mainWindow, final StudentDatabase sd) {
+		this(mainWindow, sd, -1, null);
 	}
 
 	/**
 	 * Used for editing a student.
 	 *
-	 * @param parentComponent Main window
-	 * @param sd              Student database
-	 * @param index           Index of the student
-	 * @param editStudent     Student object being edited
+	 * @param mainWindow  Main window
+	 * @param sd          Student database
+	 * @param index       Index of the student
+	 * @param editStudent Student object being edited
 	 */
-	public AddEditStudent(Component parentComponent, final StudentDatabase sd, int index, final Student editStudent) {
+	public AddEditStudent(JFrame mainWindow, final StudentDatabase sd, int index, final Student editStudent) {
+		super(mainWindow, true);
 
 		if (editStudent == null) {
 			setTitle("Add Student");
@@ -170,14 +171,8 @@ public class AddEditStudent extends JDialog {
 		}
 		setSize(500, 500);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-		// Makes parent not focusable
-		if (parentComponent != null) {
-			setModal(true);
-		}
-
 		setLayout(new BorderLayout());
-		setLocationRelativeTo(parentComponent);
+		setLocationRelativeTo(mainWindow);
 		setResizable(true);
 
 		// Pressing Escape will close the window
