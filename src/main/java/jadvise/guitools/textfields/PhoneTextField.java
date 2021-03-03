@@ -2,6 +2,8 @@ package jadvise.guitools.textfields;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.text.ParseException;
 
 public class PhoneTextField extends JFormattedTextField {
@@ -17,5 +19,16 @@ public class PhoneTextField extends JFormattedTextField {
 		}
 		setColumns(columns);
 		setText("");
+
+		// Automatically move cursor to beginning when there's
+		// no information in the TextField.
+		addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (getText().equals("(   )    -    ")) {
+					setCaretPosition(0);
+				}
+			}
+		});
 	}
 }
