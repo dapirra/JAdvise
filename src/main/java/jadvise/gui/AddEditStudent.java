@@ -488,11 +488,9 @@ public class AddEditStudent extends JDialog {
 			try {
 				sd.updateTable();
 				sd.saveData();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			} catch (ClassNotFoundException ex) {
-				System.exit(1);
+			} catch (SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
 			dispose();
 		});

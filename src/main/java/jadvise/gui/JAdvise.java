@@ -466,11 +466,9 @@ public class JAdvise extends JFrame {
 					sd.clearData();
 					sd.updateTable();
 					clearSearchAction();
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				} catch (ClassNotFoundException ex) {
-					System.exit(1);
+				} catch (SQLException | ClassNotFoundException e) {
+					e.printStackTrace();
+					PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 				}
 			}
 		});
@@ -533,11 +531,9 @@ public class JAdvise extends JFrame {
 			}
 			try {
 				sd.saveData();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			} catch (ClassNotFoundException ex) {
-				System.exit(1);
+			} catch (SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
 		}
 	}
