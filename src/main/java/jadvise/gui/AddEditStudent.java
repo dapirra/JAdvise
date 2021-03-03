@@ -144,6 +144,10 @@ public class AddEditStudent extends JDialog {
 
 	private final JButton doneButton;
 
+	private static final int ADD_SEPARATOR_NONE = -1;
+	private static final int ADD_SEPARATOR_TOP = 0;
+	private static final int ADD_SEPARATOR_BOTH = 1;
+
 	/**
 	 * Used for adding a new student.
 	 *
@@ -403,7 +407,7 @@ public class AddEditStudent extends JDialog {
 		// Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(addHeader("Personal Info:", personalInfoPanel));
+		mainPanel.add(addHeader("Personal Info:", personalInfoPanel, ADD_SEPARATOR_NONE));
 		mainPanel.add(personalInfoPanel);
 		mainPanel.add(addHeader("College Info:", collegeInfoPanel));
 		mainPanel.add(collegeInfoPanel);
@@ -413,7 +417,7 @@ public class AddEditStudent extends JDialog {
 		mainPanel.add(contactInfoPanel);
 		mainPanel.add(addHeader("Course Info:", courseInfoPanel));
 		mainPanel.add(courseInfoPanel);
-		mainPanel.add(addHeader("Notes:", notesAreaPanel));
+		mainPanel.add(addHeader("Notes:", notesAreaPanel, ADD_SEPARATOR_BOTH));
 		mainPanel.add(notesAreaPanel);
 		scrollPane = new JScrollPane(mainPanel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
@@ -535,6 +539,10 @@ public class AddEditStudent extends JDialog {
 	}
 
 	private static JPanel addHeader(String title, final JPanel hidePanel) {
+		return addHeader(title, hidePanel, ADD_SEPARATOR_TOP);
+	}
+
+	private static JPanel addHeader(String title, final JPanel hidePanel, int sep) {
 		JPanel outputPanel = new JPanel(new BorderLayout());
 
 		JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -543,7 +551,12 @@ public class AddEditStudent extends JDialog {
 		innerPanel.add(hideButton);
 		innerPanel.add(mainLabel);
 
-		outputPanel.add(addSeparator(), BorderLayout.NORTH);
+		switch (sep) {
+			case ADD_SEPARATOR_BOTH:
+				outputPanel.add(addSeparator(), BorderLayout.SOUTH);
+			case ADD_SEPARATOR_TOP:
+				outputPanel.add(addSeparator(), BorderLayout.NORTH);
+		}
 		outputPanel.add(innerPanel, BorderLayout.CENTER);
 		outputPanel.setMaximumSize(new Dimension(
 				outputPanel.getMaximumSize().width,
