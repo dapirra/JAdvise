@@ -12,6 +12,7 @@ import jadvise.guitools.JScrollableSpinner;
 import jadvise.guitools.PrebuiltDialogs;
 import jadvise.guitools.textfields.IDTextField;
 import jadvise.guitools.textfields.PhoneTextField;
+import jadvise.guitools.textfields.ZipTextField;
 import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 import jadvise.tools.Info;
@@ -286,7 +287,7 @@ public class AddEditStudent extends JDialog {
 		stateComboBox = new JScrollableComboBox<>(Info.STATES);
 		stateComboBox.setSelectedIndex(31); // NY
 		zipLabel = new JLabel("Zip: ");
-		zipField = new JTextField(7);
+		zipField = new ZipTextField(7);
 		enhanceTextField(zipField);
 		stateAndZipPanel.add(stateLabel);
 		stateAndZipPanel.add(stateComboBox);
