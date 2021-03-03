@@ -1,4 +1,4 @@
-package jadvise.guitools;
+package jadvise.guitools.textfields;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.event.DocumentEvent;

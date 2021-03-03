@@ -1,4 +1,4 @@
-package jadvise.guitools;
+package jadvise.guitools.textfields;
 
 import com.sun.javafx.PlatformUtil;
 

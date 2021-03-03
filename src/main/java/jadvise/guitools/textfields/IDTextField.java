@@ -1,14 +1,14 @@
-package jadvise.guitools;
+package jadvise.guitools.textfields;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 
-public class PhoneTextField extends JFormattedTextField {
+public class IDTextField extends JFormattedTextField {
 
-	public PhoneTextField(int columns) {
+	public IDTextField(int columns) {
 		try {
-			MaskFormatter mask = new MaskFormatter("(###) ###-####");
+			MaskFormatter mask = new MaskFormatter("########");
 			mask.setAllowsInvalid(false);
 			setFormatter(mask);
 			setFocusLostBehavior(JFormattedTextField.PERSIST);

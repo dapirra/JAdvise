@@ -7,11 +7,11 @@ import jadvise.exceptions.InvalidZipCodeException;
 import jadvise.exceptions.TooManyEmptyFieldsException;
 import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.exceptions.id.InvalidIDException;
-import jadvise.guitools.IDTextField;
 import jadvise.guitools.JScrollableComboBox;
 import jadvise.guitools.JScrollableSpinner;
-import jadvise.guitools.PhoneTextField;
 import jadvise.guitools.PrebuiltDialogs;
+import jadvise.guitools.textfields.IDTextField;
+import jadvise.guitools.textfields.PhoneTextField;
 import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 import jadvise.tools.Info;
@@ -55,7 +55,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
+import static jadvise.guitools.textfields.TextFieldEnhancer.enhanceTextField;
 
 /**
  * @author David Pirraglia

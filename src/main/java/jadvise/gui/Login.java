@@ -1,8 +1,7 @@
 package jadvise.gui;
 
-import jadvise.guitools.PortTextField;
 import jadvise.guitools.PrebuiltDialogs;
-import jadvise.guitools.TextFieldEnhancer;
+import jadvise.guitools.textfields.PortTextField;
 import jadvise.objects.MySQLAccount;
 
 import javax.swing.JButton;
@@ -15,6 +14,9 @@ import javax.swing.KeyStroke;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.SQLException;
+
+import static jadvise.guitools.textfields.TextFieldEnhancer.addPasteContextMenu;
+import static jadvise.guitools.textfields.TextFieldEnhancer.enhanceTextField;
 
 /**
  * @author David Pirraglia
@@ -32,29 +34,29 @@ public class Login extends JFrame {
 		JLabel userLabel = new JLabel("Username:  ");
 		JTextField userField = new JTextField(20);
 		userField.setMinimumSize(userField.getPreferredSize());
-		TextFieldEnhancer.enhanceTextField(userField);
+		enhanceTextField(userField);
 
 		JLabel passLabel = new JLabel("Password:  ");
 		JPasswordField passField = new JPasswordField(20);
 		passField.setEchoChar('\u2022');
 		passField.setMinimumSize(passField.getPreferredSize());
-		TextFieldEnhancer.addPasteContextMenu(passField);
+		addPasteContextMenu(passField);
 
 		JLabel ipDomainLabel = new JLabel("IP/Domain:  ");
 		JTextField ipDomainField = new JTextField("127.0.0.1", 20);
 		ipDomainField.setMinimumSize(ipDomainField.getPreferredSize());
-		TextFieldEnhancer.enhanceTextField(ipDomainField);
+		enhanceTextField(ipDomainField);
 
 		JLabel portLabel = new JLabel("Port:  ");
 		JTextField portField = new PortTextField("3306");
 		portField.setMinimumSize(portField.getPreferredSize());
-		TextFieldEnhancer.enhanceTextField(portField);
+		enhanceTextField(portField);
 		portField.setColumns(20);
 
 		JLabel databaseLabel = new JLabel("Database:  ");
 		JTextField databaseField = new JTextField("jadvise", 20);
 		databaseField.setMinimumSize(databaseField.getPreferredSize());
-		TextFieldEnhancer.enhanceTextField(databaseField);
+		enhanceTextField(databaseField);
 
 		JButton loginButton = new JButton("Login");
 		rootPane.setDefaultButton(loginButton);

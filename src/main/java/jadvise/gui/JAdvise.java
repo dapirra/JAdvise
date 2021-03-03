@@ -44,7 +44,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.stream.IntStream;
 
-import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
+import static jadvise.guitools.textfields.TextFieldEnhancer.enhanceTextField;
 
 /**
  * @author David Pirraglia
