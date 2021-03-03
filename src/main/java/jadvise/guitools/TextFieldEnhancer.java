@@ -47,7 +47,7 @@ public class TextFieldEnhancer {
 		JMenuItem redo = new JMenuItem("Redo");
 
 		// Binds CTRL+Z to undo
-		textComponent.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "UNDO");
+		textComponent.getInputMap().put(KeyStroke.getKeyStroke("ctrl Z"), "UNDO");
 		textComponent.getActionMap().put("UNDO", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -58,7 +58,7 @@ public class TextFieldEnhancer {
 		});
 
 		// Binds CTRL+Y to redo
-		textComponent.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "REDO");
+		textComponent.getInputMap().put(KeyStroke.getKeyStroke("ctrl Y"), "REDO");
 		textComponent.getActionMap().put("REDO", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

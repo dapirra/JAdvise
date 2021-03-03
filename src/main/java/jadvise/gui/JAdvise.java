@@ -285,7 +285,7 @@ public class JAdvise extends JFrame {
 
 		printItem = new JMenuItem("Print");
 		printItem.setMnemonic(KeyEvent.VK_P);
-		printItem.setAccelerator(KeyStroke.getKeyStroke("control P"));
+		printItem.setAccelerator(KeyStroke.getKeyStroke("ctrl P"));
 		printItem.addActionListener(actionEvent -> {
 			try {
 				table.print();
@@ -297,7 +297,7 @@ public class JAdvise extends JFrame {
 
 		exportToCSVItem = new JMenuItem("Export to CSV");
 		exportToCSVItem.setMnemonic(KeyEvent.VK_E);
-		exportToCSVItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+		exportToCSVItem.setAccelerator(KeyStroke.getKeyStroke("ctrl S"));
 
 		exportToCSVSaveDialog = new JFileChooser();
 		exportToCSVSaveDialog.setDialogTitle(TITLE);
@@ -351,7 +351,7 @@ public class JAdvise extends JFrame {
 
 		exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic(KeyEvent.VK_X);
-		exitItem.setAccelerator(KeyStroke.getKeyStroke("control Q"));
+		exitItem.setAccelerator(KeyStroke.getKeyStroke("ctrl Q"));
 		exitItem.addActionListener(actionEvent -> System.exit(0));
 		fileMenu.add(exitItem);
 
@@ -361,7 +361,7 @@ public class JAdvise extends JFrame {
 
 		addStudentItem = new JMenuItem("Add Student");
 		addStudentItem.setMnemonic(KeyEvent.VK_A);
-		addStudentItem.setAccelerator(KeyStroke.getKeyStroke("control N"));
+		addStudentItem.setAccelerator(KeyStroke.getKeyStroke("ctrl N"));
 		addStudentItem.addActionListener(ae -> {
 			new AddEditStudent(this, sd);
 			if (!searchField.getText().isEmpty()) {
@@ -372,7 +372,7 @@ public class JAdvise extends JFrame {
 
 		addRandomStudentsItem = new JMenuItem("Add Random Students");
 		addRandomStudentsItem.setMnemonic(KeyEvent.VK_N);
-		addRandomStudentsItem.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
+		addRandomStudentsItem.setAccelerator(KeyStroke.getKeyStroke("ctrl shift N"));
 		addRandomStudentsItem.addActionListener(actionEvent -> {
 			JScrollableSpinner spinner = new JScrollableSpinner(
 					new SpinnerNumberModel(1, 1, 100, 1),
@@ -413,7 +413,7 @@ public class JAdvise extends JFrame {
 
 		addRandomStudentFromSeedItem = new JMenuItem("Add Random Student From Seed");
 		addRandomStudentFromSeedItem.setMnemonic(KeyEvent.VK_S);
-		addRandomStudentFromSeedItem.setAccelerator(KeyStroke.getKeyStroke("control alt N"));
+		addRandomStudentFromSeedItem.setAccelerator(KeyStroke.getKeyStroke("ctrl alt N"));
 		addRandomStudentFromSeedItem.addActionListener(actionEvent -> {
 			long seed;
 			String input = "";
@@ -464,7 +464,7 @@ public class JAdvise extends JFrame {
 		editMenu.add(removeStudentItem);
 
 		removeAllStudentsItem = new JMenuItem("Remove All Students");
-		removeAllStudentsItem.setAccelerator(KeyStroke.getKeyStroke("control DELETE"));
+		removeAllStudentsItem.setAccelerator(KeyStroke.getKeyStroke("ctrl DELETE"));
 		removeAllStudentsItem.addActionListener(actionEvent -> {
 			if (PrebuiltDialogs.showConfirmDialog(
 					this,
