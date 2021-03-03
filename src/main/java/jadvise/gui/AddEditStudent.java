@@ -60,6 +60,7 @@ import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
 /**
  * @author David Pirraglia
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class AddEditStudent extends JDialog {
 
 	private final String previousID;
@@ -421,6 +422,7 @@ public class AddEditStudent extends JDialog {
 		doneButton = new JButton("Done");
 		doneButton.addActionListener(actionEvent -> {
 			try {
+				@SuppressWarnings("SuspiciousToArrayCall")
 				Student readInStudent = new Student(
 						IDField.getText(),
 						firstNameField.getText(),

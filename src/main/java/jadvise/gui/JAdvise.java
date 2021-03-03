@@ -49,6 +49,7 @@ import static jadvise.guitools.TextFieldEnhancer.enhanceTextField;
 /**
  * @author David Pirraglia
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class JAdvise extends JFrame {
 
 	public static final String TITLE = "JAdvise";
@@ -71,7 +72,7 @@ public class JAdvise extends JFrame {
 	private final JMenuItem aboutItem;
 
 	// File Chooser
-	private JFileChooser exportToCSVSaveDialog;
+	private final JFileChooser exportToCSVSaveDialog;
 
 	// Table
 	private final JTable table;
@@ -203,7 +204,7 @@ public class JAdvise extends JFrame {
 				Point point = event.getPoint();
 				int column = table.columnAtPoint(point);
 				if (tableSorter.getSortKeys().get(0).getSortOrder()
-						.toString().charAt(0) == 'A'
+						.toString().charAt(0) == 'A' // ASCENDING
 						&& column == previousColumn) {
 					tableSorter.setSortKeys(null);
 					previousColumn = -1;
