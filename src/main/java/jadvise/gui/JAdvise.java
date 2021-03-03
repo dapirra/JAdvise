@@ -1,5 +1,6 @@
 package jadvise.gui;
 
+import jadvise.exceptions.id.DuplicateIDException;
 import jadvise.guitools.JScrollableSpinner;
 import jadvise.guitools.PrebuiltDialogs;
 import jadvise.objects.MySQLAccount;
@@ -386,7 +387,14 @@ public class JAdvise extends JFrame {
 					JOptionPane.PLAIN_MESSAGE
 			) == JOptionPane.OK_OPTION) {
 				for (int i = 0; i < (int) spinner.getValue(); i++) {
-					sd.addStudent(new Student());
+					try {
+						sd.addStudent(new Student());
+					} catch (DuplicateIDException e) {
+						// In the unlikely event that a random item is added
+						// with an ID that already exists, catch the exception
+						// and try again.
+						i--;
+					}
 				}
 				sd.updateTable();
 				try {
@@ -425,8 +433,14 @@ public class JAdvise extends JFrame {
 					} catch (NumberFormatException e) {
 						PrebuiltDialogs.showErrorDialog(this, "Invalid seed.");
 						continue;
+					} catch (DuplicateIDException e) {
+						PrebuiltDialogs.showErrorDialog(this, "This ID already exists.");
+						continue;
 					} catch (SQLException | ClassNotFoundException e) {
 						PrebuiltDialogs.showErrorDialog(this, e.getMessage());
+					}
+					if (!searchField.getText().isEmpty()) {
+						search();
 					}
 				}
 				return;
