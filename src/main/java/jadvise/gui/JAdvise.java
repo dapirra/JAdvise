@@ -171,10 +171,7 @@ public class JAdvise extends JFrame {
 			}
 		});
 		clearSearch = new JButton("\u274C"); // X
-		clearSearch.addActionListener(actionEvent -> {
-			searchField.setText("");
-			tableSorter.setSortKeys(null);
-		});
+		clearSearch.addActionListener(actionEvent -> clearSearchAction());
 
 		searchPanel.add(searchLabel, BorderLayout.WEST);
 		searchPanel.add(searchField, BorderLayout.CENTER);
@@ -468,6 +465,7 @@ public class JAdvise extends JFrame {
 				try {
 					sd.clearData();
 					sd.updateTable();
+					clearSearchAction();
 				} catch (SQLException ex) {
 					ex.printStackTrace();
 					System.exit(1);
@@ -498,6 +496,11 @@ public class JAdvise extends JFrame {
 		setJMenuBar(menuBar);
 
 		setVisible(true);
+	}
+
+	private void clearSearchAction() {
+		searchField.setText("");
+		tableSorter.setSortKeys(null);
 	}
 
 	private void editStudentAction() {
