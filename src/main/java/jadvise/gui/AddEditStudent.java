@@ -17,6 +17,7 @@ import jadvise.objects.StudentDatabase;
 import jadvise.tools.Info;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
@@ -596,8 +597,10 @@ public class AddEditStudent extends JDialog {
 		JPanel outputPanel = new JPanel();
 		outputPanel.setLayout(new BoxLayout(outputPanel, BoxLayout.Y_AXIS));
 		for (JComponent c : components) {
+			c.setMaximumSize(new Dimension(c.getMaximumSize().width, 30));
 			outputPanel.add(c);
 		}
+		outputPanel.add(Box.createVerticalGlue());
 		return outputPanel;
 	}
 
