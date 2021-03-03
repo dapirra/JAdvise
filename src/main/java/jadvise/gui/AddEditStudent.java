@@ -183,7 +183,16 @@ public class AddEditStudent extends JDialog {
 
 		// Pressing Escape will close the window
 		rootPane.registerKeyboardAction(
-				actionEvent -> dispose(),
+				actionEvent -> {
+					if (PrebuiltDialogs.showConfirmDialog(
+							this,
+							"Are you sure you want to close this window?" +
+									"\nDoing so will discard all changes.",
+							JAdvise.TITLE
+					)) {
+						dispose();
+					}
+				},
 				KeyStroke.getKeyStroke("ESCAPE"),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
