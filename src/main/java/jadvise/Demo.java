@@ -10,17 +10,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class Demo {
 
+	@SuppressWarnings("SpellCheckingInspection")
 	public static void main(String[] args) {
 		try {
 			// Set Java L&F to Nimbus
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-
-			// Set Java L&F to GTK Theme (Only works on Linux)
-//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-
-//			for (UIManager.LookAndFeelInfo lf : UIManager.getInstalledLookAndFeels()) {
-//				System.out.println(lf);
-//			}
 		} catch (UnsupportedLookAndFeelException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
