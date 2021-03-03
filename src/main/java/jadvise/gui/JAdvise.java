@@ -226,18 +226,6 @@ public class JAdvise extends JFrame {
 			}
 		});
 
-		// Pressing delete with a row selected will delete it
-		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-				KeyStroke.getKeyStroke("DELETE"),
-				"DEL"
-		);
-		table.getActionMap().put("DEL", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				removeStudentAction();
-			}
-		});
-
 		// Created a context menu for the table with Edit/Delete options
 		// https://stackoverflow.com/questions/3558293/java-swing-jtable-right-click-menu-how-do-i-get-it-to-select-aka-highlight-t
 		JPopupMenu popupmenu = new JPopupMenu();
