@@ -8,6 +8,9 @@ import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
 
+/**
+ * @author David Pirraglia
+ */
 public class PortTextField extends JFormattedTextField {
 
 	private final Color FOREGROUND_BACKUP = getForeground();

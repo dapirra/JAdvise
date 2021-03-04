@@ -6,6 +6,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.ParseException;
 
+/**
+ * @author David Pirraglia
+ */
 public class ZipTextField extends JFormattedTextField {
 
 	public ZipTextField(int columns) {
