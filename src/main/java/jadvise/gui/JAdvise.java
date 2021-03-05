@@ -272,6 +272,18 @@ public class JAdvise extends JFrame {
 			}
 		});
 
+		// Pressing escape clears focus from the table
+		table.getInputMap(JPopupMenu.WHEN_FOCUSED).put(
+				KeyStroke.getKeyStroke("ESCAPE"),
+				"ESC"
+		);
+		table.getActionMap().put("ESC", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.getRootPane().requestFocusInWindow();
+			}
+		});
+
 		tableScrollPane = new JScrollPane(table);
 		tableScrollPane.getHorizontalScrollBar().setUnitIncrement(15);
 		add(tableScrollPane, BorderLayout.CENTER);
