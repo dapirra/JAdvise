@@ -129,6 +129,9 @@ public class JAdvise extends JFrame {
 			200 // Notes
 	};
 
+	public static final int[] COLUMN_INDICES =
+			IntStream.rangeClosed(0, COLUMN_NAMES.length).toArray();
+
 	// Search Area
 	private final JPanel searchPanel = new JPanel(new BorderLayout());
 	private final JTextField searchField;
@@ -657,7 +660,7 @@ public class JAdvise extends JFrame {
 		try {
 			RowFilter<TableModel, Object> rf = RowFilter.regexFilter(
 					"(?i)" + searchField.getText(),
-					IntStream.rangeClosed(0, COLUMN_NAMES.length).toArray()
+					COLUMN_INDICES
 			);
 			tableSorter.setRowFilter(rf);
 			totalRowsLabel.setText(table.getRowCount() + "");
