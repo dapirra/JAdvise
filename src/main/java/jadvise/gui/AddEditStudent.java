@@ -203,6 +203,7 @@ public class AddEditStudent extends JDialog {
 		IDLabel = new JLabel("<html><b>ID Number: </b></html>");
 		IDField = new IDTextField(15);
 		enhanceTextField(IDField);
+		IDField.setToolTipText("ID requires 8 digits");
 		IDPanel.add(IDLabel);
 		IDPanel.add(IDField);
 
