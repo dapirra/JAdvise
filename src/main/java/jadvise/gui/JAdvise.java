@@ -278,7 +278,8 @@ public class JAdvise extends JFrame {
 		printItem.addActionListener(actionEvent -> {
 			try {
 				table.print();
-			} catch (PrinterException ex) {
+			} catch (PrinterException e) {
+				e.printStackTrace();
 				PrebuiltDialogs.showErrorDialog(this, "Can't print table.");
 			}
 		});
@@ -392,6 +393,7 @@ public class JAdvise extends JFrame {
 					sd.saveData();
 				} catch (SQLException | ClassNotFoundException e) {
 					e.printStackTrace();
+					PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 				}
 				if (!searchField.getText().isEmpty()) {
 					search();
