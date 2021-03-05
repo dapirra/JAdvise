@@ -8,6 +8,8 @@ import jadvise.objects.Student;
 import jadvise.objects.StudentDatabase;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -20,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -28,12 +31,14 @@ import javax.swing.RowFilter;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -130,6 +135,13 @@ public class JAdvise extends JFrame {
 	private final JLabel searchLabel;
 	private final JButton clearSearch;
 
+	// Status Bar
+	private final JPanel statusPanel;
+	private final JLabel totalRowsLabel;
+	private final JLabel selectedStudentStatusLabel;
+	private final JLabel totalStudentsStatusLabel;
+//	private final JLabel resultsStatusLabel;
+
 	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
 
 		// Load Data
@@ -197,6 +209,12 @@ public class JAdvise extends JFrame {
 			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; // Disallow the editing of any cell
+			}
+
+			@Override
+			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
+				super.changeSelection(rowIndex, columnIndex, toggle, extend);
+				selectedStudentStatusLabel.setText(getIndex(table) + 1 + "");
 			}
 		};
 		table.getTableHeader().setReorderingAllowed(false);
@@ -289,6 +307,34 @@ public class JAdvise extends JFrame {
 		add(tableScrollPane, BorderLayout.CENTER);
 		sd.setTable(table);
 
+		// Status Bar
+		// https://stackoverflow.com/questions/3035880/how-can-i-create-a-bar-in-the-bottom-of-a-java-app-like-a-status-bar
+		statusPanel = new JPanel();
+		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+//		statusPanel.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY),
+//				new EmptyBorder(4, 4, 4, 4)));
+		statusPanel.setPreferredSize(new Dimension(getWidth(), 20));
+		statusPanel.add(new JLabel("Total Rows: "));
+		totalRowsLabel = new JLabel();
+		statusPanel.add(totalRowsLabel);
+		totalRowsLabel.setText(sd.getTotalStudents() + "");
+		statusPanel.add(new JLabel(" "));
+//		resultsStatusLabel = new JLabel();
+//		statusPanel.add(resultsStatusLabel);
+		statusPanel.add(new JSeparator(JSeparator.VERTICAL));
+		statusPanel.add(Box.createHorizontalGlue());
+		statusPanel.add(new JSeparator(JSeparator.VERTICAL));
+		selectedStudentStatusLabel = new JLabel("0");
+		selectedStudentStatusLabel.setToolTipText("Index of the selected student");
+		statusPanel.add(selectedStudentStatusLabel);
+		statusPanel.add(new JLabel("/"));
+		totalStudentsStatusLabel = new JLabel();
+		totalStudentsStatusLabel.setToolTipText("Total number of students");
+		updateTotalStudentsStatus();
+		statusPanel.add(totalStudentsStatusLabel);
+		add(statusPanel, BorderLayout.SOUTH);
+
 		// Menu Bar
 		menuBar = new JMenuBar();
 
@@ -378,6 +424,7 @@ public class JAdvise extends JFrame {
 		addStudentItem.setAccelerator(KeyStroke.getKeyStroke("ctrl N"));
 		addStudentItem.addActionListener(ae -> {
 			new AddEditStudent(this, sd);
+			updateTotalStudentsStatus();
 			if (!searchField.getText().isEmpty()) {
 				search();
 			}
@@ -419,6 +466,7 @@ public class JAdvise extends JFrame {
 					e.printStackTrace();
 					PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 				}
+				updateTotalStudentsStatus();
 				if (!searchField.getText().isEmpty()) {
 					search();
 				}
@@ -448,6 +496,7 @@ public class JAdvise extends JFrame {
 						sd.addStudent(new Student(seed));
 						sd.updateTable();
 						sd.saveData();
+						updateTotalStudentsStatus();
 					} catch (NumberFormatException e) {
 						PrebuiltDialogs.showErrorDialog(this, "Invalid seed.");
 						continue;
@@ -490,6 +539,7 @@ public class JAdvise extends JFrame {
 					sd.clearData();
 					sd.updateTable();
 					clearSearchAction();
+					updateTotalStudentsStatus();
 				} catch (SQLException | ClassNotFoundException e) {
 					e.printStackTrace();
 					PrebuiltDialogs.showErrorDialog(this, e.getMessage());
@@ -560,6 +610,7 @@ public class JAdvise extends JFrame {
 				e.printStackTrace();
 				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
+			updateTotalStudentsStatus();
 		}
 	}
 
@@ -603,6 +654,10 @@ public class JAdvise extends JFrame {
 		return table.convertRowIndexToModel(table.getSelectedRow());
 	}
 
+	public void updateTotalStudentsStatus() {
+		totalStudentsStatusLabel.setText(sd.getTotalStudents() + "");
+	}
+
 	public void search() {
 		try {
 			RowFilter<TableModel, Object> rf = RowFilter.regexFilter(
@@ -610,6 +665,12 @@ public class JAdvise extends JFrame {
 					IntStream.rangeClosed(0, COLUMN_NAMES.length).toArray()
 			);
 			tableSorter.setRowFilter(rf);
+			totalRowsLabel.setText(table.getRowCount() + "");
+//			if (searchField.getText().isEmpty()) {
+//				resultsStatusLabel.setText("");
+//			} else {
+//				resultsStatusLabel.setText(String.format("Results: %d", table.getRowCount()));
+//			}
 		} catch (java.util.regex.PatternSyntaxException e) {
 			e.printStackTrace();
 		}

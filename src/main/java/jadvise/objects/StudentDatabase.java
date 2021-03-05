@@ -87,6 +87,10 @@ public class StudentDatabase {
 		students.set(index, updatedStudent);
 	}
 
+	public int getTotalStudents() {
+		return students.size();
+	}
+
 	public ArrayList<Student> getStudents() {
 		return (ArrayList<Student>) students.clone();
 	}
