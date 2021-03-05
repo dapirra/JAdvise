@@ -140,7 +140,6 @@ public class JAdvise extends JFrame {
 	private final JLabel totalRowsLabel;
 	private final JLabel selectedStudentStatusLabel;
 	private final JLabel totalStudentsStatusLabel;
-//	private final JLabel resultsStatusLabel;
 
 	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
 
@@ -312,16 +311,12 @@ public class JAdvise extends JFrame {
 		statusPanel = new JPanel();
 		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
 		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-//		statusPanel.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY),
-//				new EmptyBorder(4, 4, 4, 4)));
 		statusPanel.setPreferredSize(new Dimension(getWidth(), 20));
 		statusPanel.add(new JLabel("Total Rows: "));
 		totalRowsLabel = new JLabel();
 		statusPanel.add(totalRowsLabel);
 		totalRowsLabel.setText(sd.getTotalStudents() + "");
 		statusPanel.add(new JLabel(" "));
-//		resultsStatusLabel = new JLabel();
-//		statusPanel.add(resultsStatusLabel);
 		statusPanel.add(new JSeparator(JSeparator.VERTICAL));
 		statusPanel.add(Box.createHorizontalGlue());
 		statusPanel.add(new JSeparator(JSeparator.VERTICAL));
@@ -666,11 +661,6 @@ public class JAdvise extends JFrame {
 			);
 			tableSorter.setRowFilter(rf);
 			totalRowsLabel.setText(table.getRowCount() + "");
-//			if (searchField.getText().isEmpty()) {
-//				resultsStatusLabel.setText("");
-//			} else {
-//				resultsStatusLabel.setText(String.format("Results: %d", table.getRowCount()));
-//			}
 		} catch (java.util.regex.PatternSyntaxException e) {
 			e.printStackTrace();
 		}
