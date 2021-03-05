@@ -10,6 +10,13 @@ public class MySQLAccount {
 	private int port;
 	private String database;
 
+	/**
+	 * Stores information used to connect to a MySQL Server. IP, Port, and
+	 * name of the database are assumed with this constructor.
+	 *
+	 * @param username The username to log into the MySQL server with.
+	 * @param password The password to log into the MySQL server with.
+	 */
 	public MySQLAccount(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -18,6 +25,15 @@ public class MySQLAccount {
 		this.database = "jadvise";
 	}
 
+	/**
+	 * Stores information used to connect to a MySQL Server.
+	 *
+	 * @param username The username to log into the MySQL server with.
+	 * @param password The password to log into the MySQL server with.
+	 * @param ip       The ip or domain of the server.
+	 * @param port     The port of the server.
+	 * @param database The name of the database.
+	 */
 	public MySQLAccount(String username, String password, String ip, int port, String database) {
 		this.username = username;
 		this.password = password;
@@ -30,6 +46,13 @@ public class MySQLAccount {
 		this.database = database;
 	}
 
+	/**
+	 * Generates a link that is used to connect to the MySQL server.
+	 *
+	 * @param includeDatabase Whether or not the name of the database should be
+	 *                        included in the link.
+	 * @return A link used to connect to the MySQL server.
+	 */
 	public String getMySQLLink(boolean includeDatabase) {
 		return "jdbc:mysql://" + ip + ':' + port
 				+ (includeDatabase ? '/' + database : "")

@@ -265,7 +265,7 @@ public class JAdvise extends JFrame {
 		add(tableScrollPane, BorderLayout.CENTER);
 		sd.setTable(table);
 
-		// MenuBar
+		// Menu Bar
 		menuBar = new JMenuBar();
 
 		// File Menu
@@ -565,6 +565,14 @@ public class JAdvise extends JFrame {
 		}
 	}
 
+	/**
+	 * Gets the index of the currently selected item from a specified table.
+	 * This function is useful for when there are rows that are filtered from
+	 * the table and the original index of the row needs to be retrieved.
+	 *
+	 * @param table The table to read from
+	 * @return The index of the currently selected item
+	 */
 	public static int getIndex(JTable table) {
 		return table.convertRowIndexToModel(table.getSelectedRow());
 	}

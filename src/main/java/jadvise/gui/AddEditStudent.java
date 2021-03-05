@@ -588,6 +588,13 @@ public class AddEditStudent extends JDialog {
 		return outputPanel;
 	}
 
+	/**
+	 * Used to toggle the showing/hiding of a panel and to update the text
+	 * of a button used to toggle the state.
+	 *
+	 * @param hidePanel  The panel to show/hide.
+	 * @param hideButton The button to toggle showing/hiding the panel.
+	 */
 	private static void togglePanelVisibility(JPanel hidePanel, JButton hideButton) {
 		if (hidePanel.isVisible()) {
 			hidePanel.setVisible(false);

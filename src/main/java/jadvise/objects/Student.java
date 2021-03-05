@@ -433,6 +433,16 @@ public final class Student {
 		this.notes = notes.trim();
 	}
 
+	/**
+	 * Converts a Student into an Array.
+	 *
+	 * @param containsNumbers Determines if some fields will contain numerical
+	 *                        data or literal data. For example, the state field
+	 *                        can contain letters representing the state or a
+	 *                        number to represent the state depending on this
+	 *                        argument being true or false.
+	 * @return An array representation of the student
+	 */
 	public String[] toArray(boolean containsNumbers) {
 		String[] outputArray = new String[19];
 		outputArray[0] = idNumber;

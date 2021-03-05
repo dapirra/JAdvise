@@ -181,6 +181,14 @@ public class TextFieldEnhancer {
 		});
 	}
 
+	/**
+	 * Similar to enhanceTextField() except that it has less functionality and
+	 * only adds 'Paste' to the context menu. Useful for text components such
+	 * as a password field where there shouldn't be the ability to cut, copy,
+	 * undo, and redo.
+	 *
+	 * @param textComponent The textfield to modify.
+	 */
 	public static void addPasteContextMenu(JTextComponent textComponent) {
 		JPopupMenu popupmenu = new JPopupMenu();
 		JMenuItem paste = new JMenuItem("Paste");

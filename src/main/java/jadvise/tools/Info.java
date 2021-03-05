@@ -6,7 +6,13 @@ import java.util.Random;
  * @author David Pirraglia
  */
 public final class Info {
-	// https://www.ssa.gov/OACT/babynames/decades/century.html
+
+	/**
+	 * A list of 100 most popular boy and girl names for the last 100 years.
+	 *
+	 * @see <a href="https://www.ssa.gov/OACT/babynames/decades/century.html">
+	 *     https://www.ssa.gov/OACT/babynames/decades/century.html<a/>
+	 */
 	public static final String[] FIRST_NAMES = {
 			// Boy Girl
 			"James", "Mary",
@@ -111,7 +117,12 @@ public final class Info {
 			"Bradley", "Charlotte"
 	};
 
-	// https://en.wikipedia.org/wiki/List_of_most_common_surnames_in_North_America#United_States_(American)
+	/**
+	 * A list of the most common last names in the United States.
+	 *
+	 * @see <a href="https://en.wikipedia.org/wiki/List_of_most_common_surnames_in_North_America#United_States_(American)">
+	 *     https://en.wikipedia.org/wiki/List_of_most_common_surnames_in_North_America#United_States_(American)</a>
+	 */
 	public static final String[] LAST_NAMES = {
 			"Smith",
 			"Johnson",
@@ -215,6 +226,9 @@ public final class Info {
 			"Fisher"
 	};
 
+	/**
+	 * A list of acceptable GPA values.
+	 */
 	public static final String[] GPA_VALUES = new String[]{
 			"0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9",
 			"1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9",
@@ -223,6 +237,9 @@ public final class Info {
 			"4.0"
 	};
 
+	/**
+	 * A list of all 50 states abbreviated.
+	 */
 	public static final String[] STATES = new String[]{
 			"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
 			"HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
@@ -231,7 +248,12 @@ public final class Info {
 			"SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
 	};
 
-	// https://geographic.org/streetview/usa/ny/suffolk/index.html
+	/**
+	 * A list of all the towns in Suffolk County.
+	 *
+	 * @see <a href="https://geographic.org/streetview/usa/ny/suffolk/index.html">
+	 *     https://geographic.org/streetview/usa/ny/suffolk/index.html</a>
+	 */
 	@SuppressWarnings("SpellCheckingInspection")
 	public static final String[] TOWNS = new String[]{
 			"Amagansett",
@@ -342,7 +364,12 @@ public final class Info {
 			"Yaphank"
 	};
 
-	// https://www.nlc.org/resource/most-common-u-s-street-names/
+	/**
+	 * A list of the most common street names in the United States.
+	 *
+	 * @see <a href="https://www.nlc.org/resource/most-common-u-s-street-names/">
+	 *     https://www.nlc.org/resource/most-common-u-s-street-names/</a>
+	 */
 	public static final String[] STREET_NAMES = new String[]{
 			"Second",
 			"Third",
