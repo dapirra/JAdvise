@@ -4,11 +4,11 @@ package jadvise.objects;
  * @author David Pirraglia
  */
 public class MySQLAccount {
-	private String username;
-	private String password;
-	private String ip;
-	private int port;
-	private String database;
+	private final String username;
+	private final String password;
+	private final String ipDomain;
+	private final int port;
+	private final String database;
 
 	/**
 	 * Stores information used to connect to a MySQL Server. IP, Port, and
@@ -20,7 +20,7 @@ public class MySQLAccount {
 	public MySQLAccount(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.ip = "127.0.0.1";
+		this.ipDomain = "127.0.0.1";
 		this.port = 3306;
 		this.database = "jadvise";
 	}
@@ -30,17 +30,17 @@ public class MySQLAccount {
 	 *
 	 * @param username The username to log into the MySQL server with.
 	 * @param password The password to log into the MySQL server with.
-	 * @param ip       The ip or domain of the server.
+	 * @param ipDomain The ip or domain of the server.
 	 * @param port     The port of the server.
 	 * @param database The name of the database.
 	 */
-	public MySQLAccount(String username, String password, String ip, int port, String database) {
+	public MySQLAccount(String username, String password, String ipDomain, int port, String database) {
 		this.username = username;
 		this.password = password;
-		if (ip.endsWith("/")) { // Remove ending forward slash, if included
-			this.ip = ip.substring(0, ip.length() - 1);
+		if (ipDomain.endsWith("/")) { // Remove ending forward slash, if included
+			this.ipDomain = ipDomain.substring(0, ipDomain.length() - 1);
 		} else {
-			this.ip = ip;
+			this.ipDomain = ipDomain;
 		}
 		this.port = Math.abs(port);
 		this.database = database;
@@ -54,7 +54,7 @@ public class MySQLAccount {
 	 * @return A link used to connect to the MySQL server.
 	 */
 	public String getMySQLLink(boolean includeDatabase) {
-		return "jdbc:mysql://" + ip + ':' + port
+		return "jdbc:mysql://" + ipDomain + ':' + port
 				+ (includeDatabase ? '/' + database : "")
 				+ "?characterEncoding=utf-8&connectionCollation=utf8mb4_unicode_520_ci";
 	}
