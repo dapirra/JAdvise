@@ -6,13 +6,15 @@ import jadvise.objects.MySQLAccount;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import static jadvise.guitools.textfields.TextFieldEnhancer.addPasteContextMenu;
@@ -21,15 +23,20 @@ import static jadvise.guitools.textfields.TextFieldEnhancer.enhanceTextField;
 /**
  * @author David Pirraglia
  */
-public class Login extends JFrame {
+public class Login extends JDialog {
 
 	public Login() {
+		super((JDialog) null);
 		setTitle("JAdvise - Connect to a MySQL Database");
-		setSize(400, 200);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(340, 200);
 		setLayout(new GridBagLayout());
 		setLocationRelativeTo(null);
 		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				System.exit(0);
+			}
+		});
 
 		JLabel userLabel = new JLabel("Username:  ");
 		JTextField userField = new JTextField(20);
