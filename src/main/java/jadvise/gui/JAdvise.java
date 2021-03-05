@@ -179,6 +179,18 @@ public class JAdvise extends JFrame {
 		searchPanel.add(clearSearch, BorderLayout.EAST);
 		add(searchPanel, BorderLayout.NORTH);
 
+		// Pressing Ctrl+F or F3 will focus on the search field
+		rootPane.registerKeyboardAction(
+				actionEvent -> searchField.requestFocusInWindow(),
+				KeyStroke.getKeyStroke("ctrl F"),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
+		rootPane.registerKeyboardAction(
+				actionEvent -> searchField.requestFocusInWindow(),
+				KeyStroke.getKeyStroke("F3"),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
+
 		// Table
 		String[][] rowData = sd.getTableData();
 		table = new JTable(rowData, COLUMN_NAMES) {
