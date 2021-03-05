@@ -442,7 +442,7 @@ public class JAdvise extends JFrame {
 		addRandomStudentsItem.setAccelerator(KeyStroke.getKeyStroke("ctrl shift N"));
 		addRandomStudentsItem.addActionListener(actionEvent -> {
 			JScrollableSpinner spinner = new JScrollableSpinner(
-					new SpinnerNumberModel(1, 1, 100, 1),
+					new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1),
 					true
 			);
 			if (JOptionPane.showConfirmDialog(
@@ -455,7 +455,18 @@ public class JAdvise extends JFrame {
 					JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE
 			) == JOptionPane.OK_OPTION) {
-				for (int i = 0; i < (int) spinner.getValue(); i++) {
+				int numberOfStudents = (int) spinner.getValue();
+				if (numberOfStudents > 100 && !PrebuiltDialogs.showYesNoDialog(
+						this,
+						String.format(
+								"Are you sure you want to generate %d students?",
+								numberOfStudents
+						),
+						TITLE
+				)) {
+					return;
+				}
+				for (int i = 0; i < numberOfStudents; i++) {
 					try {
 						sd.addStudent(new Student());
 					} catch (DuplicateIDException e) {
