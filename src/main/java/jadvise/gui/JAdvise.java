@@ -661,8 +661,6 @@ public class JAdvise extends JFrame {
 			);
 			tableSorter.setRowFilter(rf);
 			totalRowsLabel.setText(table.getRowCount() + "");
-		} catch (java.util.regex.PatternSyntaxException e) {
-			e.printStackTrace();
-		}
+		} catch (java.util.regex.PatternSyntaxException ignored) {}
 	}
 }
