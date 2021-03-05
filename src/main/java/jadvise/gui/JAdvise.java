@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -38,6 +39,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -59,11 +61,14 @@ public class JAdvise extends JFrame {
 
 	public static final String TITLE = "JAdvise";
 	private final StudentDatabase sd;
+	private boolean disableRegex = false;
+	private final Color SEARCH_FIELD_FOREGROUND_BACKUP;
 
 	// Menu
 	private final JMenuBar menuBar;
 	private final JMenu fileMenu;
 	private final JMenu editMenu;
+	private final JMenu searchMenu;
 	private final JMenu helpMenu;
 	private final JMenuItem printItem;
 	private final JMenuItem exportToCSVItem;
@@ -74,6 +79,8 @@ public class JAdvise extends JFrame {
 	private final JMenuItem editStudentItem;
 	private final JMenuItem removeStudentItem;
 	private final JMenuItem removeAllStudentsItem;
+	private final JMenuItem disableRegexItem;
+	private final JMenuItem clearSearchItem;
 	private final JMenuItem aboutItem;
 
 	// File Chooser
@@ -168,6 +175,7 @@ public class JAdvise extends JFrame {
 		// Search Area
 		searchLabel = new JLabel(" Search:  ");
 		searchField = new JTextField();
+		SEARCH_FIELD_FOREGROUND_BACKUP = searchField.getForeground();
 		enhanceTextField(searchField);
 		searchField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -546,6 +554,26 @@ public class JAdvise extends JFrame {
 		});
 		editMenu.add(removeAllStudentsItem);
 
+		// Search Menu
+		searchMenu = new JMenu("Search");
+		searchMenu.setMnemonic(KeyEvent.VK_S);
+
+		disableRegexItem = new JCheckBoxMenuItem("Disable Regex", false);
+		disableRegexItem.setMnemonic(KeyEvent.VK_D);
+		disableRegexItem.setAccelerator(KeyStroke.getKeyStroke("ctrl SLASH"));
+		disableRegexItem.addActionListener(e -> {
+			disableRegex = !disableRegex;
+			search();
+		});
+		searchMenu.add(disableRegexItem);
+
+		clearSearchItem = new JMenuItem("Clear Search");
+		clearSearchItem.setMnemonic(KeyEvent.VK_C);
+		clearSearchItem.setAccelerator(KeyStroke.getKeyStroke("ctrl COMMA"));
+		clearSearchItem.addActionListener(e -> clearSearchAction());
+		searchMenu.add(clearSearchItem);
+
+
 		// Help Menu
 		helpMenu = new JMenu("Help");
 		helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -563,6 +591,7 @@ public class JAdvise extends JFrame {
 
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
+		menuBar.add(searchMenu);
 		menuBar.add(helpMenu);
 		setJMenuBar(menuBar);
 
@@ -658,12 +687,19 @@ public class JAdvise extends JFrame {
 
 	public void search() {
 		try {
+			String regex = searchField.getText();
+			if (disableRegex) {
+				regex = regex.replaceAll("([+*?^$\\\\.\\[\\]{}()|])", "\\\\$1");
+			}
 			RowFilter<TableModel, Object> rf = RowFilter.regexFilter(
-					"(?i)" + searchField.getText(),
+					"(?i)" + regex,
 					COLUMN_INDICES
 			);
 			tableSorter.setRowFilter(rf);
 			totalRowsLabel.setText(table.getRowCount() + "");
-		} catch (java.util.regex.PatternSyntaxException ignored) {}
+			searchField.setForeground(SEARCH_FIELD_FOREGROUND_BACKUP);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			searchField.setForeground(Color.RED);
+		}
 	}
 }
