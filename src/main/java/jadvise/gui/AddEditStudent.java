@@ -182,7 +182,7 @@ public class AddEditStudent extends JDialog {
 		setLocationRelativeTo(mainWindow);
 		setResizable(true);
 
-		// Pressing Escape will close the window
+		// Pressing escape will ask to close the window
 		rootPane.registerKeyboardAction(
 				actionEvent -> {
 					if (PrebuiltDialogs.showConfirmDialog(
@@ -195,6 +195,13 @@ public class AddEditStudent extends JDialog {
 					}
 				},
 				KeyStroke.getKeyStroke("ESCAPE"),
+				JComponent.WHEN_IN_FOCUSED_WINDOW
+		);
+
+		// Pressing Ctrl+W will close the dialog
+		rootPane.registerKeyboardAction(
+				e -> dispose(),
+				KeyStroke.getKeyStroke("ctrl W"),
 				JComponent.WHEN_IN_FOCUSED_WINDOW
 		);
 
