@@ -230,7 +230,7 @@ public class JAdvise extends JFrame {
 			@Override
 			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
 				super.changeSelection(rowIndex, columnIndex, toggle, extend);
-				selectedStudentStatusLabel.setText(getIndex(table) + 1 + "");
+				updateSelectedStudentStatus();
 			}
 		};
 		table.getTableHeader().setReorderingAllowed(false);
@@ -292,6 +292,7 @@ public class JAdvise extends JFrame {
 					int row = table.rowAtPoint(e.getPoint());
 					if (row != -1) {
 						table.setRowSelectionInterval(row, row);
+						updateSelectedStudentStatus();
 						popupmenu.show(table, e.getX(), e.getY());
 					}
 				}
@@ -301,6 +302,7 @@ public class JAdvise extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+					updateSelectedStudentStatus();
 					editStudentAction();
 				}
 			}
@@ -716,6 +718,10 @@ public class JAdvise extends JFrame {
 	 */
 	public static int getIndex(JTable table) {
 		return table.convertRowIndexToModel(table.getSelectedRow());
+	}
+
+	public void updateSelectedStudentStatus() {
+		selectedStudentStatusLabel.setText(getIndex(table) + 1 + "");
 	}
 
 	public void updateTotalStudentsStatus() {
