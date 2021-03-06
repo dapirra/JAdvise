@@ -656,6 +656,7 @@ public class JAdvise extends JFrame {
 	/**
 	 * Used for testing. Primary main method is located in {@link jadvise.Demo}
 	 */
+	@SuppressWarnings("SpellCheckingInspection")
 	public static void main(String[] args) {
 		try {
 			// Set Java L&F to Nimbus

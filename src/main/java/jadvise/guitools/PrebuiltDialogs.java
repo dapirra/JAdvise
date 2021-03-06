@@ -51,6 +51,7 @@ public class PrebuiltDialogs {
 	 * @param title           The title of the dialog.
 	 * @return True if user selects Yes, false otherwise.
 	 */
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean showYesNoDialog(Component parentComponent, Object msg, String title) {
 		return JOptionPane.showConfirmDialog(
 				parentComponent,

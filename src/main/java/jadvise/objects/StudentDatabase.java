@@ -43,7 +43,7 @@ public class StudentDatabase {
 			"Notes"
 	};
 
-	private ArrayList<Student> students;
+	private final ArrayList<Student> students;
 	private final ArrayList<Student> deletedStudents;
 	private JTable table;
 	private final MySQLAccount account;
@@ -91,6 +91,7 @@ public class StudentDatabase {
 		return students.size();
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<Student> getStudents() {
 		return (ArrayList<Student>) students.clone();
 	}
