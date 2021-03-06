@@ -44,7 +44,11 @@ import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -155,6 +159,9 @@ public class JAdvise extends JFrame {
 	private final JLabel totalRowsLabel;
 	private final JLabel selectedStudentStatusLabel;
 	private final JLabel totalStudentsStatusLabel;
+
+	private static final Clipboard clipboard =
+			Toolkit.getDefaultToolkit().getSystemClipboard();
 
 	public JAdvise(MySQLAccount account) throws SQLException, ClassNotFoundException {
 
@@ -273,25 +280,56 @@ public class JAdvise extends JFrame {
 			}
 		});
 
-		// Created a context menu for the table with Edit/Delete options
+		// Created a context menu for the table
 		// https://stackoverflow.com/questions/3558293/java-swing-jtable-right-click-menu-how-do-i-get-it-to-select-aka-highlight-t
 		JPopupMenu popupmenu = new JPopupMenu();
+		JMenuItem popupCopyCellItem = new JMenuItem("Copy cell");
+		JMenuItem popupCopyRowItem = new JMenuItem("Copy row");
 		JMenuItem popupEditItem = new JMenuItem("Edit");
 		JMenuItem popupDeleteItem = new JMenuItem("Delete");
+		popupCopyCellItem.addActionListener(e -> {
+			int row = table.getSelectedRow();
+			int col = table.getSelectedColumn();
+			String cell = table.getModel().getValueAt(row, col).toString();
+			clipboard.setContents(new StringSelection(cell), null);
+		});
+		// Send Ctrl+C to the table to copy the row
+		popupCopyRowItem.addActionListener(e -> {
+			table.dispatchEvent(new KeyEvent(
+					table,
+					KeyEvent.KEY_PRESSED,
+					e.getWhen(),
+					InputEvent.CTRL_DOWN_MASK | InputEvent.CTRL_MASK,
+					KeyEvent.VK_C,
+					'c'
+			));
+			table.dispatchEvent(new KeyEvent(
+					table,
+					KeyEvent.KEY_RELEASED,
+					e.getWhen(),
+					InputEvent.CTRL_DOWN_MASK | InputEvent.CTRL_MASK,
+					KeyEvent.VK_C,
+					'c'
+			));
+		});
 		popupEditItem.addActionListener(e -> editStudentAction());
 		popupDeleteItem.addActionListener(e -> removeStudentAction());
+		popupmenu.add(popupCopyCellItem);
+		popupmenu.add(popupCopyRowItem);
 		popupmenu.add(popupEditItem);
 		popupmenu.add(popupDeleteItem);
 
 		// Adds mouse listeners to the table
 		table.addMouseListener(new MouseAdapter() {
-			// Right clicking selects the current row and shows the popup menu
+			// Right clicking selects the current row + col and shows the popup menu
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger() && e.getComponent() instanceof JTable) {
 					int row = table.rowAtPoint(e.getPoint());
+					int col = table.columnAtPoint(e.getPoint());
 					if (row != -1) {
 						table.setRowSelectionInterval(row, row);
+						table.setColumnSelectionInterval(col, col);
 						updateSelectedStudentStatus();
 						popupmenu.show(table, e.getX(), e.getY());
 					}
