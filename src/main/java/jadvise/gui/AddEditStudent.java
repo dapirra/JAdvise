@@ -443,6 +443,7 @@ public class AddEditStudent extends JDialog {
 
 		// Done Button
 		doneButton = new JButton("Done");
+		rootPane.setDefaultButton(doneButton);
 		doneButton.addActionListener(actionEvent -> {
 			try {
 				@SuppressWarnings("SuspiciousToArrayCall")
