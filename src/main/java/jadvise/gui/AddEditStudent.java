@@ -180,7 +180,7 @@ public class AddEditStudent extends JDialog {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(mainWindow);
-		setResizable(true);
+		setResizable(false);
 
 		// Pressing escape will ask to close the window
 		rootPane.registerKeyboardAction(

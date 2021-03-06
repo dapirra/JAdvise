@@ -164,6 +164,7 @@ public class JAdvise extends JFrame {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setResizable(true);
+		setMinimumSize(new Dimension(250, 300));
 
 		// Pressing escape will ask if the user would like to quit
 		rootPane.registerKeyboardAction(
