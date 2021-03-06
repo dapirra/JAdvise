@@ -40,6 +40,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -48,6 +50,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.stream.IntStream;
 
@@ -593,9 +598,28 @@ public class JAdvise extends JFrame {
 		aboutItem = new JMenuItem("About");
 		aboutItem.setMnemonic(KeyEvent.VK_A);
 		aboutItem.setAccelerator(KeyStroke.getKeyStroke("F1"));
+		JLabel websiteHyperLinkLabel = new JLabel(
+				"<html><a href=\"https://dapirra.github.io/\">" +
+						"https://dapirra.github.io/</p></html>");
+		websiteHyperLinkLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		websiteHyperLinkLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent mouseEvent) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://dapirra.github.io/"));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		aboutItem.addActionListener(actionEvent -> JOptionPane.showMessageDialog(
 				this,
-				"Version: 1.0\nDate: 12/15/13\nCreated by David Pirraglia",
+				new JComponent[] {
+						new JLabel("Version: 2.0"),
+						new JLabel("Date: 3/5/2021"),
+						new JLabel("Created by David Pirraglia"),
+						websiteHyperLinkLabel
+				},
 				TITLE,
 				JOptionPane.INFORMATION_MESSAGE
 		));
