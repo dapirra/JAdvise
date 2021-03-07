@@ -18,7 +18,8 @@ public class Demo {
 		} catch (UnsupportedLookAndFeelException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
+		} finally {
+			new Login();
 		}
-		new Login();
 	}
 }
