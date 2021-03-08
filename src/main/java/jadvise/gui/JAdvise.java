@@ -603,6 +603,7 @@ public class JAdvise extends JFrame {
 					sd.updateTable();
 					clearSearchAction();
 					updateTotalStudentsStatus();
+					updateSelectedStudentStatus();
 				} catch (SQLException | ClassNotFoundException e) {
 					e.printStackTrace();
 					PrebuiltDialogs.showErrorDialog(this, e.getMessage());
@@ -713,7 +714,16 @@ public class JAdvise extends JFrame {
 				e.printStackTrace();
 				PrebuiltDialogs.showErrorDialog(this, e.getMessage());
 			}
+			int selectedRow = table.getSelectedRow();
+			if (table.getRowCount() > 0) {
+				if (table.getRowCount() == selectedRow) {
+					table.setRowSelectionInterval(selectedRow - 1, selectedRow - 1);
+				} else {
+					table.setRowSelectionInterval(selectedRow, selectedRow);
+				}
+			}
 			updateTotalStudentsStatus();
+			updateSelectedStudentStatus();
 		}
 	}
 
@@ -755,7 +765,8 @@ public class JAdvise extends JFrame {
 	 * @return The index of the currently selected item
 	 */
 	public static int getIndex(JTable table) {
-		return table.convertRowIndexToModel(table.getSelectedRow());
+		int row = table.getSelectedRow();
+		return row == -1 ? -1 : table.convertRowIndexToModel(row);
 	}
 
 	public void updateSelectedStudentStatus() {
