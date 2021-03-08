@@ -252,12 +252,13 @@ public class JAdvise extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent event) {
 				// Do nothing if not left click
-				if (event.getButton() != MouseEvent.BUTTON1) return;
+				if (event.getButton() != MouseEvent.BUTTON1 ||
+						event.getClickCount() != 1) return;
 
 				Point point = event.getPoint();
 				int column = table.columnAtPoint(point);
-				if (tableSorter.getSortKeys().get(0).getSortOrder()
-						.toString().charAt(0) == 'A' // ASCENDING
+				String sort = tableSorter.getSortKeys().get(0).getSortOrder().toString();
+				if (sort.charAt(0) == 'A' // ASCENDING
 						&& column == previousColumn) {
 					tableSorter.setSortKeys(null);
 					previousColumn = -1;
