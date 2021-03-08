@@ -763,6 +763,7 @@ public class JAdvise extends JFrame {
 	}
 
 	public void updateTotalStudentsStatus() {
+		totalRowsLabel.setText(table.getRowCount() + "");
 		totalStudentsStatusLabel.setText(sd.getTotalStudents() + "");
 	}
 
