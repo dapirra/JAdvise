@@ -658,7 +658,7 @@ public class JAdvise extends JFrame {
 				this,
 				new JComponent[] {
 						new JLabel("Version: 2.0"),
-						new JLabel("Date: 3/5/2021"),
+						new JLabel("Date: 3/7/2021"),
 						new JLabel("Created by David Pirraglia"),
 						websiteHyperLinkLabel
 				},
